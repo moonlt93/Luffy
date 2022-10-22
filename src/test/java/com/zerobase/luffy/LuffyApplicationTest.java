@@ -14,9 +14,9 @@ class LuffyApplicationTest {
     @Test
     public void comment(){
         System.out.println("test");
-        int num =1;
+        int num =2;
 
-        assertEquals(1,num);
+        assertEquals(2,num);
 
     }
 }

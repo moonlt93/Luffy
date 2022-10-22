@@ -13,11 +13,11 @@ jobs:
         with:
           java-version: 11
       - name: Set up MariaDB
-      - uses: getong/mariadb-action@v1.1
+        uses: getong/mariadb-action@v1.1
         with:
           mysql database: Luffy
           mysql user: root
-          mysql password: ${{ secrets.DatabasePassword }}
+          mysql password: ${{ secrets.MYSQL_PASSWORD }}
       - name: Run Coverage
         run: |
           chmod +x gradlew

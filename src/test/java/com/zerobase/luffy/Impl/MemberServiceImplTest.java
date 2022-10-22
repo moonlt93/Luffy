@@ -18,4 +18,27 @@ class MemberServiceImplTest {
 
 
 
+    @Autowired
+    MemberRepository memberRepository;
+
+    @Test
+    void register(){
+        //given
+        Member member = new Member();
+        //when
+        member.setUsername("진수");
+        member.setId(1L);
+        member.setIp("진수");
+        member.setEmail("진수");
+        member.setPassword("진수");
+        member.setRegDt(LocalDateTime.now());
+
+        //then
+        memberRepository.save(member);
+        List<Member> list = memberRepository.findAll();
+
+        assertNotNull(list);
+        System.out.println("하이");
+    }
+
 }

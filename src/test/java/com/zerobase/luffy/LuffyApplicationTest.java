@@ -10,7 +10,7 @@ import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 class LuffyApplicationTest {
     @Test
     void contextLoads() {
-        System.out.println("test메시지");
+        System.out.println("test메시지다");
     }
 
 }

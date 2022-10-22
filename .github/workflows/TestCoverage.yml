@@ -15,10 +15,10 @@ jobs:
       - name: Set up MariaDB
         uses: getong/mariadb-action@v1.1
         with:
-         character set server: utf8
-         mysql database: luffy
-         mysql user: root
-         mysql password: ${{ secrets.MYSQL_PASSWORD }}
+           character set server: utf8
+           mysql database: luffy
+           mysql user: root
+           mysql password: ${{ secrets.MYSQL_PASSWORD }}
       - name: Run Coverage
         run: |
           chmod +x gradlew

@@ -15,7 +15,7 @@
 
 **Java**  / **Javascript**
 
-**SpringBoot** / *Spring JPA*
+**SpringBoot** / **Spring JPA**
 
 **Spring batch** / **Spring Security**
 

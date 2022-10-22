@@ -16,7 +16,11 @@ public class javaFooTest {
         String actual = javaFoo.hello("펭");
         assertEquals(actual, "하");
     }
-
+    @Test
+    public void partiallyCoveredHelloMethodTest2() {
+        String actual = javaFoo.hello("수");
+        assertEquals(actual, "화");
+    }
 
 
 }

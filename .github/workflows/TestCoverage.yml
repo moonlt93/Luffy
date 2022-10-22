@@ -13,9 +13,7 @@ jobs:
         with:
           java-version: 11
       - name: Run Coverage
-        run: |
-          chmod +x gradlew
-          ./gradlew clean test jacocoTestReport
+        run: ./gradlew clean test jacocoTestReport
 
       - name: Add test coverage in PR comment
         id: jacoco

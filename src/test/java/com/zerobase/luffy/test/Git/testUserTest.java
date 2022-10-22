@@ -11,6 +11,6 @@ class testUserTest {
 
     @Test
     void testUserTest(){
-        assertEquals(12,12);
+        assertEquals(1322,1322);
     }
 }

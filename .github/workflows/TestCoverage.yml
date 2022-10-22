@@ -7,6 +7,12 @@ jobs:
   build:
     runs-on: ubuntu-latest 
     steps:
+      - uses: getong/mariadb-action@v1.1
+        with:
+          character set server: utf8
+          mysql database: Luffy
+          mysql user: root
+          mysql password: ${{secrets.MYSQL_PASSWORD}} 
       - uses: actions/checkout@v2
       - name: Set up JDK 11
         uses: actions/setup-java@v1

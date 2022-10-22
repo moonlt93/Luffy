@@ -37,35 +37,40 @@ dependencies {
 
 }
 
+
+
+
 tasks.named('test') {
     useJUnitPlatform()
 }
 
 jacocoTestReport {
     reports {
-        csv.enabled true
-        xml.enabled true
-        xml.destination file("$buildDir/jacoco.xml")
+        xml.required = true
+        csv.required = true
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
 }
 jacocoTestCoverageVerification {
-    // 이 커버리지 기준은 이 글의 맨 아래에서 다시 설명하겠습니다.
     violationRules {
         rule {
-            element = 'CLASS'
-
             limit {
-                counter = 'BRANCH'
-                value = 'COVEREDRATIO'
-                minimum = 0.10
+                minimum = 0.13
             }
+
+            failOnViolation true
         }
     }
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
 }
 test {
     jacoco {
         enabled = true
-        destinationFile = file("$buildDir/jacoco/jacoco.exec")
+        destinationFile = layout.buildDirectory.file("jacoco/${name}.exec").get().asFile
         includes = []
         excludes = []
         excludeClassLoaders = []
@@ -77,5 +82,11 @@ test {
         address = "localhost"
         port = 6300
         jmx = false
+    }
+}
+test {
+    jacoco {
+        destinationFile = layout.buildDirectory.file('jacoco/jacocoTest.exec').get().asFile
+        classDumpDir = layout.buildDirectory.dir('jacoco/classpathdumps').get().asFile
     }
 }

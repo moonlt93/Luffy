@@ -2,7 +2,7 @@ package com.zerobase.luffy;
 
 public class Calculator {
     public static void main(String[] args) {
-        System.out.println("허허");
+        System.out.println("허허허");
     }
 
     public int add(int i, int i1) {

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+
+    <meta charset="UTF-8">
+    <title>인덱스</title>
+</head>
+<body>
+<div th:replace="/fragment/header.html :: fragment-body-menu"></div>
+<h1> index</h1>
+
+<!-- ROLE_ADMIN 권한을 가지고 있다면 보임 -->
+<div sec:authorize="hasRole('ADMIN')">ROLE_ADMIN 권한이 있습니다.</div>
+<!-- ROLE_SUB_ADMIN 권한을 가지고 있다면 보임 -->
+<div sec:authorize="hasRole('MANAGER')">ROLE_SUB_ADMIN 권한이 있습니다.</div>
+<!-- ROLE_USER 권한을 가지고 있다면 보임 -->
+<div sec:authorize="hasRole('USER')">ROLE_USER 권한이 있습니다.</div>
+<!-- ROLE_ADMIN 혹은 ROLE_SUB_ADMIN 권한을 가지고 있다면 보임 -->
+<div sec:authorize="hasAnyRole('ADMIN, MANAGER')">ROLE_ADMIN 혹은 ROLE_SUB_ADMIN 권한이 있습니다.</div>
+</body>
+</html>

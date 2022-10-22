@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+
 @Transactional
 class MemberServiceImplTest {
 
@@ -34,10 +34,8 @@ class MemberServiceImplTest {
         member.setRegDt(LocalDateTime.now());
 
         //then
-        memberRepository.save(member);
-        List<Member> list = memberRepository.findAll();
 
-        assertNotNull(list);
+        assertNotNull(member);
         System.out.println("하이");
     }
 

@@ -8,6 +8,7 @@ class LuffyApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }

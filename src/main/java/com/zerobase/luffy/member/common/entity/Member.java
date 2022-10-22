@@ -34,6 +34,4 @@ public class Member {
     private String ip;
     private String ROLE;
 
-
-
 }

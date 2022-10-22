@@ -13,7 +13,9 @@
 ## 기술스택
 
 
-**Java**  / **SpringBoot**
+**Java**  / **Javascript**
+
+**SpringBoot** / **Spring JPA**
 
 **Spring batch** / **Spring Security**
 

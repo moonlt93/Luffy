@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class LuffyApplicationTest {
     @Test
     void contextLoads() {
+
     }
 
 }

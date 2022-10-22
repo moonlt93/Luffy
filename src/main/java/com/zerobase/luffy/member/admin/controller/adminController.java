@@ -12,4 +12,7 @@ public class adminController {
     public String GetAdmin(){
         return "/admin/main";
     }
+
+
+
 }

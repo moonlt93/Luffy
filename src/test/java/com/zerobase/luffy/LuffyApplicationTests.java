@@ -20,5 +20,9 @@ class LuffyApplicationTests {
         assertThat(1, equalTo(1));
     }
 
+    @Test
+    void equalTest2() {
+        assertThat(2, equalTo(2));
+    }
 
 }

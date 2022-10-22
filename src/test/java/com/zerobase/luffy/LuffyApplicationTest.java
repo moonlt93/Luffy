@@ -1,16 +1,18 @@
 package com.zerobase.luffy;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-@SpringBootTest
-@EnableSpringConfigured
 class LuffyApplicationTest {
+
+    private final Calculator calculator = new Calculator();
+
     @Test
     void contextLoads() {
-        System.out.println("test메시지다");
+
+            assertEquals(2, calculator.add(1, 1));
+        }
     }
 
-}

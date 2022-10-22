@@ -10,16 +10,17 @@ group = 'com.zerobase'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
 repositories {
     mavenCentral()
 }
-ext {
-    coverageSourceDirs = 'src/test/java'
-}
-jacoco {
-    toolVersion = "0.8.8"
-    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
-}
+
+
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-batch'
@@ -44,48 +45,19 @@ dependencies {
 
 }
 
-test {
+tasks.named('test') {
     useJUnitPlatform()
-    jacoco {
-        destinationFile = file("$buildDir/jacoco/jacoco.exec")
-    }
-    finalizedBy 'jacocoTestReport'
 }
+
 
 jacocoTestReport {
     reports {
         xml.enabled = true
         csv.enabled = true
     }
-    finalizedBy 'jacocoTestCoverageVerification'
+
 }
 
 
 
-jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            enabled = true
-            element = 'CLASS'
-            limit {
-                counter = 'LINE'
-                value = 'COVEREDRATIO'
-                minimum = 0.0
-            }
-            excludes =[]
-        }
-    }
-}
 
-
-task testCoverage(type: Test) {
-    group 'verification'
-    description 'Runs the unit tests with coverage'
-
-    dependsOn(':test',
-            ':jacocoTestReport',
-            ':jacocoTestCoverageVerification')
-
-    tasks['jacocoTestReport'].mustRunAfter(tasks['test'])
-    tasks['jacocoTestCoverageVerification'].mustRunAfter(tasks['jacocoTestReport'])
-}

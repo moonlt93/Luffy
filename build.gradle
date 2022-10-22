@@ -13,6 +13,9 @@ sourceCompatibility = '11'
 repositories {
     mavenCentral()
 }
+ext {
+    coverageSourceDirs = 'src/test/java'
+}
 jacoco {
     toolVersion = "0.8.8"
     reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
@@ -42,14 +45,17 @@ dependencies {
 }
 
 test {
+    useJUnitPlatform()
     finalizedBy 'jacocoTestReport'
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/jacoco.exec")
+    }
 }
 
 jacocoTestReport {
     reports {
-        xml.enabled = false
+        xml.enabled = true
         csv.enabled = true
-        html.enabled = true
     }
     finalizedBy 'jacocoTestCoverageVerification'
 }

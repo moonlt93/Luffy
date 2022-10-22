@@ -38,7 +38,7 @@ class MemberServiceImplTest {
         List<Member> list = memberRepository.findAll();
 
         assertNotNull(list);
-
+        System.out.println("하이");
     }
 
 }

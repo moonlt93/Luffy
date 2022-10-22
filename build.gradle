@@ -46,10 +46,10 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    finalizedBy 'jacocoTestReport'
     jacoco {
         destinationFile = file("$buildDir/jacoco/jacoco.exec")
     }
+    finalizedBy 'jacocoTestReport'
 }
 
 jacocoTestReport {
@@ -78,3 +78,14 @@ jacocoTestCoverageVerification {
 }
 
 
+task testCoverage(type: Test) {
+    group 'verification'
+    description 'Runs the unit tests with coverage'
+
+    dependsOn(':test',
+            ':jacocoTestReport',
+            ':jacocoTestCoverageVerification')
+
+    tasks['jacocoTestReport'].mustRunAfter(tasks['test'])
+    tasks['jacocoTestCoverageVerification'].mustRunAfter(tasks['jacocoTestReport'])
+}

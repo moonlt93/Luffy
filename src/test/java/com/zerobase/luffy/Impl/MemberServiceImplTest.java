@@ -4,26 +4,19 @@ import com.zerobase.luffy.member.common.dto.MemberDto;
 import com.zerobase.luffy.member.common.entity.Member;
 import com.zerobase.luffy.member.common.repository.MemberRepository;
 import com.zerobase.luffy.member.common.service.Impl.MemberServiceImpl;
-import com.zerobase.luffy.member.common.service.MemberService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.zerobase.luffy.member.common.dto.MemberDto.EntityBuild;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 
 
 @ExtendWith(MockitoExtension.class)
@@ -37,7 +30,7 @@ class MemberServiceImplTest {
 
 
     @Test
-    void register(){
+    void register() {
 
         Member member2 = Member.builder()
                 .username("user22").build();
@@ -56,15 +49,16 @@ class MemberServiceImplTest {
 
 
         //when
-       MemberDto dto = EntityBuild(member) ;
+        MemberDto dto = EntityBuild(member);
 
         //given
         Boolean result = memberServiceImpl.register(dto);
 
         //then
 
-        assertEquals(22L,dto.getId());
-        assertEquals("user22",dto.getUserName());
+        assertEquals(22L, dto.getId());
+        assertEquals("user22", dto.getUserName());
+        // assertTrue(result);
 
 
     }

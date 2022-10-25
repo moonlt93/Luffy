@@ -1,0 +1,16 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  profiles:
+    active: local
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:tcp://localhost/~/test
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.MariaDBDialect
+      database-platform: org.hibernate.dialect.H2Dialect
+      ddl-auto: create-drop

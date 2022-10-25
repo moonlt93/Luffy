@@ -7,6 +7,7 @@ import com.zerobase.luffy.member.common.model.MessageResult;
 import com.zerobase.luffy.member.common.repository.MemberRepository;
 import com.zerobase.luffy.member.common.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -123,6 +124,13 @@ public class MemberServiceImpl implements MemberService {
 
 
         return new MessageResult();
+    }
+
+    public MemberDto getMember(Long userId){
+        MemberDto member = MemberDto.EntityBuild(memberRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("USER_NOT_FOUND")));
+
+            return member;
     }
 }
 

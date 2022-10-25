@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+            crossorigin="anonymous"></script>
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div th:replace="/fragment/header.html :: fragment-my-menu"></div>
+<h1>마이페이지</h1>
+<div>
+    <form name="updateForm" id="updateForm" action="/member/myPage"
+          method="post">
+        <table class="table">
+            <tbody>
+            <tr>
+                <td>아이디</td>
+                <td>
+                    <p th:text="${list.userName}"></p>
+                </td>
+            </tr>
+            <tr>
+                <td>No</td>
+                <td>
+                    <p th:text="${list.id}"></p>
+                    <input id="userNo" name="userNo" type="hidden"
+                           th:value="${list.id}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>등록일</td>
+                <td>
+                    <p th:text="${list.regDt}"></p>
+                </td>
+            </tr>
+            <tr>
+                <td>이름</td>
+                <td>
+                    <p th:text="${list.name}"></p>
+                </td>
+            </tr>
+            <tr>
+                <td>거주지</td>
+                <td>
+                    <input name="registration" type="text"
+                           th:value="${list.registration}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>핸드폰번호</td>
+                <td>
+                    <input name="phone" type="text" th:value="${list.phone}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>비고</td>
+                <td>
+                    <p>머라고 하면 좋을까?</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <button id="modify_btn" type="submit">수정</button>
+        </div>
+    </form>
+    <span><button id="delete_btn" type="button">삭제</button></span>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        let id = $("input[id=userNo]").val();
+
+        $("#delete_btn").on('click', function () {
+
+            location.href = "/member/mywithdraw/" + id;
+        });
+        $("#modify_btn").on('click', function () {
+
+            if (!confirm("정말 수정하시겠습니까?")) {
+                return false;
+            }
+
+        });
+    });
+
+
+</script>
+
+</body>
+</html>
+
+<!--
+-->

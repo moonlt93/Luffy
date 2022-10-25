@@ -14,5 +14,10 @@ public class adminController {
     }
 
 
+    @GetMapping("/member")
+    public String GetMember(){
+
+        return "/admin/member";
+    }
 
 }

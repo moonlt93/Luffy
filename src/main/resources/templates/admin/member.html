@@ -3,10 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <title>관리자화면</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+
+            $('#selectAll').on('click', function() {
+
+                var checked = $(this).is(':checked');
+                console.log(checked);
+
+
+                $('#dataList input[type=checkbox]').each(function(k, v) {
+                    $(this).prop('checked', checked);
+                });
+
+
+            });
+
+            $('#selDelete_btn').on('click', function() {
+
+                var $checked = $('#dataList input[type=checkbox]:checked');
+                if ($checked.length < 1) {
+                    alert(' 삭제할 데이터를 선택해 주세요. ');
+                    return false;
+                }
+
+                if (!confirm(' 선택한 데이터를 삭제하시겠습니까? ')) {
+                    return false;
+                }
+
+                let idList = [];
+                $.each($checked, function(k, v) {
+                    idList.push($(this).val());
+                });
+
+                console.log(idList);
+                console.log(idList.join(','));
+
+                let $deleteForm = $('form[name=deleteForm]');
+                $deleteForm.find('input[name=idList]').val( idList.join(',') );
+                $deleteForm.submit();
+
+            });
+
+
+        });
+    </script>
 </head>
 <body>
 <div th:replace="/fragment/header.html :: fragment-admin-menu"></div>
 <h1>관리자 회원 관리</h1>
+
+<div>
+    <div class="buttons">
+        <p class="total-count">전체<span th:text="${totalCount}"></span>개</p>
+        <button id="selDelete_btn" type="button">선택삭제</button>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <td> <input id="selectAll" type="checkbox"/></td>
+            <td>No</td>
+            <td>이름</td>
+            <td>이메일</td>
+            <td>Ip</td>
+            <td>등록일자</td>
+            <td>수정일자</td>
+            <td>거주지</td>
+            <td>회원상태</td>
+        </tr>
+        </thead>
+        <tbody id="dataList">
+        <tr th:each="x : ${list}">
+            <td>
+                <input type="checkbox" th:value="${x.id}"/>
+            </td>
+            <td th:text="${x.id}">
+                <input class="form-control" type="hidden" name="id"
+                       th:value="${x.id}" readonly/>
+                <p th:text="${x.id}">1</p>
+            </td>
+            <td>
+                <input class="form-control" name="name" type="text"
+                       th:value="${x.name}" readonly/>
+            </td>
+            <td>
+                <input class="form-control" name="email" type="email"
+                       th:value="${x.email}" readonly/>
+            </td>
+            <td>
+                <input class="form-control" type="text" th:value="${x.ip}"
+                       readonly/>
+            </td>
+            <td>
+                <input class="form-control" type="text" th:value="${x.regDt}"
+                       readonly/>
+            </td>
+            <td>
+                <input class="form-control" type="text" th:value="${x.upDt}"
+                       readonly/>
+            </td>
+            <td>
+                <input class="form-control" name="registration" type="text"
+                       th:value="${x.registration}" readonly/>
+            </td>
+            <td>
+                <!--    <input  class="form-control" name="registration" type="text" th:value="${x.memberStatus}"/>-->
+                <select name="memberStatus" class="form-control" th:value="${x.memberStatus}">
+                    <option th:selected="${x.memberStatus} == 'ING'">ING</option>
+                    <option th:selected="${x.memberStatus} == 'UNREGISTERED'">UNREGISTERED</option>
+                </select>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<form name="deleteForm" method="post"
+      action="/admin/member/delete">
+    <input type="hidden" name="idList"/>
+
+</form>
 
 </body>
 </html>

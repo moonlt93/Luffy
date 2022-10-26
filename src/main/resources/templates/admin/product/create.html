@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>제품등록</title>
+</head>
+<body>
+<div th:replace="/fragment/header.html :: fragment-admin-menu"></div>
+<h1>제품등록</h1>
+private String imgLink;
+private String content;
+private String productSize;
+private Long price;
+
+private LocalDateTime productRegDt;
+private LocalDateTime UpDt;
+private LocalDateTime EndDt;
+private String productName;
+
+private int pnt;
+@Enumerated(EnumType.STRING)
+private ProductCode memberStatus;
+<form id="productSubmit" method ="post" enctype="multipart/form-data">
+
+    <table>
+        <tbody>
+        <tr>
+
+        </tr>
+        </tbody>
+    </table>
+
+</form>
+
+</body>
+</html>

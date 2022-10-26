@@ -40,6 +40,9 @@ public class MemberDto {
                 .password(member.getPassword())
                 .phone(member.getPhone())
                 .regDt(member.getRegDt())
+                .upDt(member.getUpDt())
+                .email(member.getEmail())
+                .memberStatus(String.valueOf(member.getMemberStatus()))
                 .registration(member.getRegistration())
                 .name(member.getName())
                 .build();

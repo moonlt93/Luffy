@@ -7,17 +7,23 @@ import com.zerobase.luffy.member.common.model.MessageResult;
 import com.zerobase.luffy.member.common.repository.MemberRepository;
 import com.zerobase.luffy.member.common.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.asm.Advice;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.zerobase.luffy.member.type.MemberCode.ING;
 import static com.zerobase.luffy.member.type.MemberCode.UNREGISTERED;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
@@ -131,6 +137,19 @@ public class MemberServiceImpl implements MemberService {
                 .orElseThrow(() -> new UsernameNotFoundException("USER_NOT_FOUND")));
 
             return member;
+    }
+
+    @Override
+    public List<MemberDto> memberList(MemberDto dto) {
+        List<Member> list = memberRepository.findAll();
+
+       if(!CollectionUtils.isEmpty(list)){
+           log.info("리스트 있음");
+       }
+
+        return list.stream()
+                .map(MemberDto :: EntityBuild)
+                .collect(Collectors.toList());
     }
 }
 

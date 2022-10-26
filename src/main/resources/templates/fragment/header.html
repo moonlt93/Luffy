@@ -21,8 +21,8 @@
 
 <div>
     <div th:fragment="fragment-my-menu">
-        <a  sec:authorize="isAnonymous()"  href="/member/login"> | 로그인</a>
         <a  href="/"> | 홈으로</a>
+        <a  sec:authorize="isAnonymous()"  href="/member/login"> | 로그인</a>
         <a  sec:authorize="isAuthenticated()"  href="/member/logout"> | 로그아웃</a>
         <a sec:authorize="isAuthenticated()" href="/member/myPage"> | 마이페이지</a>
     </div>
@@ -36,6 +36,7 @@
         <a href="/admin/member"> | 회원관리</a>
         <a href="/admin/brand"> | BM관리</a>
         <a href="/admin/log"> | 로그확인</a>
+        <a href="/admin/category/list"> | 카테고리관리</a>
         <a href="/admin/main"> | 관리자페이지</a>|
         <a href="/"> | 메인화면</a>|
     </div>

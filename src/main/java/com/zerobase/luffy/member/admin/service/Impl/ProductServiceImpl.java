@@ -6,6 +6,8 @@ import com.zerobase.luffy.member.admin.repository.ProductDetailRepository;
 import com.zerobase.luffy.member.admin.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +24,11 @@ public class ProductServiceImpl implements ProductService {
     private final ProductDetailRepository productDetailRepository;
 
     @Override
-    public List<ProductDetail> getAllList() {
+    public Page<ProductDetail> getAllList(Pageable pageable) {
 
-        List<ProductDetail> list = productDetailRepository.findAll(getSortBySortValueDesc());
 
-        return list;
+        return  productDetailRepository.findAll(pageable);
+
 
     }
 
@@ -129,5 +131,15 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         return true;
+    }
+
+
+    @Override
+    public Page<ProductDetail> findByTitleContaining(String searchKeyword, Pageable pageable) {
+
+        Page<ProductDetail> page =  productDetailRepository.findByProductNameContaining(searchKeyword,pageable);
+
+
+        return page;
     }
 }

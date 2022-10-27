@@ -1,4 +1,4 @@
-package com.zerobase.luffy.member.Util;
+package com.zerobase.luffy.Util;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 

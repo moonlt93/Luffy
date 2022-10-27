@@ -1,7 +1,6 @@
-package com.zerobase.luffy.member.common.repository;
+package com.zerobase.luffy.common.repository;
 
-import com.zerobase.luffy.member.common.dto.MemberDto;
-import com.zerobase.luffy.member.common.entity.Member;
+import com.zerobase.luffy.common.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

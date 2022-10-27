@@ -1,7 +1,7 @@
 package com.zerobase.luffy.auth;
 
-import com.zerobase.luffy.member.common.entity.Member;
-import com.zerobase.luffy.member.common.repository.MemberRepository;
+import com.zerobase.luffy.common.entity.Member;
+import com.zerobase.luffy.common.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

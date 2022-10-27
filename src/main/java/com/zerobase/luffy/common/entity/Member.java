@@ -1,4 +1,4 @@
-package com.zerobase.luffy.member.common.entity;
+package com.zerobase.luffy.common.entity;
 
 
 import com.zerobase.luffy.member.type.MemberCode;

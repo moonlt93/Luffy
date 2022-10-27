@@ -29,7 +29,7 @@ public class ProductDto  {
     private String fileName;
     private String urlFileName;
     private String idList;
-
+    private String  searchKeyword;
     public static ProductDto entityBuilder(ProductDetail detail) {
 
         return ProductDto.builder()

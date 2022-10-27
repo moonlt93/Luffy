@@ -1,4 +1,4 @@
-package com.zerobase.luffy.member.common.model;
+package com.zerobase.luffy.common.model;
 
 import lombok.Data;
 

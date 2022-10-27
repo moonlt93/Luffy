@@ -1,6 +1,6 @@
-package com.zerobase.luffy.member.common.dto;
+package com.zerobase.luffy.common.dto;
 
-import com.zerobase.luffy.member.common.entity.Member;
+import com.zerobase.luffy.common.entity.Member;
 import lombok.*;
 
 import java.time.LocalDateTime;

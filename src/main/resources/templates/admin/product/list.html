@@ -23,15 +23,37 @@
         width: 150px;
         height: 100px;
     }
+    .numbersPage {
+        text-align: center;
+        font-size: 35px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .numbersPage strong {
+        font-size: 20px;
+        font-weight: bold;
+    }
 </style>
 <body>
 <div th:replace="/fragment/header.html :: fragment-admin-menu"></div>
 <h1>제품리스트</h1>
 <br/>
+<div class="totalNum">
+    총 <span th:text="${totalNum + 1}"></span>개
+</div>
 <div class="button">
     <a href="/admin/product/create">제품등록</a>
     <button id="deleteBtn" type="button">선택삭제</button>
+
+    <div class="searchForm" style="float:right">
+        <form action="/admin/product/list" method="get">
+            <input type="text" name="keyword" >
+            <button type="submit">검색</button>
+        </form>
+
+    </div>
 </div>
+
 
 <div>
     <table class="table">
@@ -102,6 +124,14 @@
     <input type="hidden" name="idList"/>
 
 </form>
+<div class="numbersPage">
+<th:block th:each="page: ${#numbers.sequence(startPage,endPage)}">
+    <a th:if="${page!=nowPage}" th:href="@{/admin/product/list(page = ${page - 1})}"  th:text="${page}"></a>
+    <strong th:if="${page == nowPage}" th:text="${page}" style="color:red"></strong>
+</th:block>
+</div>
+
+
 <script>
     $(document).ready(function () {
 

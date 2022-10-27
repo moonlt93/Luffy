@@ -1,8 +1,8 @@
-package com.zerobase.luffy.member.common.controller;
+package com.zerobase.luffy.common.controller;
 
-import com.zerobase.luffy.member.common.dto.MemberDto;
-import com.zerobase.luffy.member.common.model.MessageResult;
-import com.zerobase.luffy.member.common.service.MemberService;
+import com.zerobase.luffy.common.dto.MemberDto;
+import com.zerobase.luffy.common.model.MessageResult;
+import com.zerobase.luffy.common.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

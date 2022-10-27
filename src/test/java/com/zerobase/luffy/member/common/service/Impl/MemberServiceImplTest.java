@@ -53,7 +53,7 @@ class MemberServiceImplTest {
                 .id(13L)
                 .build();
 
-        Boolean result = memberServiceImpl.register(memberDto);
+        boolean result = memberServiceImpl.register(memberDto);
 
         //then
         verify(memberRepository,times(1)).save(captor.capture());

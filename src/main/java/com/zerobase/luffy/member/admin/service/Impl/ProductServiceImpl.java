@@ -128,7 +128,6 @@ public class ProductServiceImpl implements ProductService {
                 }
             }
         }
-        log.info("삭제완료");
         return true;
     }
 }

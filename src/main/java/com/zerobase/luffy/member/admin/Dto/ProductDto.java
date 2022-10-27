@@ -2,6 +2,7 @@ package com.zerobase.luffy.member.admin.Dto;
 
 
 import com.zerobase.luffy.member.admin.base.ProductHeader;
+import com.zerobase.luffy.member.admin.entity.ProductDetail;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -12,24 +13,35 @@ import java.time.LocalDateTime;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDto {
+public class ProductDto  {
 
-    Long id;
-    String categoryName;
-    String imgLink;
-    String content;
-    Long price;
-    String productName;
 
-    LocalDateTime productRegDt;
-    LocalDateTime UpDt;
-    LocalDateTime EndDt;
-    int pnt;
-    ProductHeader header;
-    String productStatus;
+    private Long id;
+    private String categoryName;
+    private String imgLink;
+    private String content;
+    private Long price;
+    private String productName;
 
-    String fileName;
-    String urlFileName;
-    String idList;
+    private int pnt;
+    private String productStatus;
+    private LocalDateTime upDt;
+    private String fileName;
+    private String urlFileName;
+    private String idList;
 
+    public static ProductDto entityBuilder(ProductDetail detail) {
+
+        return ProductDto.builder()
+                .id(detail.getId())
+                .productName(detail.getProductName())
+                .categoryName(detail.getCategoryName())
+                .price(detail.getPrice())
+                .productStatus(detail.getProductStatus())
+                .content(detail.getContent())
+                .pnt(detail.getPnt())
+                .urlFileName(detail.getUrlFileName())
+                .fileName(detail.getFileName())
+                .build();
+    }
 }

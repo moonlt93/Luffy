@@ -37,3 +37,5 @@ out/
 .vscode/
 application.yml
 test-application.yml
+*.jpg
+*.png

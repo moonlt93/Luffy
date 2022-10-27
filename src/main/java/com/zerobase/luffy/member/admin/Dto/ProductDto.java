@@ -1,31 +1,23 @@
 package com.zerobase.luffy.member.admin.Dto;
 
 
-import com.zerobase.luffy.member.admin.entity.ProductDetail;
-import com.zerobase.luffy.member.admin.entity.ProductHeader;
-import com.zerobase.luffy.member.type.ProductCode;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.zerobase.luffy.member.admin.base.ProductHeader;
+import lombok.*;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 @Builder
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductDto {
 
     Long id;
-
+    String categoryName;
     String imgLink;
     String content;
-    String productSize;
     Long price;
     String productName;
 
@@ -33,8 +25,11 @@ public class ProductDto {
     LocalDateTime UpDt;
     LocalDateTime EndDt;
     int pnt;
-    ProductCode memberStatus;
     ProductHeader header;
+    String productStatus;
 
+    String fileName;
+    String urlFileName;
+    String idList;
 
 }

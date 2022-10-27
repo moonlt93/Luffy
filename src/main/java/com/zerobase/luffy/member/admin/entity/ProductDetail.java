@@ -1,9 +1,7 @@
 package com.zerobase.luffy.member.admin.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.zerobase.luffy.member.admin.base.ProductHeader;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,35 +9,22 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDetail {
+public class ProductDetail extends ProductHeader {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-   /* @ManyToOne
-    @JoinColumn(name="id")
-    private ProductHeader header;*/
-
-    private String imgLink;
+    private String productName ;
+    private String categoryName;
+    int pnt;
     private String content;
-    private String productSize;
     private Long price;
 
-    private LocalDateTime productRegDt;
-    private LocalDateTime UpDt;
-    private LocalDateTime EndDt;
-
-/*    public void setProductHeader(ProductHeader header){
-
-        this.header = header;
-
-        if(!header.getDetail().contains(this)){
-            header.getDetail().add(this);
-        }
-    }*/
+    private String fileName;
+    private String urlFileName;
+    private String productStatus;
+    private LocalDateTime endDt;
 
 
 

@@ -1,7 +1,6 @@
 package com.zerobase.luffy.member.admin.Dto;
 
 
-import com.zerobase.luffy.member.admin.base.ProductHeader;
 import com.zerobase.luffy.member.admin.entity.ProductDetail;
 import lombok.*;
 
@@ -30,6 +29,7 @@ public class ProductDto  {
     private String urlFileName;
     private String idList;
     private String  searchKeyword;
+    private String writer;
     public static ProductDto entityBuilder(ProductDetail detail) {
 
         return ProductDto.builder()
@@ -42,6 +42,7 @@ public class ProductDto  {
                 .pnt(detail.getPnt())
                 .urlFileName(detail.getUrlFileName())
                 .fileName(detail.getFileName())
+                .writer(detail.getWriter())
                 .build();
     }
 }

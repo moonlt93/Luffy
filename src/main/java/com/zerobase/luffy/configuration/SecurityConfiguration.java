@@ -31,11 +31,9 @@ public class SecurityConfiguration  {
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/member/login")
+                .loginPage("/member/login").loginProcessingUrl("/member/login").defaultSuccessUrl("/")
                 .successHandler(getSuccessHandler())
                 .failureHandler(getFailureHandler())
-                .loginProcessingUrl("/member/login")
-                .defaultSuccessUrl("/")
                 .permitAll()
                 .and().logout().logoutRequestMatcher(
                         new AntPathRequestMatcher("/member/logout")
@@ -53,6 +51,7 @@ public class SecurityConfiguration  {
 
     @Bean
     UserLoginSuccessHandler getSuccessHandler() {
+
         return new UserLoginSuccessHandler();
     }
 

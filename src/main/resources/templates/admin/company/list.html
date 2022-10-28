@@ -36,15 +36,15 @@
 </style>
 <body>
 <div th:replace="/fragment/header.html :: fragment-admin-menu"></div>
-<h1>제품리스트</h1>
+<h1>회사리스트</h1>
 <br/>
 
 <div class="button">
-    <a  class="btn btn-primary" href="/admin/product/create">제품등록</a>
+    <a  class="btn btn-primary" href="/admin/company/create">제품등록</a>
     <button class="btn btn-danger" id="deleteBtn" type="button">선택삭제</button>
 
     <div class="searchForm" style="float:right">
-        <form action="/admin/product/list" method="get">
+        <form action="/admin/company/list" method="get">
             <input type="text" name="keyword" >
             <button type="submit">검색</button>
         </form>
@@ -64,25 +64,28 @@
                 NO
             </td>
             <td>
-                상품명
+                사명
             </td>
             <td>
-                이미지
+                회사번호
             </td>
             <td>
-                등록일
+                회사주소
             </td>
             <td>
-                수량
+                회사도메인주소
             </td>
             <td>
-                상태
+                이벤트여부
+            </td>
+            <td>
+                status
             </td>
 
         </tr>
         </thead>
         <tbody id="dataList">
-        <tr th:each="x : ${list}">
+        <tr th:each="x : ${company}">
 
             <td>
                 <input type="checkbox" th:value="${x.id}"/>
@@ -95,21 +98,23 @@
 
             <td>
                 <a th:href="'edit?id='+${x.id}"
-                   th:text="${x.productName}">제품명</a>
-            </td>
-
-            <td>
-                <img id="image" th:src="@{${x.urlFileName}}" alt="첨부이미지"
-                     th:if="${x.urlFileName != null}"/>
+                   th:text="${x.companyName}">제품명</a>
             </td>
             <td>
-                <p th:text="${x.regDt}"></p>
+                <p th:text="${x.companyCall}"></p>
             </td>
             <td>
-                <p th:text="${x.pnt}"></p>
+                <p th:text ="${x.companyResident}"></p>
             </td>
             <td>
-                <p th:text="${x.productStatus}"></p>
+                <p th:text="${x.companyURL}" ></p>
+            </td>
+            <td>
+                <input type="checkbox" readonly th:value="${x.companyEvent}"
+                th:checked="${x.companyEvent == true}" />
+            </td>
+            <td>
+                <p th:text="${x.companyStatus}" th:value ="${x.companyStatus}" ></p>
             </td>
         </tr>
 
@@ -118,13 +123,13 @@
 
 </div>
 <form name="deleteForm" method="post"
-      action="/admin/product/delete">
+      action="/admin/company/delete">
     <input type="hidden" name="idList"/>
 
 </form>
-<div class="numbersPage">
+<div class="numbersPage" >
 <th:block th:each="page: ${#numbers.sequence(startPage,totalNum)}">
-    <a th:if="${page!=nowPage}" th:href="@{/admin/product/list(page = ${page - 1})}"  th:text="${page}"></a>
+    <a th:if="${page!=nowPage}" th:href="@{/admin/company/list(page = ${page - 1})}"  th:text="${page}"></a>
     <strong th:if="${page == nowPage}" th:text="${page}" style="color:red"></strong>
 </th:block>
 </div>

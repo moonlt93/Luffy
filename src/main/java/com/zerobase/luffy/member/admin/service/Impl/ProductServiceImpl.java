@@ -7,6 +7,7 @@ import com.zerobase.luffy.member.admin.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -27,14 +28,11 @@ public class ProductServiceImpl implements ProductService {
     public Page<ProductDetail> getAllList(Pageable pageable) {
 
 
-        return  productDetailRepository.findAll(pageable);
+        return  productDetailRepository.findAll(PageRequest.of(pageable.getPageNumber(), 10, Sort.by(Sort.Order.desc("id"))));
 
 
     }
 
-    private Sort getSortBySortValueDesc(){
-        return  Sort.by(Sort.Direction.DESC,"id");
-    };
 
 
     @Override
@@ -56,6 +54,7 @@ public class ProductServiceImpl implements ProductService {
                     .urlFileName(dto.getUrlFileName())
                     .content(dto.getContent())
                     .pnt(dto.getPnt())
+                    .writer(dto.getWriter())
                     .build();
         }
 
@@ -82,6 +81,7 @@ public class ProductServiceImpl implements ProductService {
         detail.setFileName(dto.getFileName());
         detail.setUpDt(LocalDateTime.now());
         detail.setEndDt(LocalDateTime.now());
+        detail.setWriter(dto.getWriter());
         detail.setUrlFileName(dto.getUrlFileName());
         productDetailRepository.save(detail);
 
@@ -100,6 +100,7 @@ public class ProductServiceImpl implements ProductService {
                 .price(dto.getPrice())
                 .productName(dto.getProductName())
                 .pnt(dto.getPnt())
+                .writer(dto.getWriter())
                 .productStatus(dto.getProductStatus())
                 .fileName(dto.getFileName())
                 .urlFileName(dto.getUrlFileName())

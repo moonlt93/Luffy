@@ -1,6 +1,7 @@
 package com.zerobase.luffy.member.bm.service.Impl;
 
 import com.zerobase.luffy.Util.passUtil;
+import com.zerobase.luffy.member.admin.entity.Company;
 import com.zerobase.luffy.member.admin.repository.CompanyRepository;
 import com.zerobase.luffy.member.bm.Dto.BmDto;
 import com.zerobase.luffy.member.bm.entity.BrandManager;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -29,6 +31,15 @@ public class ManagerServiceImpl implements ManagerService {
 
        String encPassword= passUtil.encPassword(dto.getPassword());
 
+       Optional<Company> optionalCompanyId= companyRepository.findByCompanyName(dto.getCompanyName());
+
+       if(!optionalCompanyId.isPresent()){
+           return false;
+       }
+
+       Company company = optionalCompanyId.get();
+
+
        BrandManager manager =BrandManager.builder()
                .managerName(dto.getManagerName())
                .username(dto.getUsername())
@@ -38,23 +49,16 @@ public class ManagerServiceImpl implements ManagerService {
                .ROLE("ROLE_MANAGER")
                .memberStatus(MemberCode.ING)
                .companyName(dto.getManagerName())
-
+               .company(company)
                .build();
 
-      vaildateDuplicateManager(manager);
       managerRepository.save(manager);
 
 
         return true;
     }
 
-    private void vaildateDuplicateManager(BrandManager manager) {
-        List<BrandManager> findMembers =
-                managerRepository.findByName(manager.getManagerName());
-        if(!findMembers.isEmpty()){
-           throw new IllegalStateException("이미 존재하는 회원입니다.");
-        }
-    }
+
 
 
 

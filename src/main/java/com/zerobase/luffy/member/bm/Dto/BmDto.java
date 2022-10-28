@@ -20,6 +20,7 @@ public class BmDto{
     private String managerEmail;
     private String ROLE;
     private Company company;
+    private String companyName;
 
     private MemberCode memberStatus;
 

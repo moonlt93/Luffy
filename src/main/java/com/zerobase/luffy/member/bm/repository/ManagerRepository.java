@@ -9,30 +9,8 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class ManagerRepository {
-
-    @PersistenceContext
-    EntityManager em;
+public interface ManagerRepository extends  JpaRepository<BrandManager,Long> {
 
 
-    public void save(BrandManager bm){
-
-        em.persist(bm);
-    }
-
-    public BrandManager findOne(Long id){
-        return em.find(BrandManager.class,id);
-
-    }
-    public List<BrandManager> findAll(){
-        return em.createQuery("select b from BrandManager b",BrandManager.class)
-                .getResultList();
-    }
-    public List<BrandManager> findByName(String managerName){
-        return em.createQuery("select  b from BrandManager b where b.managerName =:managerName",BrandManager.class)
-                .setParameter("managerName",managerName)
-                .getResultList();
-    }
-
-
+    List<BrandManager> findByManagerName(String managerName);
 }

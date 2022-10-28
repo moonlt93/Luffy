@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>매니저등록</title>
+</head>
+<body>
+<div th:replace="/fragment/header.html :: fragment-body-menu"></div>
+<h1>매니저등록</h1>
+
+<div class="registerForm">
+
+  <form method="post" action="/manager/register">
+  <div>
+    <input type="text" name="username" placeholder="아이디을 입력해주세요" required/>
+  </div>
+    <div>
+      <input type="text" name="managerName" placeholder="성함을 입력해주세요" required/>
+    </div>
+    <div>
+      <input type="text" name="companyName" placeholder="회사를 입력해주세요" required/>
+    </div>
+    <div>
+      <input type="password" name="password" placeholder="비밀번호를 입력해주세요" required/>
+    </div>
+    <div>
+      <input type="text" name="managerCall" placeholder="전화번호를 입력해주세요" required/>
+    </div>
+    <div>
+      <input type="email" name="managerEmail" placeholder="이메일을 입력해주세요"/>
+    </div>
+    <div>
+      <button type="submit">등록</button>
+    </div>
+    <a href="/">메인으로</a>
+
+
+  </form>
+
+
+
+</div>
+
+</body>
+</html>

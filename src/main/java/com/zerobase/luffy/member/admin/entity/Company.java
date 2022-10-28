@@ -22,8 +22,6 @@ public class Company extends BaseHeader {
     @Column(name="company_id")
     private Long id;
 
-    @OneToMany(mappedBy = "company",fetch = FetchType.LAZY)
-    private List<BrandManager> brandManager = new ArrayList<>();
 
 
     private String companyName ;
@@ -33,11 +31,5 @@ public class Company extends BaseHeader {
     private boolean companyEvent;
     private String companyStatus;
 
-public void addBrandManager(BrandManager brand){
-    this.brandManager.add(brand);
-    if(brand.getCompany() != this){
-        brand.setCompany(this);
-    }
-}
 
 }

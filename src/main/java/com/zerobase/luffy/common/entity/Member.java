@@ -29,7 +29,7 @@ public class Member {
 
     private LocalDateTime regDt;
     private LocalDateTime upDt;
-    private LocalDateTime EndDt;
+    private LocalDateTime endDt;
 
 
     private String ip;

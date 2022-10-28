@@ -22,14 +22,15 @@ public class Company extends BaseHeader {
     @Column(name="company_id")
     private Long id;
 
-
-
     private String companyName ;
     private String companyCall;
     private String companyResident;
     private String companyURL;
     private boolean companyEvent;
     private String companyStatus;
+
+
+
 
 
 }

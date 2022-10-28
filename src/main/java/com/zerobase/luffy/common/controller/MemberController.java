@@ -3,6 +3,7 @@ package com.zerobase.luffy.common.controller;
 import com.zerobase.luffy.common.dto.MemberDto;
 import com.zerobase.luffy.common.model.MessageResult;
 import com.zerobase.luffy.common.service.MemberService;
+import com.zerobase.luffy.member.bm.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ public class MemberController {
 
 
     private final MemberService memberService;
+    private final ManagerService managerService;
 
 
     @RequestMapping("/login")
@@ -47,6 +49,7 @@ public class MemberController {
         param.setIp(req.getRemoteAddr());
 
         boolean result = memberService.register(param);
+
 
         if (!result) {
             log.info("문제가 생겼습니다.");
@@ -73,7 +76,6 @@ public class MemberController {
 
         Long id = Long.valueOf(req.getParameter("userNo"));
         dto.setId(id);
-
 
 
         MessageResult result = memberService.updateDetail(dto);

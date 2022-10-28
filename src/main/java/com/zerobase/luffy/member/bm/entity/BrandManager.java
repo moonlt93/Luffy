@@ -6,6 +6,8 @@ import com.zerobase.luffy.member.type.MemberCode;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,8 +24,13 @@ public class BrandManager extends BaseHeader {
     private Long id;
 
 
+    @ManyToOne
+    @JoinColumn(name="company_id")
+    private Company company;
+
 
     private String companyName;
+
     private String username;
     private String managerName;
     private String password;
@@ -33,7 +40,6 @@ public class BrandManager extends BaseHeader {
 
     @Enumerated(EnumType.STRING)
     private MemberCode memberStatus;
-
 
 
 

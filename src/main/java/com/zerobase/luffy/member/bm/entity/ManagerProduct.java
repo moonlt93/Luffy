@@ -1,4 +1,4 @@
-package com.zerobase.luffy.member.admin.entity;
+package com.zerobase.luffy.member.bm.entity;
 
 import com.zerobase.luffy.common.base.BaseHeader;
 import lombok.*;
@@ -6,23 +6,19 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="product")
-public class ProductDetail extends BaseHeader {
+@Entity
+@Table(name="ManagerProduct")
+public class ManagerProduct extends BaseHeader {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="product_id")
+    @Column(name="Manager_product_id")
     private Long id;
-
-/*
-    @OneToMany(mappedBy = "product")
-    private List<Photo> photo = new ArrayList<>();*/
 
     private String productName ;
     private String categoryName;
@@ -35,14 +31,6 @@ public class ProductDetail extends BaseHeader {
     private String productStatus;
     private LocalDateTime endDt;
     private String writer;
-
-/*    public void addPhoto(Photo photo){
-        this.photo.add(photo);
-        if(photo.getProduct()!= this){
-            photo.setProduct(this);
-        }
-    }*/
-
 
 
 }

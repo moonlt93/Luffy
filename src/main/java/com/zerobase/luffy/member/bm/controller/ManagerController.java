@@ -15,26 +15,28 @@ public class ManagerController {
 
     private final ManagerService managerService;
 
-    @GetMapping("/main")
-    public String getManager(){
 
-    return "/manager/main";
+    @GetMapping("/main")
+    public String getManager() {
+
+        return "/manager/main";
     }
 
 
     @GetMapping("/register")
-    public String getregister(){
+    public String getregister() {
 
         return "/manager/register";
     }
 
     @PostMapping("/register")
-    public String postRegister(BmDto dto ){
+    public String postRegister(BmDto dto) {
 
-        boolean result =managerService.register(dto);
+        boolean result = managerService.register(dto);
 
-        return"/manager/main";
+        return "/manager/main";
     }
+
 
 
     @RequestMapping("/login")
@@ -42,6 +44,8 @@ public class ManagerController {
 
         return "/manager/loginform";
     }
+
+
 
 
 }

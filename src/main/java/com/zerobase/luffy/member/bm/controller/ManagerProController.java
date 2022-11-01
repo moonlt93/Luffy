@@ -1,12 +1,11 @@
-package com.zerobase.luffy.member.admin.controller;
-
+package com.zerobase.luffy.member.bm.controller;
 
 import com.zerobase.luffy.Util.file.fileUtils;
-import com.zerobase.luffy.member.admin.Dto.ProductDto;
 import com.zerobase.luffy.member.admin.Dto.ProductFileDto;
-import com.zerobase.luffy.member.admin.entity.ProductDetail;
 import com.zerobase.luffy.member.admin.service.CategoryService;
-import com.zerobase.luffy.member.admin.service.ProductService;
+import com.zerobase.luffy.member.bm.Dto.BmProductDto;
+import com.zerobase.luffy.member.bm.entity.ManagerProduct;
+import com.zerobase.luffy.member.bm.service.ManagerProService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,56 +20,56 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
-@Controller
-@RequestMapping("/admin/product")
-@RequiredArgsConstructor
 @Slf4j
-public class adminProductController {
+@Controller
+@RequiredArgsConstructor
+@RequestMapping("/manager/product")
+public class ManagerProController {
+
+
+    private final ManagerProService managerProService;
 
     private final CategoryService categoryService;
 
-    private final ProductService productService;
 
+@GetMapping("/list")
+public String GetProduct(Model model,
+                         @PageableDefault(page = 0, size = 10,
+                                 sort = "id", direction = Sort.Direction.DESC) Pageable pageable
+        , @RequestParam(required = false) String keyword) {
 
-    @GetMapping("/list")
-    public String GetProduct(Model model,
-                             @PageableDefault(page = 0, size = 10,
-                                     sort = "id", direction = Sort.Direction.DESC) Pageable pageable
-            , @RequestParam(required = false) String keyword) {
-
-        Page<ProductDetail> list = null;
-        if (keyword == null || "".equals(keyword)) {
-            list = productService.getAllList(pageable);
-        } else {
-            list = productService.findByTitleContaining(keyword, pageable);
-        }
-
-        int nowPage = list.getPageable().getPageNumber() + 1;
-        int totalNum = list.getTotalPages();
-        int startPage = totalNum < 5 ? 1 : totalNum - 4;
-        System.out.println(totalNum);
-
-        model.addAttribute("list", list);
-        model.addAttribute("nowPage", nowPage);
-        model.addAttribute("totalNum", totalNum);
-        model.addAttribute("startPage", startPage);
-
-        return "/admin/product/list";
+    Page<ManagerProduct> list = null;
+    if (keyword == null || "".equals(keyword)) {
+        list = managerProService.getAllList(pageable);
+    } else {
+        list = managerProService.findByTitleContaining(keyword, pageable);
     }
 
+    int nowPage = list.getPageable().getPageNumber() + 1;
+    int totalNum = list.getTotalPages();
+    int startPage = totalNum < 5 ? 1 : totalNum - 4;
+
+
+    model.addAttribute("list", list);
+    model.addAttribute("nowPage", nowPage);
+    model.addAttribute("totalNum", totalNum);
+    model.addAttribute("startPage", startPage);
+
+    return "/manager/product/list";
+}
 
     @GetMapping(value = {"/create", "/edit"})
-    public String GetProductCreate(Model model, HttpServletRequest req, ProductDto dto
-                        ) {
+    public String GetProductCreate(Model model, HttpServletRequest req, BmProductDto dto
+    ) {
 
         model.addAttribute("category", categoryService.selectList());
 
         boolean isEdit = req.getRequestURI().contains("/edit");
-        ProductDto dto2 = new ProductDto();
+        BmProductDto dto2 = new BmProductDto();
+
         if (isEdit) {
             long id = dto.getId();
-            ProductDto existProduct = productService.getById(id);
+            BmProductDto existProduct = managerProService.getById(id);
             if (existProduct == null) {
                 model.addAttribute("message", "상품정보가 없습니다.");
                 return "/common/error/error";
@@ -81,14 +80,14 @@ public class adminProductController {
         model.addAttribute("isEdit", isEdit);
         model.addAttribute("detail", dto2);
 
-        return "/admin/product/create";
+        return "/manager/product/create";
     }
 
-
     @PostMapping(value = {"/create", "/edit"})
-    public String addSubmit(Model model, ProductDto dto, @ModelAttribute ProductFileDto fileDto
+    public String addSubmit(Model model, BmProductDto dto, @ModelAttribute ProductFileDto fileDto
             , HttpServletRequest req, Authentication authentication) throws Exception {
-        if (fileDto == null) {
+
+    if (fileDto == null) {
             throw new Exception("전달받은 데이터가 없음. ");
         }
         log.info("list ={}", fileDto.getItemImgList());
@@ -107,37 +106,26 @@ public class adminProductController {
 
             if (isEdit) {
                 long id = dto.getId();
-                ProductDto existProduct = productService.getById(id);
+                BmProductDto existProduct = managerProService.getById(id);
 
                 if (existProduct == null) {
                     model.addAttribute("message", "강좌정보가 존재하지 않습니다.");
                     return "common/error/error";
                 }
 
-                boolean result = productService.set(dto);
+                boolean result = managerProService.set(dto);
 
             } else {
                 String writer = authentication.getName();
                 dto.setWriter(writer);
                 System.out.println(dto.getCategoryName());
-                boolean result = productService.add(dto);
+                boolean result = managerProService.add(dto);
 
             }
         }
 
 
-        return "redirect:/admin/product/list";
-    }
-
-
-    @PostMapping("/delete")
-    public String deleteSubmit(ProductDto dto) {
-
-
-        boolean result = productService.del(dto.getIdList());
-
-
-        return "redirect:/admin/product/list";
+        return "redirect:/manager/product/list";
     }
 
 

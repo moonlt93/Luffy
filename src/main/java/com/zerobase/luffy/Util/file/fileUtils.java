@@ -1,7 +1,5 @@
-package com.zerobase.luffy.Util;
+package com.zerobase.luffy.Util.file;
 
-import com.zerobase.luffy.member.admin.Dto.ProductDto;
-import com.zerobase.luffy.member.admin.Dto.ProductFileDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,51 +8,46 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Slf4j
-public class FileUtil {
+public class fileUtils implements fileUtil{
 
-    public void imageMaker(MultipartFile file , ProductDto dto) throws Exception {
+    @Override
+    public String[] imageMaker(MultipartFile file) {
 
+        String saveFileName = "";
+        String urlFileName = "";
 
+        if (file != null) {
 
-            String saveFileName = "";
-            String urlFileName = "";
+            String originalFileName = file.getOriginalFilename();
+            System.out.println(originalFileName);
 
-            if (file != null) {
+            String baseLocalPath = "C:\\zero\\Ultimate\\Luffy\\src\\main\\resources\\static\\files";
+            String baseUrlPath = "/files";
+            String[] arrFileName = getNewSaveFile(baseUrlPath, baseLocalPath, originalFileName);
 
-                String originalFileName = file.getOriginalFilename();
-                System.out.println(originalFileName);
+            saveFileName = arrFileName[0];
+            urlFileName = arrFileName[1];
 
-                String baseLocalPath = "C:\\zero\\Ultimate\\Luffy\\src\\main\\resources\\static\\files";
-                String baseUrlPath = "/files";
-                String[] arrFileName = getNewSaveFile(baseUrlPath, baseLocalPath, originalFileName);
+            try {
+                File newFile = new File(saveFileName);
+                FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(newFile));
 
-                saveFileName = arrFileName[0];
-                urlFileName = arrFileName[1];
-
-                try {
-                    File newFile = new File(saveFileName);
-                    FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(newFile));
-
-                } catch (IOException e) {
-                    log.info("#############################");
-                    log.info(e.getMessage());
-                }
+            } catch (IOException e) {
+                log.info("#############################");
+                log.info(e.getMessage());
             }
-
-            dto.setFileName(saveFileName);
-            dto.setUrlFileName(urlFileName);
-
         }
 
 
+        return new String[]{saveFileName, urlFileName};
+    }
 
+    @Override
+    public String[] getNewSaveFile(String baseUrlPath, String baseLocalPath, String OriginalName) {
 
-
-    private String[] getNewSaveFile(String baseUrlPath, String baseLocalPath, String OriginalName) {
         LocalDate now = LocalDate.now();
 
         String[] dirs = {
@@ -87,7 +80,5 @@ public class FileUtil {
         }
 
         return new String[]{newFilename, urlFilename};
-
     }
-
 }

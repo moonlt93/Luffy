@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 페이지</title>
+    <style>
+        .list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .list table th, .list table td {
+            border: solid 1px #000;
+        }
+
+        p.nothing {
+            text-align: center;
+            padding: 100px;
+        }
+
+        .inline-div {
+            display: inline-block;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+<div th:replace="/fragment/header.html :: fragment-admin-menu"></div>
+<h1>브랜드 매니저 리스트</h1>
+
+<div class="list">
+    <button class="btn btn-danger" id="deleteBtn" type="button">선택삭제</button>
+
+    <table>
+        <thead>
+        <tr>
+            <td>
+                <input id="selectAll" type="checkbox"/>
+            </td>
+            <th> ID</th>
+            <th>
+                사명
+            </th>
+            <th>
+                매니저명
+            </th>
+            <th>
+                연락처
+            </th>
+            <th>
+                이메일
+            </th>
+            <th>
+                권한
+            </th>
+            <th>
+                상태
+            </th>
+        </tr>
+        </thead>
+        <tbody id="dataList">
+        <tr th:each="x: ${list}">
+            <td>
+                <input type="checkbox" th:value="${x.id}"/>
+            </td>
+            <td>
+                <a th:href="'/admin/manager/update?id='+${x.id}" th:text="${x.id}"></a>
+            </td>
+            <td>
+                <input type="hidden" name="companyName"
+                       th:value="${x.companyName}"/>
+                <p th:text="${x.companyName}"></p>
+            </td>
+            <td>
+                <input type="hidden" name="managerName"
+                       th:value="${x.managerName}"/>
+                <p th:text="${x.managerName}"></p>
+            </td>
+            <td>
+                <input type="hidden" name="managerCall"
+                       th:value="${x.managerCall}"/>
+                <p th:text="${x.managerCall}"></p>
+            </td>
+            <td>
+                <input type="hidden" name="managerEmail"
+                       th:value="${x.managerEmail}"/>
+                <p th:text="${x.managerEmail}"></p>
+            </td>
+            <td>
+                <input type="hidden" name="ROLE" th:value="${x.ROLE}"/>
+                <p th:text="${x.ROLE}"></p>
+            </td>
+            <td>
+                <p th:text="${x.memberStatus}"></p>
+            </td>
+            </td>
+        </tr>
+        <tr th:if="${#lists.size(list)< 1}">
+            <td colspan="5">
+                <p class="nothing">내용이 없습니다.</p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<form name="deleteForm" method="post"
+      action="/admin/manager/delete">
+    <input type="hidden" name="idList"/>
+
+</form>
+<script>
+    $(document).ready(function () {
+        $('#selectAll').on('click', function () {
+
+            var checked = $(this).is(':checked');
+            console.log(checked);
+
+
+            $('#dataList input[type=checkbox]').each(function (k, v) {
+                $(this).prop('checked', checked);
+            });
+
+
+        });
+
+        $('#deleteBtn').on('click', function () {
+
+            var $checked = $('#dataList input[type=checkbox]:checked');
+            if ($checked.length < 1) {
+                alert(' 삭제할 데이터를 선택해 주세요. ');
+                return false;
+            }
+
+            if (!confirm(' 선택한 데이터를 삭제하시겠습니까? ')) {
+                return false;
+            }
+
+            var idList = [];
+            $.each($checked, function (k, v) {
+                idList.push($(this).val());
+            });
+
+
+            var $deleteForm = $('form[name=deleteForm]');
+            $deleteForm.find('input[name=idList]').val(idList.join(','));
+            $deleteForm.submit();
+
+        });
+
+
+
+    });
+
+</script>
+
+
+</body>
+</html>

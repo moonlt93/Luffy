@@ -1,7 +1,7 @@
 package com.zerobase.luffy.member.admin.service.Impl;
 
 import com.zerobase.luffy.member.admin.service.AdminService;
-import com.zerobase.luffy.common.repository.MemberRepository;
+import com.zerobase.luffy.member.user.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

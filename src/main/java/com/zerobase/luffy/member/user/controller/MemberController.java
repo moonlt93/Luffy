@@ -1,8 +1,8 @@
-package com.zerobase.luffy.common.controller;
+package com.zerobase.luffy.member.user.controller;
 
-import com.zerobase.luffy.common.dto.MemberDto;
-import com.zerobase.luffy.common.model.MessageResult;
-import com.zerobase.luffy.common.service.MemberService;
+import com.zerobase.luffy.member.user.dto.MemberDto;
+import com.zerobase.luffy.member.user.model.MessageResult;
+import com.zerobase.luffy.member.user.service.MemberService;
 import com.zerobase.luffy.member.bm.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,6 @@ public class MemberController {
 
 
     private final MemberService memberService;
-    private final ManagerService managerService;
 
 
     @RequestMapping("/login")
@@ -69,7 +68,7 @@ public class MemberController {
          model.addAttribute("list",list);
 
         return "/member/myPage";
-    };
+    }
 
     @PostMapping("/myPage")
     public String ModifyMyPage(Model model,MemberDto dto,HttpServletRequest req){

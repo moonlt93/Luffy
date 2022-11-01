@@ -1,6 +1,6 @@
 package com.zerobase.luffy.auth;
 
-import com.zerobase.luffy.common.entity.Member;
+import com.zerobase.luffy.member.user.entity.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

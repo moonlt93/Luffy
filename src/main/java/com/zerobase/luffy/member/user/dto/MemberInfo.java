@@ -1,4 +1,4 @@
-package com.zerobase.luffy.common.dto;
+package com.zerobase.luffy.member.user.dto;
 
 import lombok.*;
 

@@ -1,8 +1,8 @@
-package com.zerobase.luffy.common.service;
+package com.zerobase.luffy.member.user.service;
 
 
-import com.zerobase.luffy.common.dto.MemberDto;
-import com.zerobase.luffy.common.model.MessageResult;
+import com.zerobase.luffy.member.user.dto.MemberDto;
+import com.zerobase.luffy.member.user.model.MessageResult;
 
 import java.util.List;
 

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>제품리스트</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"></script>
+</head>
+<style>
+    img {
+        width: 150px;
+        height: 100px;
+    }
+    .numbersPage {
+        text-align: center;
+        font-size: 35px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .numbersPage strong {
+        font-size: 20px;
+        font-weight: bold;
+    }
+</style>
+<body>
+<div th:replace="/fragment/header.html :: fragment-admin-menu"></div>
+<h1>제품리스트</h1>
+<br/>
+
+<div class="button">
+    <a  class="btn btn-primary" href="/manager/product/create">제품등록</a>
+    <button class="btn btn-danger" id="deleteBtn" type="button">선택삭제</button>
+
+    <div class="searchForm" style="float:right">
+        <form action="/manager/product/list" method="get">
+            <input type="text" name="keyword" >
+            <button type="submit">검색</button>
+        </form>
+
+    </div>
+</div>
+
+
+<div>
+    <table class="table">
+        <thead>
+        <tr>
+            <td>
+                <input id="selectAll" type="checkbox"/>
+            </td>
+            <td>
+                NO
+            </td>
+            <td>
+                상품명
+            </td>
+            <td>
+                이미지
+            </td>
+            <td>
+                등록일
+            </td>
+            <td>
+                수량
+            </td>
+            <td>
+                상태
+            </td>
+
+        </tr>
+        </thead>
+        <tbody id="dataList">
+        <tr th:each="x : ${list}" >
+
+            <td>
+                <input type="checkbox" th:value="${x.id}"/>
+            </td>
+
+            <td th:text="${x.id}">
+                <input type="hidden" name="id" th:value="${x.id}"/>
+                <p th:text="${x.id}"></p>
+            </td>
+
+            <td>
+                <a th:href="'/manager/product/edit?id='+${x.id}"
+                   th:text="${x.productName}">제품명</a>
+            </td>
+
+            <td>
+                <img id="image" th:src="@{${x.urlFileName}}" alt="첨부이미지"
+                     th:if="${x.urlFileName != null}"/>
+            </td>
+            <td>
+                <p th:text="${x.regDt}"></p>
+            </td>
+            <td>
+                <p th:text="${x.pnt}"></p>
+            </td>
+            <td>
+                <p th:text="${x.productStatus}"></p>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+<form name="deleteForm" method="post"
+      action="/manager/product/delete">
+    <input type="hidden" name="idList"/>
+
+</form>
+<div class="numbersPage">
+<th:block th:each="page: ${#numbers.sequence(startPage,totalNum)}">
+    <a th:if="${page!=nowPage}" th:href="@{/manager/product/list(page = ${page - 1})}"  th:text="${page}"></a>
+    <strong th:if="${page == nowPage} and ${page != -1}" th:text="${page}" style="color:red"></strong>
+</th:block>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#selectAll').on('click', function () {
+
+            var checked = $(this).is(':checked');
+            console.log(checked);
+
+
+            $('#dataList input[type=checkbox]').each(function (k, v) {
+                $(this).prop('checked', checked);
+            });
+
+
+        });
+
+        $('#deleteBtn').on('click', function () {
+
+            var $checked = $('#dataList input[type=checkbox]:checked');
+            if ($checked.length < 1) {
+                alert(' 삭제할 데이터를 선택해 주세요. ');
+                return false;
+            }
+
+            if (!confirm(' 선택한 데이터를 삭제하시겠습니까? ')) {
+                return false;
+            }
+
+            var idList = [];
+            $.each($checked, function (k, v) {
+                idList.push($(this).val());
+            });
+
+
+            var $deleteForm = $('form[name=deleteForm]');
+            $deleteForm.find('input[name=idList]').val(idList.join(','));
+            $deleteForm.submit();
+
+        });
+
+
+    });
+</script>
+
+</body>
+</html>

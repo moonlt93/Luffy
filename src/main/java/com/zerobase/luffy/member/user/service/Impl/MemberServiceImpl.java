@@ -1,11 +1,11 @@
-package com.zerobase.luffy.common.service.Impl;
+package com.zerobase.luffy.member.user.service.Impl;
 
-import com.zerobase.luffy.common.dto.MemberDto;
+import com.zerobase.luffy.member.user.dto.MemberDto;
 import com.zerobase.luffy.Util.passUtil;
-import com.zerobase.luffy.common.entity.Member;
-import com.zerobase.luffy.common.model.MessageResult;
-import com.zerobase.luffy.common.repository.MemberRepository;
-import com.zerobase.luffy.common.service.MemberService;
+import com.zerobase.luffy.member.user.entity.Member;
+import com.zerobase.luffy.member.user.model.MessageResult;
+import com.zerobase.luffy.member.user.repository.MemberRepository;
+import com.zerobase.luffy.member.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -101,7 +101,7 @@ public class MemberServiceImpl implements MemberService {
 
 
         Optional<Member> optionalMember = memberRepository.findById(userId);
-        if(!optionalMember.isPresent()){
+        if(optionalMember.isEmpty()){
             return new MessageResult(false,"회원정보가 존재하지 않습니다.");
 
         }

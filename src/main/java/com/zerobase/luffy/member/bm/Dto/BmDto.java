@@ -1,6 +1,7 @@
 package com.zerobase.luffy.member.bm.Dto;
 
 import com.zerobase.luffy.member.admin.entity.Company;
+import com.zerobase.luffy.member.bm.entity.BrandManager;
 import com.zerobase.luffy.member.type.MemberCode;
 import lombok.*;
 
@@ -23,7 +24,20 @@ public class BmDto{
     private String companyName;
 
     private MemberCode memberStatus;
+    private String idList;
 
 
+    public static BmDto EntityBuilder(BrandManager dto){
+        return BmDto.builder()
+                .id(dto.getId())
+                .ROLE(dto.getROLE())
+                .companyName(dto.getCompanyName())
+                .memberStatus(dto.getMemberStatus())
+                .managerEmail(dto.getManagerEmail())
+                .managerName(dto.getManagerName())
+                .managerCall(dto.getManagerCall())
+                .build();
+
+    }
 
 }

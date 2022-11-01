@@ -1,9 +1,9 @@
 package com.zerobase.luffy.member.common.service.Impl;
 
-import com.zerobase.luffy.common.dto.MemberDto;
-import com.zerobase.luffy.common.entity.Member;
-import com.zerobase.luffy.common.repository.MemberRepository;
-import com.zerobase.luffy.common.service.Impl.MemberServiceImpl;
+import com.zerobase.luffy.member.user.dto.MemberDto;
+import com.zerobase.luffy.member.user.entity.Member;
+import com.zerobase.luffy.member.user.repository.MemberRepository;
+import com.zerobase.luffy.member.user.service.Impl.MemberServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

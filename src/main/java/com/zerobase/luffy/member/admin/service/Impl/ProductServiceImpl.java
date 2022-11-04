@@ -104,7 +104,6 @@ public class ProductServiceImpl implements ProductService {
                 .productStatus(dto.getProductStatus())
                 .fileName(dto.getFileName())
                 .urlFileName(dto.getUrlFileName())
-
                 .build();
         productDetailRepository.save(detail);
 

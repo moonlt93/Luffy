@@ -20,6 +20,7 @@ public class BmProductDto  {
     private String productName;
 
     private int pnt;
+    private int fileCount;
     private String productStatus;
     private LocalDateTime upDt;
     private String fileName;

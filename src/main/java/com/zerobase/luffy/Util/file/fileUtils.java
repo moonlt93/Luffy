@@ -8,16 +8,22 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
 public class fileUtils implements fileUtil{
 
     @Override
-    public String[] imageMaker(MultipartFile file) {
+    public String[] imageMaker(List<MultipartFile> fileList) {
+
+         String[][] imageList= new String[fileList.size()][2];
+        int i = 0;
+      for(MultipartFile file : fileList){
 
         String saveFileName = "";
         String urlFileName = "";
+
 
         if (file != null) {
 
@@ -38,11 +44,25 @@ public class fileUtils implements fileUtil{
             } catch (IOException e) {
                 log.info("#############################");
                 log.info(e.getMessage());
+             }
             }
+
+            imageList[i][0] = saveFileName;
+            imageList[i][1] = urlFileName;
+            i++;
         }
 
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+        for (int j = 0; j <imageList.length; j++) {
+            sb1.append(imageList[j][0]).append("-");
+            sb2.append(imageList[j][1]).append("-");
+        }
+        System.out.println(sb1);
+        System.out.println(sb2);
 
-        return new String[]{saveFileName, urlFileName};
+
+        return new String [] {String.valueOf(sb1), String.valueOf(sb2)};
     }
 
     @Override

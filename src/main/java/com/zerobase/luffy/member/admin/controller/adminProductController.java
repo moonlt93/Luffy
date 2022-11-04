@@ -95,10 +95,10 @@ public class adminProductController {
 
         List<MultipartFile> fileList = fileDto.getItemImgList();
 
-        for (MultipartFile file : fileList) {
+
 
             fileUtils fileUtils = new fileUtils();
-            String[] Things= fileUtils.imageMaker(file);
+            String[] Things= fileUtils.imageMaker(fileList);
             dto.setFileName(Things[0]);
             dto.setUrlFileName(Things[1]);
 
@@ -123,7 +123,7 @@ public class adminProductController {
                 boolean result = productService.add(dto);
 
             }
-        }
+
 
 
         return "redirect:/admin/product/list";

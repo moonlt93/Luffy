@@ -20,4 +20,6 @@ public interface ManagerProService {
 
 
     boolean set(BmProductDto dto);
+
+    boolean del(String idList);
 }

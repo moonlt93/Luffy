@@ -3,7 +3,6 @@ package com.zerobase.luffy.member.admin.controller;
 import com.zerobase.luffy.member.bm.Dto.BmDto;
 import com.zerobase.luffy.member.bm.entity.BrandManager;
 import com.zerobase.luffy.member.bm.service.ManagerService;
-import com.zerobase.luffy.member.type.MemberCode;
 import com.zerobase.luffy.member.user.model.MessageResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequiredArgsConstructor

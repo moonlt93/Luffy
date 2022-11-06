@@ -11,9 +11,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class TestJobConfiguration{
 
-    @Bean
-    public JobLauncherTestUtils jobLauncherTestUtils() { // (2)
-        return new JobLauncherTestUtils();
-    }
 
 }

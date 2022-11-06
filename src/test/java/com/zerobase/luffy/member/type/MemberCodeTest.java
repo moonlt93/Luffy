@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class MemberCodeTest {
 
 
-
     @Test
     @DisplayName("enum스피드테스트:Stream")
     void enumStreamSpeedTest() {

@@ -23,25 +23,6 @@ class ProductJobTest {
     private JobLauncherTestUtils jobLauncherTestUtils;
 
 
-    @Test
-    @DisplayName("배치잡 실행")
-    void Batch_test() throws Exception {
-
-
-        //given
-        JobParameters param = new JobParametersBuilder()
-                .addString("v","0")
-                .addLong("requestDate",System.currentTimeMillis())
-                .toJobParameters();
-
-    //when
-        JobExecution jobExecution =jobLauncherTestUtils.launchJob(param);
-
-    //then
-    assertThat(jobExecution.getExitStatus()).isEqualTo(BatchStatus.COMPLETED);
-
-
-    }
 
 }
 

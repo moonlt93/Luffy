@@ -61,7 +61,7 @@
                   <select id="memStatus" name="memberStatus" th:value="${list.memberStatus}">
                       <option th:each="difficultyValue : ${T(com.zerobase.luffy.member.type.MemberCode).values()}"
                               th:text="${difficultyValue.name()}"
-                              th:selected="${list.memberStatus} ? ${difficultyValue.ING} :${difficultyValue.UNREGISTERED}">
+                              th:selected="${list.memberStatus} ? ${difficultyValue.ING} : ${difficultyValue.UNREGISTERED}">
 
                       </option>
 

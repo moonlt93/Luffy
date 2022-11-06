@@ -13,4 +13,5 @@ public interface ManagerRepository extends  JpaRepository<BrandManager,Long> {
 
 
     Optional<BrandManager> findByUsername(String username);
+
 }

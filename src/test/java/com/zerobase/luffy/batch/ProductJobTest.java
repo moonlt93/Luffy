@@ -19,10 +19,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class ProductJobTest {
 
 
-    @Autowired
-    private JobLauncherTestUtils jobLauncherTestUtils;
-
-
 
 }
 

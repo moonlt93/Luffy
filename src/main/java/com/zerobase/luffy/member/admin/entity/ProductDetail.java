@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,7 +13,6 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="product")
 public class ProductDetail extends BaseHeader {
 
     @Id
@@ -20,9 +20,6 @@ public class ProductDetail extends BaseHeader {
     @Column(name="product_id")
     private Long id;
 
-/*
-    @OneToMany(mappedBy = "product")
-    private List<Photo> photo = new ArrayList<>();*/
 
     private String productName ;
     private String categoryName;
@@ -36,13 +33,25 @@ public class ProductDetail extends BaseHeader {
     private LocalDateTime endDt;
     private String writer;
 
-/*    public void addPhoto(Photo photo){
-        this.photo.add(photo);
-        if(photo.getProduct()!= this){
-            photo.setProduct(this);
-        }
-    }*/
 
+
+
+    public ProductDetail(Long id, String productName, String productStatus, int pnt,
+                          Long price, String fileName,String urlFileName, String writer, LocalDateTime regDt,
+                         String categoryName, String content) {
+        this.id= id;
+        this.pnt+=pnt;
+        this.fileName = fileName;
+        this.urlFileName = urlFileName;
+        this.productStatus = "배치등록상품";
+        this.setUpDt(LocalDateTime.now());
+        this.productName=productName;
+        this.price=price;
+        this.categoryName=categoryName;
+        this.content=content;
+        this.writer=writer;
+        this.setRegDt(regDt);
+    }
 
 
 }

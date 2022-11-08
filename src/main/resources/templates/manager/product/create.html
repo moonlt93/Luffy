@@ -20,10 +20,11 @@
                 <td>
                     <select name="categoryName" required>
                         <option value="">카테고리 선택</option>
-                            <option th:each="x : ${category}" th:value="${x.categoryName}"
-                                    th:text="${x.categoryName}"
-                                    th:selected="${detail.categoryName}== ${x.categoryName}"></option>
-                        </select>
+                        <option th:each="x : ${category}"
+                                th:value="${x.categoryName}"
+                                th:text="${x.categoryName}"
+                                th:selected="${detail.categoryName}== ${x.categoryName}"></option>
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -36,7 +37,8 @@
             <tr>
                 <th>첨부 파일</th>
                 <td>
-                   <span> <input type="file" name="itemImgList[]" multiple placeholder="선택된 파일 없음"
+                   <span> <input type="file" name="itemImgList[]" multiple
+                                 placeholder="선택된 파일 없음"
                                  required/>
                    용량제한은 10MB</span>
                 </td>
@@ -71,22 +73,13 @@
             <tr>
                 <th>제품상태</th>
                 <td>
-                    <select name="productStatus"
-                            th:value="${detail.productStatus}">
-                        <option th:selected="${detail.productStatus}=='SellOK'">
-                            판매중
-                        </option>
-                        <option th:selected="${detail.productStatus}=='SellNo'">
-                            판매불가
-                        </option>
-                        <option th:selected="${detail.productStatus}=='WareHousing'">
-                            입고 준비중
-                        </option>
-                        <option th:selected="${detail.productStatus}=='SoldOut'">
-                            일시품절
-                        </option>
+                        <select name="productStatus"
+                                th:value="${detail.productStatus}">
+                            <option th:each="StatusValues: ${T(com.zerobase.luffy.member.type.ProductCode).values()}"
+                                    th:text="${StatusValues.name()}">
+                            </option>
 
-                    </select>
+                        </select>
                 </td>
             </tr>
             <input type="hidden" name="writer" value="${sessionScope.userId}">

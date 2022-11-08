@@ -1,6 +1,7 @@
 package com.zerobase.luffy;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

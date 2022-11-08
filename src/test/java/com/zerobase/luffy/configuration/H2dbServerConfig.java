@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 @Log
 @Configuration
-@Profile("local")
+@Profile("test")
 public class H2dbServerConfig {
     @Bean
     @ConfigurationProperties("spring.datasource.hikari")

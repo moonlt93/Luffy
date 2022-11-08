@@ -7,7 +7,6 @@ import org.springframework.web.util.UrlPathHelper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 //차후 수정
 
 @Slf4j
@@ -32,14 +31,3 @@ public class loginInterceptor implements HandlerInterceptor {
 
     }
 }
-/*     HttpSession session= request.getSession();
-        Object obj = session.getAttribute("login");
-        if(obj ==null){
-            log.info("로그인에 실패하였습니다.인터셉터");
-            response.sendRedirect("/");
-        }
-      log.info( request.getRequestURI());
-
-       return true;
-    }
-    */

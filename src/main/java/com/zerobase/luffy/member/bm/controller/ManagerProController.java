@@ -1,6 +1,7 @@
 package com.zerobase.luffy.member.bm.controller;
 
 import com.zerobase.luffy.Util.file.fileUtils;
+import com.zerobase.luffy.member.admin.Dto.ProductDto;
 import com.zerobase.luffy.member.admin.Dto.ProductFileDto;
 import com.zerobase.luffy.member.admin.service.CategoryService;
 import com.zerobase.luffy.member.bm.Dto.BmProductDto;
@@ -93,11 +94,12 @@ public String GetProduct(Model model,
         log.info("list ={}", fileDto.getItemImgList());
 
         List<MultipartFile> fileList = fileDto.getItemImgList();
+            dto.setFileCount(fileList.size());
 
-        for (MultipartFile file : fileList) {
 
             fileUtils fileUtils = new fileUtils();
-            String[] Things= fileUtils.imageMaker(file);
+            String[] Things= fileUtils.imageMaker(fileList);
+
             dto.setFileName(Things[0]);
             dto.setUrlFileName(Things[1]);
 
@@ -118,15 +120,27 @@ public String GetProduct(Model model,
             } else {
                 String writer = authentication.getName();
                 dto.setWriter(writer);
-                System.out.println(dto.getCategoryName());
+
                 boolean result = managerProService.add(dto);
 
             }
-        }
+
 
 
         return "redirect:/manager/product/list";
     }
+
+
+    @PostMapping("/delete")
+    public String deleteSubmit(ProductDto dto) {
+
+
+        boolean result = managerProService.del(dto.getIdList());
+
+
+        return "redirect:/manager/product/list";
+    }
+
 
 
 }

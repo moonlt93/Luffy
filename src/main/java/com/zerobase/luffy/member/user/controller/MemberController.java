@@ -121,25 +121,3 @@ public class MemberController {
 
 }
 
-/*@GetMapping("/myPage")
-    public String GetMyPage(Principal principal, Model model){
-
-        String username= principal.getName();
-
-         List<MemberInfo> list = memberService.getUserListByUsername(username)
-                .stream().map(memberDto ->MemberInfo.builder()
-                         .id(memberDto.getId())
-                        .regDt(memberDto.getRegDt())
-                        .ROLE(memberDto.getROLE())
-                        .registration(memberDto.getRegistration())
-                        .phone(memberDto.getPhone())
-                        .userName(memberDto.getUserName())
-                        .email(memberDto.getEmail())
-                        .name(memberDto.getName())
-                        .build())
-                        .collect(Collectors.toList());
-
-         model.addAttribute("list",list);
-
-        return "/member/myPage";
-    };*/

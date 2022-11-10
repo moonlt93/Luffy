@@ -1,7 +1,7 @@
 package com.zerobase.luffy.scheduler;
 
 import com.zerobase.luffy.batch.ProductJob;
-import com.zerobase.luffy.member.admin.entity.ProductDetail;
+import com.zerobase.luffy.member.admin.repository.PhotoesRepository;
 import com.zerobase.luffy.member.admin.repository.ProductDetailRepository;
 import com.zerobase.luffy.member.bm.entity.ManagerProduct;
 import com.zerobase.luffy.member.bm.repository.ManagerProRepository;
@@ -17,7 +17,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,8 +31,12 @@ public class JobScheduler {
     private final ProductJob productJob;
 
     private final ManagerProRepository managerProRepository;
+    private final PhotoesRepository photoesRepository;
+    private final ProductDetailRepository productDetail;
 
-    @Scheduled(cron = "0 0/2 * * * ?")
+  //    @Scheduled(cron = "0 */2 * * * * ")
+
+    @Scheduled(cron = "0 0 1 1/1 * ? ")
     public void ProductCreatedSchedule() {
 
         Map<String, JobParameter> confMap = new HashMap<>();
@@ -58,8 +61,11 @@ public class JobScheduler {
 
     }
 
+
     @Transactional
-    @Scheduled(cron = "0 0/4 * * * ?")
+  //  @Scheduled(cron = "0 5 1 1/1 * ? ")
+
+    @Scheduled(cron = "0 5 1 1/1 * ? ")
     public void ProductDeleteSchedule() throws InterruptedException {
 
         log.info("if schedule finished extra data delete");
@@ -76,8 +82,6 @@ public class JobScheduler {
                 this.managerProRepository.deleteByProductStatus(code);
 
                 Thread.sleep(5000);
-
-
         }
 
     }

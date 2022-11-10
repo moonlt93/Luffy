@@ -1,15 +1,13 @@
 package com.zerobase.luffy.member.type;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.StopWatch;
-
-import static org.junit.jupiter.api.Assertions.*;
-
+@Slf4j
 @SpringBootTest
 class ProductCodeTest {
-
 
     @Test
     @DisplayName("enum 속도 측정 map 이용")
@@ -23,8 +21,8 @@ class ProductCodeTest {
             ProductCode.find("처리중");
         }
         stopWatch.stop();
-        System.out.println("2억건처리시 2초 이하면 합격");
-        System.out.println("HashMap이용시 :"+stopWatch.getTotalTimeSeconds()+"s");
+        log.info("2억건처리시 2초 이하면 합격");
+        log.info("HashMap이용시 :"+stopWatch.getTotalTimeSeconds()+"s");
         //hashMap이 압도적으로 빠름
 
     }

@@ -1,5 +1,6 @@
 package com.zerobase.luffy.member.type;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.apache.bcel.generic.FieldOrMethod;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.StopWatch;
 
 import static org.junit.jupiter.api.Assertions.*;
+@Slf4j
 @SpringBootTest
 class MemberCodeTest {
 
@@ -24,8 +26,8 @@ class MemberCodeTest {
             MemberCode.find("등록이안된사용자");
         }
         stopWatch.stop();
-        System.out.println("2억건처리시 2초 이하면 합격");
-        System.out.println("Stream.Of 이용 :" +
+        log.info("2억건처리시 2초 이하면 합격");
+        log.info("Stream.Of 이용 :" +
                 stopWatch.getTotalTimeSeconds() + "s");
 
     }

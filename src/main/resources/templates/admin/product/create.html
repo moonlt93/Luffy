@@ -75,14 +75,13 @@
                 <td>
                     <select name="productStatus"
                             th:value="${detail.productStatus}">
-                        <option th:each="StatusValues: ${T(com.zerobase.luffy.member.type.ManagerProductCode).values()}"
+                        <option th:each="StatusValues: ${T(com.zerobase.luffy.member.type.ProductCode).values()}"
                                 th:text="${StatusValues.name()}">
                         </option>
 
                     </select>
                 </td>
             </tr>
-             <input type="hidden" name="writer" value="${sessionScope.userId}">
             </tbody>
         </table>
 

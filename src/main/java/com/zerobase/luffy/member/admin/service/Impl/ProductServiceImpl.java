@@ -1,6 +1,7 @@
 package com.zerobase.luffy.member.admin.service.Impl;
 
 import com.zerobase.luffy.member.admin.Dto.ProductDto;
+import com.zerobase.luffy.member.admin.entity.Photoes;
 import com.zerobase.luffy.member.admin.entity.ProductDetail;
 import com.zerobase.luffy.member.admin.repository.ProductDetailRepository;
 import com.zerobase.luffy.member.admin.service.ProductService;
@@ -13,7 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -50,6 +51,7 @@ public class ProductServiceImpl implements ProductService {
                     .productStatus(dto.getProductStatus())
                     .productName(dto.getProductName())
                     .categoryName(dto.getCategoryName())
+                    .regDt(dto.getRegDt())
                     .price(dto.getPrice())
                     .urlFileName(dto.getUrlFileName())
                     .content(dto.getContent())
@@ -79,7 +81,6 @@ public class ProductServiceImpl implements ProductService {
         detail.setPnt(dto.getPnt());
         detail.setProductName(dto.getProductName());
         detail.setFileName(dto.getFileName());
-        detail.setUpDt(LocalDateTime.now());
         detail.setEndDt(LocalDateTime.now());
         detail.setWriter(dto.getWriter());
         detail.setUrlFileName(dto.getUrlFileName());
@@ -91,25 +92,75 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public boolean add(ProductDto dto) {
 
+        String fileName = dto.getFileName();
+        String UrlName = dto.getUrlFileName();
+        int len = dto.getFileCount();
 
-        ProductDetail detail = ProductDetail.builder()
-                .categoryName(dto.getCategoryName())
-                .productStatus(dto.getProductStatus())
-                .productName(dto.getProductName())
-                .content(dto.getContent())
-                .price(dto.getPrice())
-                .productName(dto.getProductName())
-                .pnt(dto.getPnt())
-                .writer(dto.getWriter())
-                .productStatus(dto.getProductStatus())
-                .fileName(dto.getFileName())
-                .urlFileName(dto.getUrlFileName())
-                .build();
-        productDetailRepository.save(detail);
 
-        return true;
+        if (len > 1) {
+            String fileName2 = dto.getFileName();
+            String UrlName2 = dto.getUrlFileName();
+
+            String[] fileNamePeek = fileName2.split("-");
+            String[] urlNamePeek = UrlName2.split("-");
+
+            ProductDetail pro = ProductDetail.builder()
+                    .categoryName(dto.getCategoryName())
+                    .price(dto.getPrice())
+                    .pnt(dto.getPnt())
+                    .fileName(fileNamePeek[0])
+                    .urlFileName(urlNamePeek[0])
+                    .content(dto.getContent())
+                    .writer(dto.getWriter())
+                    .productName(dto.getProductName())
+                    .productStatus(dto.getProductStatus())
+                    .photoes(new ArrayList<>())
+                    .build();
+
+            for (int i = 1; i < len; i++) {
+                Photoes photoes = Photoes.builder()
+                        .urlFileName(urlNamePeek[i])
+                        .fileName(fileNamePeek[i])
+                        .writer(dto.getWriter())
+                        .productDetail(pro)
+                        .build();
+
+                pro.addPhotoes(photoes);
+            }
+            productDetailRepository.save(pro);
+            return true;
+        }else {
+
+            String replaceFile = replaceString(fileName);
+            String replaceUrl = replaceString(UrlName);
+
+            ProductDetail pro = ProductDetail.builder()
+                    .categoryName(dto.getCategoryName())
+                    .price(dto.getPrice())
+                    .pnt(dto.getPnt())
+                    .content(dto.getContent())
+                    .urlFileName(replaceUrl)
+                    .writer(dto.getWriter())
+                    .fileName(replaceFile)
+                    .productName(dto.getProductName())
+                    .productStatus(dto.getProductStatus())
+                    .photoes(new ArrayList<>())
+                    .build();
+
+
+            Photoes photoes = Photoes.builder()
+                    .urlFileName(dto.getUrlFileName())
+                    .fileName(dto.getFileName())
+                    .writer(dto.getWriter())
+                    .productDetail(pro)
+                    .build();
+
+            pro.getPhotoes().add(photoes);
+            productDetailRepository.save(pro);
+             return true;
+        }
+
     }
-
 
     @Override
     public boolean del(String idList) {
@@ -121,13 +172,14 @@ public class ProductServiceImpl implements ProductService {
                 long id = 0L;
                 try{
                     id=Long.parseLong(x);
+                    if(ids.length>0){
 
+                    productDetailRepository.deleteById(id);
+                    }
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-                if(id>0){
-                    productDetailRepository.deleteById(id);
-                }
+
             }
         }
         return true;
@@ -141,5 +193,11 @@ public class ProductServiceImpl implements ProductService {
 
 
         return page;
+    }
+
+
+    private String replaceString(String replaceFile){
+
+        return replaceFile.replace("-", "");
     }
 }

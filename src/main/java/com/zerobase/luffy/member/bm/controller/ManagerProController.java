@@ -1,5 +1,6 @@
 package com.zerobase.luffy.member.bm.controller;
 
+import com.zerobase.luffy.Exception.ManagerCode.ManagerProException;
 import com.zerobase.luffy.Util.file.fileUtils;
 import com.zerobase.luffy.member.admin.Dto.ProductDto;
 import com.zerobase.luffy.member.admin.Dto.ProductFileDto;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 @Slf4j
 @Controller
@@ -62,8 +64,9 @@ public String GetProduct(Model model,
     @GetMapping(value = {"/create", "/edit"})
     public String GetProductCreate(Model model, HttpServletRequest req, BmProductDto dto
     ) {
-
+        HttpSession session = (HttpSession)req.getSession();
         model.addAttribute("category", categoryService.selectList());
+        model.addAttribute("sessionId", session.getId());
 
         boolean isEdit = req.getRequestURI().contains("/edit");
         BmProductDto dto2 = new BmProductDto();
@@ -87,6 +90,10 @@ public String GetProduct(Model model,
     @PostMapping(value = {"/create", "/edit"})
     public String addSubmit(Model model, BmProductDto dto, @ModelAttribute ProductFileDto fileDto
             , HttpServletRequest req, Authentication authentication) throws Exception {
+
+        String writer = authentication.getName();
+        dto.setWriter(writer);
+
 
     if (fileDto == null) {
             throw new Exception("전달받은 데이터가 없음. ");
@@ -118,10 +125,10 @@ public String GetProduct(Model model,
                 boolean result = managerProService.set(dto);
 
             } else {
-                String writer = authentication.getName();
-                dto.setWriter(writer);
 
-                boolean result = managerProService.add(dto);
+
+                ManagerProException result = managerProService.add(dto);
+                log.info("등록여부 확인"+ result.toString());
 
             }
 

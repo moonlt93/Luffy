@@ -24,12 +24,14 @@ public class ProductDto  {
 
     private int pnt;
     private String productStatus;
+    private LocalDateTime regDt;
     private LocalDateTime upDt;
     private String fileName;
     private String urlFileName;
     private String idList;
     private String  searchKeyword;
     private String writer;
+    private int fileCount;
     public static ProductDto entityBuilder(ProductDetail detail) {
 
         return ProductDto.builder()

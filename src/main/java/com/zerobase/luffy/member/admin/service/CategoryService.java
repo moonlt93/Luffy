@@ -12,4 +12,6 @@ public interface CategoryService {
     boolean del(Long id);
 
     boolean update(CategoryDto dto);
+
+
 }

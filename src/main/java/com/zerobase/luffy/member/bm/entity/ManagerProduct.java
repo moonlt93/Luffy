@@ -1,12 +1,9 @@
 package com.zerobase.luffy.member.bm.entity;
 
 import com.zerobase.luffy.common.base.BaseHeader;
-import com.zerobase.luffy.member.admin.entity.Photo;
-import io.micrometer.core.instrument.util.AbstractPartition;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

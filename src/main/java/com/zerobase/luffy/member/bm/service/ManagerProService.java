@@ -1,5 +1,6 @@
 package com.zerobase.luffy.member.bm.service;
 
+import com.zerobase.luffy.Exception.ManagerCode.ManagerProException;
 import com.zerobase.luffy.member.bm.Dto.BmProductDto;
 import com.zerobase.luffy.member.bm.entity.ManagerProduct;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,7 @@ public interface ManagerProService {
     BmProductDto getById(long id);
 
 
-    boolean add(BmProductDto dto);
+    ManagerProException add(BmProductDto dto);
 
 
     Page<ManagerProduct> getAllList(Pageable pageable);

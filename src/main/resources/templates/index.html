@@ -1,22 +1,155 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 
     <meta charset="UTF-8">
     <title>인덱스</title>
-</head>
-<body>
-<div th:replace="/fragment/header.html :: fragment-body-menu"></div>
-<h1> index</h1>
 
-<!-- ROLE_ADMIN 권한을 가지고 있다면 보임 -->
-<div sec:authorize="hasRole('ADMIN')">ROLE_ADMIN 권한이 있습니다.</div>
-<!-- ROLE_SUB_ADMIN 권한을 가지고 있다면 보임 -->
-<div sec:authorize="hasRole('MANAGER')">ROLE_SUB_ADMIN 권한이 있습니다.</div>
-<!-- ROLE_USER 권한을 가지고 있다면 보임 -->
-<div sec:authorize="hasRole('USER')">ROLE_USER 권한이 있습니다.</div>
-<!-- ROLE_ADMIN 혹은 ROLE_SUB_ADMIN 권한을 가지고 있다면 보임 -->
-<div sec:authorize="hasAnyRole('ADMIN, MANAGER')">ROLE_ADMIN 혹은 ROLE_SUB_ADMIN 권한이 있습니다.</div>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<style>
+     .carousel-inner .carousel-item img {
+         width: 600px;
+         height: 400px;
+         text-align: center;
+     }
+
+</style>
+
+<body class="p-3 m-0 border-0">
+<header>
+    <div th:replace="/fragment/header.html :: fragment-body-menu"></div>
+    <h1> index</h1>
+</header>
+
+
+<article>
+    <!-- Example Code -->
+    <section>
+
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="5000">
+                    <img src="/files/2022/11/01/216C553953FC27C335_1.jpeg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="/files/2022/11/01/216C553953FC27C335_1.jpeg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="/files/2022/11/01/216C553953FC27C335_1.jpeg" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+    </section>
+
+    <section class="carousel">
+        <div class="role"></div>
+        <!-- ROLE_ADMIN 권한을 가지고 있다면 보임 -->
+        <div sec:authorize="hasRole('ADMIN')">ROLE_ADMIN 권한이 있습니다.</div>
+        <!-- ROLE_SUB_ADMIN 권한을 가지고 있다면 보임 -->
+        <div sec:authorize="hasRole('MANAGER')">ROLE_SUB_ADMIN 권한이 있습니다.</div>
+        <!-- ROLE_USER 권한을 가지고 있다면 보임 -->
+        <div sec:authorize="hasRole('USER')">ROLE_USER 권한이 있습니다.</div>
+        <!-- ROLE_ADMIN 혹은 ROLE_SUB_ADMIN 권한을 가지고 있다면 보임 -->
+        <div sec:authorize="hasAnyRole('ADMIN, MANAGER')">ROLE_ADMIN 혹은
+            ROLE_SUB_ADMIN
+            권한이 있습니다.
+        </div>
+    </section>
+</article>
+
+
+<article>
+    <section class="iframe ProductCard area">
+    <div class="col-header">
+        <span>베스트 모음</span>
+            <a href="#">더보기</a>
+    </div>
+
+
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col col-lg-3">
+                    1 of 3
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-lg-3">
+                    2 of 3
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-lg-3">
+                    3 of 3
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-lg-3">
+                    4 of 3
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    1 of 3
+                </div>
+                <div class="col-md-auto">
+                    Variable width content
+                </div>
+                <div class="col col-lg-2">
+                    3 of 3
+                </div>
+            </div>
+        </div>
+    </section>
+</article>
+<footer>
+    <h1>footer 입니다.</h1>
+
+
+</footer>
+
+<!-- End Example Code -->
+
 </body>
 </html>

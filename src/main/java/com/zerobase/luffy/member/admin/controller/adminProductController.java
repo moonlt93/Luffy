@@ -88,17 +88,22 @@ public class adminProductController {
     @PostMapping(value = {"/create", "/edit"})
     public String addSubmit(Model model, ProductDto dto, @ModelAttribute ProductFileDto fileDto
             , HttpServletRequest req, Authentication authentication) throws Exception {
+
+        String writer = authentication.getName();
+        dto.setWriter(writer);
+
         if (fileDto == null) {
             throw new Exception("전달받은 데이터가 없음. ");
         }
         log.info("list ={}", fileDto.getItemImgList());
 
         List<MultipartFile> fileList = fileDto.getItemImgList();
-
+        dto.setFileCount(fileList.size());
 
 
             fileUtils fileUtils = new fileUtils();
             String[] Things= fileUtils.imageMaker(fileList);
+
             dto.setFileName(Things[0]);
             dto.setUrlFileName(Things[1]);
 
@@ -117,13 +122,10 @@ public class adminProductController {
                 boolean result = productService.set(dto);
 
             } else {
-                String writer = authentication.getName();
-                dto.setWriter(writer);
-                System.out.println(dto.getCategoryName());
+
                 boolean result = productService.add(dto);
 
             }
-
 
 
         return "redirect:/admin/product/list";

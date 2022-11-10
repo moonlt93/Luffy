@@ -70,7 +70,7 @@ public class SecurityConfiguration  {
     public WebSecurityCustomizer webSecurityCustomizer() {
 
         return (web) -> web.ignoring()
-                .mvcMatchers("/favicon.ico","/maxcdn**","code.jquery.com/jquery**")
+                .mvcMatchers("**/favicon.ico","/maxcdn**","code.jquery.com/jquery**")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 

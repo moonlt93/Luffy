@@ -1,4 +1,4 @@
-package com.zerobase.luffy.member.admin.entity;
+package com.zerobase.luffy.member.bm.entity;
 
 import com.zerobase.luffy.member.bm.entity.ManagerProduct;
 import lombok.*;
@@ -13,6 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Photo {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="photo_id")
@@ -20,12 +21,14 @@ public class Photo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="Manager_product_id")
-    private ManagerProduct ManagerProduct;
+    public ManagerProduct ManagerProduct;
 
 
     private String writer;
     private String fileName;
     private String urlFileName;
+
+    private String productName;
 
     public Photo(ManagerProduct managerProduct){
         this.writer=managerProduct.getWriter();

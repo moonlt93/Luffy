@@ -14,11 +14,11 @@ import java.util.List;
 @Builder
 public class CategoryDto {
 
-Long id ;
-String categoryName;
-int sortValue;
-boolean usingYn;
-int courseCount;
+    private Long id ;
+    private String categoryName;
+    private int sortValue;
+    private boolean usingYn;
+    private int courseCount;
 
 
     public static List<CategoryDto> of(List<Category> categories){
@@ -35,11 +35,13 @@ int courseCount;
 
     public static CategoryDto of(Category category){
         return CategoryDto.builder()
-                .id(category.getId())
+                .id(category.getCategoryId())
                 .categoryName(category.getCategoryName())
                 .sortValue(category.getSortValue())
                 .usingYn(category.isUsingYn())
                 .build();
     }
+
+
 
 }

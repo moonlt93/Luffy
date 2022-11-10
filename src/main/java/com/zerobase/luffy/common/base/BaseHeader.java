@@ -9,15 +9,13 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseHeader {
 
 
          @CreatedDate
+         @Column(updatable = false)
         private LocalDateTime RegDt;
 
          @LastModifiedDate

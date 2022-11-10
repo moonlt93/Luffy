@@ -16,15 +16,13 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", nullable = false)
-    private Long id;
+    @Column( nullable = false)
+    private Long categoryId;
 
 
     private String categoryName;
     private int sortValue;
     private boolean usingYn;
-
-
 
 
 }

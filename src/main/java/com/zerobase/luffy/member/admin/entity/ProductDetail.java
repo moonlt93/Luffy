@@ -1,10 +1,12 @@
 package com.zerobase.luffy.member.admin.entity;
 
 import com.zerobase.luffy.common.base.BaseHeader;
+import com.zerobase.luffy.member.type.BatchStatus;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,8 +22,10 @@ public class ProductDetail extends BaseHeader {
     @Column(name="product_id")
     private Long id;
 
+    @OneToMany(mappedBy = "productDetail",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Photoes> photoes =new ArrayList<>();
 
-    private String productName ;
+    private String productName;
     private String categoryName;
     private int pnt;
     private String content;
@@ -43,14 +47,18 @@ public class ProductDetail extends BaseHeader {
         this.pnt+=pnt;
         this.fileName = fileName;
         this.urlFileName = urlFileName;
-        this.productStatus = "배치등록상품";
-        this.setUpDt(LocalDateTime.now());
+        this.productStatus = String.valueOf(BatchStatus.BatchProduct);
         this.productName=productName;
         this.price=price;
         this.categoryName=categoryName;
         this.content=content;
         this.writer=writer;
-        this.setRegDt(regDt);
+    }
+
+
+    public void addPhotoes(final Photoes photo){
+        photoes.add(photo);
+        photo.setProductDetail(this);
     }
 
 

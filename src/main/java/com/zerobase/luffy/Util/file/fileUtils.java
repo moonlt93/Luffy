@@ -58,8 +58,6 @@ public class fileUtils implements fileUtil{
             sb1.append(imageList[j][0]).append("-");
             sb2.append(imageList[j][1]).append("-");
         }
-        System.out.println(sb1);
-        System.out.println(sb2);
 
 
         return new String [] {String.valueOf(sb1), String.valueOf(sb2)};

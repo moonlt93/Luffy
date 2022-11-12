@@ -7,11 +7,16 @@ import java.util.List;
 public interface CategoryService {
     List<CategoryDto> selectList();
 
-    boolean add(String categoryName);
+    boolean add(CategoryDto categoryDto);
 
     boolean del(Long id);
 
     boolean update(CategoryDto dto);
 
 
+     boolean createCategory(CategoryDto dto);
+
+    List<CategoryDto> getCategoryList();
+
+  /*  List<CategoryDto> getCateListId(Long parentId);*/
 }

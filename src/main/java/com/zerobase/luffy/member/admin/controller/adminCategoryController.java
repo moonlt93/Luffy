@@ -33,7 +33,10 @@ public class adminCategoryController {
     public String add(CategoryDto dto) {
 
 
-        boolean result = categoryService.add(dto.getCategoryName());
+        boolean result = categoryService.createCategory(dto);
+
+        System.out.println("parentId: "+dto.getParentId());
+     // boolean result = categoryService.add(dto);
 
 
         return "redirect:/admin/category/list";

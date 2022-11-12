@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -19,6 +20,15 @@ public class CategoryDto {
     private int sortValue;
     private boolean usingYn;
     private int courseCount;
+    private Long parentId;
+    private List<CategoryDto> children;
+
+    public CategoryDto(final Category category) {
+       this.id = category.getCategoryId();
+       this.categoryName=category.getCategoryName();
+       this.sortValue = category.getSortValue();
+       this.children=category.getChildren().stream().map(CategoryDto:: new ).collect(Collectors.toList());
+    }
 
 
     public static List<CategoryDto> of(List<Category> categories){
@@ -33,7 +43,7 @@ public class CategoryDto {
         return null;
     }
 
-    public static CategoryDto of(Category category){
+    private static CategoryDto of(Category category){
         return CategoryDto.builder()
                 .id(category.getCategoryId())
                 .categoryName(category.getCategoryName())

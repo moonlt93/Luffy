@@ -1,0 +1,102 @@
+
+
+#BodyMainMenu{
+    background-color: black;
+    width: 100%;
+    height: 38px;
+}
+
+#BodyMainMenu a {
+    font-weight: bold;
+    width: 100%;
+    height: 30px;
+    padding: 8px 2px 2px 2px;
+    color: white;
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+}
+    a {
+     color: blue;
+     text-decoration: none;
+     font-weight: bold;
+     font-size: larger;
+     outline: none;
+}
+.navbar {
+    font-weight: bold;
+    color:black;
+
+}
+.dropdown-item{
+    font-size: 15px;
+}
+ .btn-outline-success {
+     --bs-btn-color: black;
+     --bs-btn-border-color: black;
+     --bs-btn-hover-color: #fff;
+     --bs-btn-hover-bg: black;
+     --bs-btn-hover-border-color: black;
+     --bs-btn-focus-shadow-rgb: 25,135,84;
+     --bs-btn-active-color: #fff;
+     --bs-btn-active-bg: black;
+     --bs-btn-active-border-color: black;
+     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+     --bs-btn-disabled-color: black;
+     --bs-btn-disabled-bg: transparent;
+     --bs-btn-disabled-border-color: black;
+}
+ span #MainBanner a {
+     text-align: left;
+ }
+
+
+
+html, body {
+    height: 100%
+}
+
+#wrap {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 100px;
+}
+
+#footerMain footer {
+    width: 100%;
+    height: 40px;
+    bottom: 0;
+    position: absolute;
+    border-top: 1px solid #c4c4c4;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    background-color: black;
+    font-size: 11px;
+}
+
+#footerMain footer a {
+    display: inline-block;
+    margin: 0 20px 10px 20px;
+    color: white; font-size: 11px;
+    background-color: inherit;
+}
+
+#footerMain footer a:visited {
+    color: #808080;
+}
+#footerMain footer nav{
+    background-color: inherit;
+}
+
+#footerMain footer p {
+    margin-top: 0;  padding-bottom: 30px;
+    background-color: inherit;
+}
+#footerMain footer p span {
+    display: inline-block;
+    margin-left: 20px;
+    background-color: inherit;
+}

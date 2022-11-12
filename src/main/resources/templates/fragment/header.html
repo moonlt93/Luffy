@@ -1,19 +1,36 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="/css/category.css" rel="stylesheet">
+    <style>
+        #BodyMainMenu {
+            text-align: right;
+            background-color: black;
+            font-weight: bold;
+        }
+
+
+    </style>
 </head>
 <body>
 <div>
-    <div th:fragment="fragment-body-menu">
-        <a  sec:authorize="isAnonymous()" href="/member/register"> | 회원가입</a>
-        <a  sec:authorize="isAnonymous()"  href="/member/login"> | 로그인</a>
-        <a  sec:authorize="isAuthenticated()"  href="/member/logout"> | 로그아웃</a>
-        <a sec:authorize="isAuthenticated()" href="/member/myPage"> | 마이페이지</a>
-        <a sec:authorize="hasRole('ADMIN')" href="/admin/main"> | 관리자페이지</a>|
-        <a sec:authorize="hasAnyRole('MANAGER','ADMIN')" href="/manager/main"> | 매니저페이지</a>
+    <div id="BodyMainMenu" th:fragment="fragment-body-menu">
+
+        <div style="float: left;width: 81%; padding-left: 10px;">
+            <a href="/">LUFFY</a></div>
+
+
+        <span><a sec:authorize="isAuthenticated()" href="/member/logout"> | LOGOUT</a></span>
+        <span><a sec:authorize="isAuthenticated()" href="/member/myPage"> | MYPAGE</a></span>
+        <span><a sec:authorize="hasRole('ADMIN')" href="/admin/main"> | ADMIN</a></span>
+        <span><a sec:authorize="hasAnyRole('MANAGER','ADMIN')"
+                 href="/manager/main">|MANAGER</a></span>
+        <span><a sec:authorize="isAnonymous()"href="/member/register"> | JOIN</a></span>
+        <span><a sec:authorize="isAnonymous()" href="/member/login"> | LOGIN</a></span>
     </div>
     <hr/>
 </div>
@@ -21,10 +38,10 @@
 
 <div>
     <div th:fragment="fragment-my-menu">
-        <a  href="/"> | 홈으로</a>
-        <a  sec:authorize="isAnonymous()"  href="/member/login"> | 로그인</a>
-        <a  sec:authorize="isAuthenticated()"  href="/member/logout"> | 로그아웃</a>
-        <a sec:authorize="isAuthenticated()" href="/member/myPage"> | 마이페이지</a>
+        <a href="/"> | 홈으로</a>
+        <a sec:authorize="isAnonymous()" href="/member/login"> | LOGIN</a>
+        <a sec:authorize="isAuthenticated()" href="/member/logout"> | LOGOUT</a>
+        <a sec:authorize="isAuthenticated()" href="/member/myPage"> | MYPAGE</a>
     </div>
     <hr/>
 </div>

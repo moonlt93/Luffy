@@ -29,7 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryDto> selectList() {
 
-        List<Category> categories = categoryRepository.findAll(getSortBySortValueDesc());
+        List<Category> categories = categoryRepository.findAll(getSortByCategoryIdDesc());
 
         return CategoryDto.of(categories);
     }
@@ -74,8 +74,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
 
-    private Sort getSortBySortValueDesc() {
-        return Sort.by(Sort.Direction.DESC, "sortValue");
+    private Sort getSortByCategoryIdDesc() {
+        return Sort.by(Sort.Direction.DESC, "categoryId");
     }
 
     ;
@@ -85,7 +85,7 @@ public class CategoryServiceImpl implements CategoryService {
     public boolean createCategory(CategoryDto dto) {
 
         final Category parent = categoryRepository.findById(dto.getParentId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Menu입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("이미 존재하는 메뉴 입니다."));
 
         final  Category category = Category.builder()
                 .categoryName(dto.getCategoryName())

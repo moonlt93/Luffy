@@ -23,6 +23,5 @@ public interface ProductService {
 
     Page<ProductDetail> findByTitleContaining(String searchKeyword, Pageable pageable);
 
-
-
+    ProductDetail findById(Long productId);
 }

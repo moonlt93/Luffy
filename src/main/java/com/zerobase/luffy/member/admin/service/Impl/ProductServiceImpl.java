@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -199,5 +200,21 @@ public class ProductServiceImpl implements ProductService {
     private String replaceString(String replaceFile){
 
         return replaceFile.replace("-", "");
+    }
+
+    //배너 사진 1개만 가져오기
+    @Override
+    public ProductDetail findById(Long productId) {
+
+       Optional<ProductDetail> optionalProductDetail= productDetailRepository.findById(productId);
+
+       if(optionalProductDetail.isPresent()) {
+           ProductDetail pro = optionalProductDetail.get();
+
+           return ProductDetail.builder()
+                   .urlFileName(pro.getUrlFileName())
+                   .build();
+       }
+       return null;
     }
 }

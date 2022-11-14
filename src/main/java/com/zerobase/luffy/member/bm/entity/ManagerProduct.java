@@ -30,6 +30,7 @@ public class ManagerProduct extends BaseHeader {
     private int pnt;
     private String content;
     private Long price;
+    private String companyName;
 
     private String fileName;
     private String urlFileName;

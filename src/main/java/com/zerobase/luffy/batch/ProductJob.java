@@ -62,7 +62,7 @@ public class ProductJob {
         return manageProduct -> {
             return new ProductDetail(manageProduct.getId(), manageProduct.getProductName(), manageProduct.getProductStatus(),
                         manageProduct.getPnt(), manageProduct.getPrice(), manageProduct.getFileName(), manageProduct.getUrlFileName(), manageProduct.getWriter()
-                      , manageProduct.getRegDt(), manageProduct.getCategoryName(), manageProduct.getContent());
+                      , manageProduct.getRegDt(), manageProduct.getCategoryName(), manageProduct.getContent(), manageProduct.getCompanyName());
         };
     }
 

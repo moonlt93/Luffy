@@ -36,13 +36,14 @@ public class ProductDetail extends BaseHeader {
     private String productStatus;
     private LocalDateTime endDt;
     private String writer;
+    private String companyName;
 
 
 
 
     public ProductDetail(Long id, String productName, String productStatus, int pnt,
                           Long price, String fileName,String urlFileName, String writer, LocalDateTime regDt,
-                         String categoryName, String content) {
+                         String categoryName, String content,String companyName) {
         this.id= id;
         this.pnt+=pnt;
         this.fileName = fileName;
@@ -53,6 +54,7 @@ public class ProductDetail extends BaseHeader {
         this.categoryName=categoryName;
         this.content=content;
         this.writer=writer;
+        this.companyName = getCompanyName();
     }
 
 

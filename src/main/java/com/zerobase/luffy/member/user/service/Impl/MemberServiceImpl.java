@@ -1,5 +1,6 @@
 package com.zerobase.luffy.member.user.service.Impl;
 
+import com.zerobase.luffy.main.entity.Coupon;
 import com.zerobase.luffy.member.user.dto.MemberDto;
 import com.zerobase.luffy.Util.passUtil;
 import com.zerobase.luffy.member.user.entity.Member;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,7 +52,19 @@ public class MemberServiceImpl implements MemberService {
                 .memberStatus(ING)
                 .email(dto.getEmail())
                 .name(dto.getName())
+                .coupons(new ArrayList<>())
                 .build();
+
+
+        for (int i = 1; i <=3 ; i++) {
+            Coupon coupons = Coupon.builder()
+                    .title(i*10+"% 할인 쿠폰")
+                    .rate(i*10)
+                    .member(member)
+                    .build();
+
+            member.getCoupons().add(coupons);
+        }
 
 
         memberRepository.save(member);

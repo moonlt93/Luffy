@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css"
+          rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="/css/category.css" rel="stylesheet">
+    <style>
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <header>
+        <div th:replace="/fragment/header.html :: fragment-body-menu"></div>
+    </header>
+    <div th:replace="/fragment/category.html ::fragment-cate-menu"></div>
+    <br/>
+
+<div class="member">
+    <section class="ProductCardArea">
+        <div class="container">
+            <div class="row">
+                <h1>payment create </h1>
+                <!-- 상품 상세내역-->
+                <div class="col-12 col-md-6 mb-3 mb-lg-3">
+                    <!-- 쿠폰, 배송지 ,적립금 유무-->
+
+                    <dl class="row">
+                        <dt class="col-sm-3">쿠폰</dt>
+                        <select id="coupon" name="coupon"
+                                class="form-select form-select-sm mb-6"
+                                aria-label=".form-select-lg example"
+                                style="width: 50%">
+                            <option value=" ">쿠폰</option>
+                           <option th:each="x: ${coupon}"th:text="${x.title}"></option>
+                        </select>
+                    </dl>
+
+                    <dl class="row">
+
+                        <dt class="col-sm-3">적립금</dt>
+                         <dd class="col-sm-9"><input type="text" name="reserve"  placeholder="0"></dd>
+
+                    </dl>
+                    <dl class="row">
+                        <div class="title">
+                            <dt class="col-sm-3">배송지 정보</dt>
+                        </div>
+                       <div class="content">
+                         <dl class="row">
+                             <dt class="col-sm-3">이름</dt>
+                             <dd class="col-sm-9"><input type="text" th:value="${member.name}" name="name" ></dd>
+                         </dl>
+                           <dl class="row">
+                               <dt class="col-sm-3">연락처</dt>
+                               <dd class="col-sm-9"><input type="text" th:value="${member.phone}" name="phone" ></dd>
+                           </dl>
+                           <dl class="row">
+                               <dt class="col-sm-3">주소</dt>
+                               <dd class="col-sm-9"><input type="text" th:value="${member.registration}" name="registration"></dd>
+                           </dl>
+                       </div>
+
+
+                    </dl>
+                </div>
+
+                <div class="col-12 col-md-6 ">
+                    <!-- 결재 내역  card 사용-->
+                    <div class="card border-primary mb-3"
+                         style="max-width: 20rem;">
+                        <div class="card-header">Header</div>
+                        <div class="card-body">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div th:replace="/fragment/footer.html ::fragment-footer"></div>
+</div>
+</div>
+<script th:inline="javascript">
+
+</script>
+</body>
+</html>

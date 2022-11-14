@@ -1,6 +1,7 @@
 package com.zerobase.luffy.member.admin.Dto;
 
 
+import com.querydsl.core.annotations.QueryProjection;
 import com.zerobase.luffy.member.admin.entity.ProductDetail;
 import lombok.*;
 
@@ -17,7 +18,6 @@ public class ProductDto  {
 
     private Long id;
     private String categoryName;
-    private String imgLink;
     private String content;
     private Long price;
     private String productName;
@@ -32,6 +32,8 @@ public class ProductDto  {
     private String  searchKeyword;
     private String writer;
     private int fileCount;
+
+
     public static ProductDto entityBuilder(ProductDetail detail) {
 
         return ProductDto.builder()
@@ -47,4 +49,8 @@ public class ProductDto  {
                 .writer(detail.getWriter())
                 .build();
     }
+
+
+
+
 }

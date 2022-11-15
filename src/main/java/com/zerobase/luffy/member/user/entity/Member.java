@@ -29,6 +29,7 @@ public class Member {
     private String phone;
     private String email;
     private String registration;
+    private String CompanyName;
 
 
     private LocalDateTime regDt;
@@ -38,7 +39,7 @@ public class Member {
 
     private String ip;
     private String ROLE;
-    private int reserve;
+    private Long reserve;
 
     @Enumerated(EnumType.STRING)
     private MemberCode memberStatus;

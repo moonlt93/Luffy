@@ -141,24 +141,16 @@
 
                         <dt class="col-sm-3">적립금</dt>
                         <dd class="col-sm-9"><input type="text" id="reserve"
-                                                    name="reserve" th:value="${reserve}"
-                                                    readonly style="text-align: right; border: none;"/></dd>
+                                                    name="reserve"
+                                                    th:value="${reserve}"
+                                                    readonly
+                                                    style="text-align: right; border: none;"/>
+                        </dd>
                     </dl>
 
-               <!--     <dl class="row">
-                        <dt class="col-sm-3">쿠폰</dt>
-                        <select id="coupon" name="coupon"
-                                class="form-select form-select-lg mb-3"
-                                aria-label=".form-select-lg example">
-                            <option value=" ">쿠폰</option>
-                            <option value="50">50%</option>
-                            <option value="30">30%</option>
-                            <option value="10">10%</option>
-                        </select>
-                    </dl>-->
                     <dl class="row">
                         <dt class="col-sm-3">색상</dt>
-                        <select id="productColor" name="productColor"
+                        <select id="productColor" name="productColor" required
                                 class="form-select form-select-lg mb-3"
                                 aria-label=".form-select-lg example">
                             <option value=" ">색상</option>
@@ -169,7 +161,7 @@
                     </dl>
                     <dl class="row">
                         <dt class="col-sm-3">사이즈</dt>
-                        <select id="productSize" name="productSize"
+                        <select id="productSize" name="productSize" required
                                 class="form-select form-select-lg mb-3"
                                 aria-label=".form-select-lg example">
                             <option value=" ">사이즈</option>
@@ -182,23 +174,20 @@
                     <dl class="row">
                         <dt class="col-sm-9">개수</dt>
                         <dd class="col-sm-3">
-                        <input class="form-control" type="number" name="count" id="count" th:value="${count}"
-                               placeholder="0" style="text-align: right;"></input></dd>
+                            <input class="form-control" type="number"
+                                   name="count" id="count" th:value="${count}"
+                                   min="0" placeholder="0" required
+                                   style="text-align: right;"></input></dd>
                     </dl>
                     <br/>
-          <!--          <dl class="row" style="text-align: right">
-                        <dt class="col-sm-3">총 산정금액</dt>
-                        <dd class="col-sm-9"><input type="text" id="totalPrice"
-                                                    name="totalPrice" th:value="${totalPrice}"
-                                                    readonly style="text-align: right; border: none;"/></dd>
-                        &lt;!&ndash; <p  id="totalPrice" th:value="${totalPrice}" th:text="${totalPrice}"></p>&ndash;&gt;
-                    </dl>-->
+
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <span>
                             <button type="button"
                                     class="btn btn-outline-dark btn-lg">찜하기</button>
                             <button type="button" class="btn btn-dark btn-lg">장바구니</button>
-                            <button  type="button" class="btn btn-dark btn-lg" onclick="order()">구매하기</button>
+                            <button type="button" class="btn btn-dark btn-lg"
+                                    onclick="order()">구매하기</button>
                         </span>
                     </div>
                 </div>
@@ -206,13 +195,13 @@
 
         </section>
         <form method="post" action="/order/create">
-            <input type="hidden" name="productSize" />
-            <input type="hidden" name="productColor" />
-            <input type="hidden" name="totalPrice"/>
+            <input type="hidden" name="productSize"/>
+            <input type="hidden" name="productColor"/>
+            <input type="hidden" name="price"/>
             <input type="hidden" name="couponYn"/>
             <input type="hidden" name="reserve "/>
             <input type="hidden" name="categoryName "/>
-            <input type="hidden" name="count "/>
+            <input type="hidden" name="count" value=""/>
         </form>
 
     </article>
@@ -223,53 +212,36 @@
 
 <script th:inline="javascript">
 
-    let productName=[[${items.productName}]];
-    let categoryName=[[${items.categoryName}]];
+    let productName = [[${items.productName}]];
+    let categoryName = [[${items.categoryName}]];
     let price = [[${items.price}]];
     let reserve = [[${items.price}]] * 0.1;
     let productId = [[${items.id}]];
-    let companyName=[[${items.companyName}]];
-
-    console.log(companyName);
-    console.log(categoryName);
+    let companyName = [[${items.companyName}]];
 
 
-    let productColor= $("select[name=productColor]").val();
-    let productSize=  $("select[name=productSize]").val();
-    let totalPrice = price;
-    let couponYn =false;
+    let productColor = $("select[name=productColor]").val();
+    let productSize = $("select[name=productSize]").val();
+    let couponYn = false;
 
 
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         $('#reserve').val(reserve);
         $('input[name=totalPrice]').val(price);
-/*
 
-       $('#coupon').change(function(){
+        $('#count').change(function () {
+            let counts = $('#count').val();
 
-           let coupons = document.getElementById('coupon');
-           let val = coupons.options[coupons.selectedIndex].value;
-           couponYn=true;
-           totalPrice = Math.ceil(price-((price * val)/100));
-
-           $('#totalPrice').val(totalPrice);
-           $('#couponYn').val(couponYn);
-       });
-*/      $('#count').change(function() {
-        let counts = document.getElementById('count');
-        let val = counts.val();
-
-       let result= $('input[name=count]').val(val);
-       console.log(result);
+            $('input[name=count]').attr('value', counts);
         });
 
 
-        $('#productColor').change(function() {
+        $('#productColor').change(function () {
 
 
-        let Color =document.getElementById('productColor');
-        let val = Color.options[Color.selectedIndex].value;
+            let Color = document.getElementById('productColor');
+            let val = Color.options[Color.selectedIndex].value;
 
             productColor = $('input[name=productColor]').val(val);
             console.log(productColor);
@@ -278,67 +250,68 @@
         });
 
 
-        $('#productSize').change(function() {
+        $('#productSize').change(function () {
 
 
-            let size =document.getElementById('productSize');
+            let size = document.getElementById('productSize');
             let val = size.options[size.selectedIndex].value;
 
-            productSize= $('input[name=productSize]').val(val);
+            productSize = $('input[name=productSize]').val(val);
             console.log(productSize);
 
         });
 
 
-
     });
 
-    function order(){
+    function order() {
 
         var url = "/order/create";
 
         var paramData = {
             reserve: $('input[name=reserve]').val(),
-            totalPrice: $('input[name=totalPrice]').val(),
+            price: price,
             productColor: $('input[name=productColor]').val(),
             productSize: $('input[name=productSize]').val(),
             couponYn: $('input[name=couponYn]').val(),
             productName: productName,
             productId: productId,
             categoryName: categoryName,
-            companyName: companyName
+            companyName: companyName,
+            count:$('input[name=count]').val()
         };
 
         var param = JSON.stringify(paramData);
 
         $.ajax({
-            url : url,
-            type : "POST",
-            contentType : "application/json",
-            data : param,
-            async: false,
-            dataType : "json",
-            cache : false,
-            success : function(jqXHR,data, status){
+            url: url,
+            type: "POST",
+            contentType: "application/json",
+            data: param,
+            async: true,
+            dataType: "json",
+            cache: false,
+            success: function (jqXHR, data, status,request) {
 
-                    console.log(data); //응답 body부 데이터
-                    console.log(status); //"succes"로 고정인듯함
-                    console.log(jqXHR);
-                    if(!confirm("결재하시겠습니까?")){
-                        location.href='/shop/fin';
-                    }
-                    location.href='/payment/create';
 
+
+              let code = jqXHR.code;
+              console.log(code);
+
+                if (!confirm("결재하시겠습니까?")) {
+                    location.href ='/shop/fin';
+                   return false;
+                }
+                location.href = '/payment/create/'+code;
+                //?orderCode= '+code;
             },
-            error : function(jqXHR, status, error){
-                if(jqXHR.status == '401'){
+            error: function (jqXHR, status, error) {
+                if (jqXHR.status == '401') {
                     alert('로그인 후 이용해주세요');
-                    location.href='/member/login';
-                } else{
+                    location.href = '/member/login';
+                } else {
                     alert(jqXHR.responseText);
-                    console.log(error); //응답 body부 데이터
-                    console.log(status); //"succes"로 고정인듯함
-                    console.log(jqXHR);
+
                 }
             }
         });

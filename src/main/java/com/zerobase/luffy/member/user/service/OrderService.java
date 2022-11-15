@@ -9,4 +9,8 @@ public interface OrderService {
     Object createOrder(OrderDto dto);
 
     List<OrderItem> findByUserName(String name);
+
+    OrderDto findByOrderCode(String code);
+
+    OrderDto findByOrderId(String code);
 }

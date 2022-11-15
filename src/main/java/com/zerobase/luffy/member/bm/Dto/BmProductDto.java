@@ -18,6 +18,8 @@ public class BmProductDto  {
     private String content;
     private Long price;
     private String productName;
+    private String companyName;
+    private Long companyId;
 
     private int pnt;
     private int fileCount;

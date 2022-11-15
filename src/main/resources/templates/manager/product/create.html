@@ -70,6 +70,21 @@
                            th:value="${detail.pnt}"/>
                 </td>
             </tr>
+            <tr>
+                <th>
+                    회사명
+                </th>
+                <td>
+                    <select name="companyName" required>
+                        <option value="">회사선택</option>
+                        <option th:each="x : ${company}"
+                                th:value="${x.companyName}"
+                                th:text="${x.companyName}"
+                                th:selected="${detail.companyName}== ${x.companyName}"></option>
+                    </select>
+                </td>
+                <input name="companyId" id ="companyId" type="hidden">
+            </tr>
             </tbody>
         </table>
 

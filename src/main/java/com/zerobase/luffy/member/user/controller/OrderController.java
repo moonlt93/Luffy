@@ -37,7 +37,7 @@ public class OrderController {
             dto.setUsername(principal.getName());
             OrderId = orderService.createOrder(dto);
             log.info("주문번호 생성 "+OrderId);
-            map.put("sucess",OrderId);
+            map.put("code",OrderId);
 
         }catch(NullPointerException e){
             return new ResponseEntity<String>(e.getMessage(),HttpStatus.UNAUTHORIZED);

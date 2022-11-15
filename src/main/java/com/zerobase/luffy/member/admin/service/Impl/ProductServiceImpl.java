@@ -30,11 +30,10 @@ public class ProductServiceImpl implements ProductService {
     public Page<ProductDetail> getAllList(Pageable pageable) {
 
 
-        return  productDetailRepository.findAll(PageRequest.of(pageable.getPageNumber(), 10, Sort.by(Sort.Order.desc("id"))));
+        return productDetailRepository.findAll(PageRequest.of(pageable.getPageNumber(), 10, Sort.by(Sort.Order.desc("id"))));
 
 
     }
-
 
 
     @Override
@@ -42,9 +41,9 @@ public class ProductServiceImpl implements ProductService {
 
         Optional<ProductDetail> optionalDto = productDetailRepository.findById(id);
 
-        if(!optionalDto.isEmpty()){
+        if (!optionalDto.isEmpty()) {
 
-            ProductDetail dto =optionalDto.get();
+            ProductDetail dto = optionalDto.get();
 
             return ProductDto.builder()
                     .id(dto.getId())
@@ -65,29 +64,73 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-
     @Override
     public boolean set(ProductDto dto) {
 
-        Optional<ProductDetail> optionalDetail =productDetailRepository.findById(dto.getId());
+        Optional<ProductDetail> optionalDetail = productDetailRepository.findById(dto.getId());
 
-        if(!optionalDetail.isPresent() ){
+        if (!optionalDetail.isPresent()) {
             return false;
         }
 
         ProductDetail detail = optionalDetail.get();
-        detail.setCategoryName(dto.getCategoryName());
-        detail.setPrice(dto.getPrice());
-        detail.setContent(dto.getContent());
-        detail.setPnt(dto.getPnt());
-        detail.setProductName(dto.getProductName());
-        detail.setFileName(dto.getFileName());
-        detail.setEndDt(LocalDateTime.now());
-        detail.setWriter(dto.getWriter());
-        detail.setUrlFileName(dto.getUrlFileName());
-        productDetailRepository.save(detail);
 
-        return true;
+        String fileName = dto.getFileName();
+        String UrlName = dto.getUrlFileName();
+        int len = dto.getFileCount();
+
+
+        if (len > 1) {
+            String fileName2 = dto.getFileName();
+            String UrlName2 = dto.getUrlFileName();
+
+            String[] fileNamePeek = fileName2.split("-");
+            String[] urlNamePeek = UrlName2.split("-");
+
+            detail.setCategoryName(dto.getCategoryName());
+            detail.setPrice(dto.getPrice());
+            detail.setContent(dto.getContent());
+            detail.setPnt(dto.getPnt());
+            detail.setProductName(dto.getProductName());
+            detail.setFileName(fileNamePeek[0]);
+            detail.setWriter(dto.getWriter());
+            detail.setUrlFileName(urlNamePeek[0]);
+            detail.setPhotoes(new ArrayList<>());
+            detail.setProductStatus(dto.getProductStatus());
+
+            for (int i = 1; i < len; i++) {
+                Photoes photoes = Photoes.builder()
+                        .urlFileName(urlNamePeek[i])
+                        .fileName(fileNamePeek[i])
+                        .writer(dto.getWriter())
+                        .productDetail(detail)
+                        .build();
+
+                detail.addPhotoes(photoes);
+            }
+
+            productDetailRepository.save(detail);
+
+            return true;
+        } else {
+
+            String replaceFile = replaceString(fileName);
+            String replaceUrl = replaceString(UrlName);
+
+            detail.setCategoryName(dto.getCategoryName());
+            detail.setPrice(dto.getPrice());
+            detail.setContent(dto.getContent());
+            detail.setPnt(dto.getPnt());
+            detail.setProductName(dto.getProductName());
+            detail.setFileName(replaceFile);
+            detail.setWriter(dto.getWriter());
+            detail.setUrlFileName(replaceUrl);
+            detail.setPhotoes(new ArrayList<>());
+            detail.setProductStatus(dto.getProductStatus());
+            productDetailRepository.save(detail);
+            return true;
+        }
+
     }
 
     @Override
@@ -130,7 +173,7 @@ public class ProductServiceImpl implements ProductService {
             }
             productDetailRepository.save(pro);
             return true;
-        }else {
+        } else {
 
             String replaceFile = replaceString(fileName);
             String replaceUrl = replaceString(UrlName);
@@ -158,7 +201,7 @@ public class ProductServiceImpl implements ProductService {
 
             pro.getPhotoes().add(photoes);
             productDetailRepository.save(pro);
-             return true;
+            return true;
         }
 
     }
@@ -166,18 +209,18 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public boolean del(String idList) {
 
-        if(idList != null && idList.length()>0){
-            String [] ids = idList.split(",");
+        if (idList != null && idList.length() > 0) {
+            String[] ids = idList.split(",");
 
-            for(String x : ids){
+            for (String x : ids) {
                 long id = 0L;
-                try{
-                    id=Long.parseLong(x);
-                    if(ids.length>0){
+                try {
+                    id = Long.parseLong(x);
+                    if (ids.length > 0) {
 
-                    productDetailRepository.deleteById(id);
+                        productDetailRepository.deleteById(id);
                     }
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -190,14 +233,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductDetail> findByTitleContaining(String searchKeyword, Pageable pageable) {
 
-        Page<ProductDetail> page =  productDetailRepository.findByProductNameContaining(searchKeyword,pageable);
+        Page<ProductDetail> page = productDetailRepository.findByProductNameContaining(searchKeyword, pageable);
 
 
         return page;
     }
 
 
-    private String replaceString(String replaceFile){
+    private String replaceString(String replaceFile) {
 
         return replaceFile.replace("-", "");
     }
@@ -206,15 +249,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDetail findById(Long productId) {
 
-       Optional<ProductDetail> optionalProductDetail= productDetailRepository.findById(productId);
+        Optional<ProductDetail> optionalProductDetail = productDetailRepository.findById(productId);
 
-       if(optionalProductDetail.isPresent()) {
-           ProductDetail pro = optionalProductDetail.get();
+        if (optionalProductDetail.isPresent()) {
+            ProductDetail pro = optionalProductDetail.get();
 
-           return ProductDetail.builder()
-                   .urlFileName(pro.getUrlFileName())
-                   .build();
-       }
-       return null;
+            return ProductDetail.builder()
+                    .urlFileName(pro.getUrlFileName())
+                    .build();
+        }
+        return null;
     }
+
+
 }

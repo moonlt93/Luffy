@@ -37,8 +37,7 @@ public class Photoes {
 
 
     public Photoes(Long id, String writer, String fileName, String urlFileName, String productName, long yourId) {
-
-        this.id =id;
+        this.id=id;
         this.urlFileName=urlFileName;
         this.writer=writer;
         this.fileName=fileName;
@@ -46,7 +45,7 @@ public class Photoes {
         this.setProductDetail(ProductDetail.builder()
                 .id(yourId)
                 .build());
-    }
 
+    }
 }
 

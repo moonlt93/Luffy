@@ -1,7 +1,6 @@
 package com.zerobase.luffy.member.admin.service.Impl;
 
 import com.zerobase.luffy.member.admin.Dto.CompanyDto;
-import com.zerobase.luffy.member.admin.Dto.ProductDto;
 import com.zerobase.luffy.member.admin.entity.Company;
 import com.zerobase.luffy.member.admin.repository.CompanyRepository;
 import com.zerobase.luffy.member.admin.service.CompanyService;
@@ -12,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +20,11 @@ public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
 
+
+    @Override
+    public List<Company> selectAllList() {
+        return companyRepository.findAll();
+    }
 
     @Override
     public Page<Company> getAllList(Pageable pageable) {

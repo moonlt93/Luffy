@@ -57,13 +57,12 @@ public class OrderServiceImpl implements OrderService {
                         .categoryName(dto.getCategoryName())
                         .companyName(dto.getCompanyName())
                         .productSize(dto.getProductSize())
-                        .regDt(LocalDateTime.now())
                         .productColor(dto.getProductColor())
                         .productName(dto.getProductName())
                         .productColor(dto.getProductColor())
                         .tax(dto.getReserve())
                         .reserve(dto.getReserve())
-                        .totalPrice(dto.getTotalPrice())
+                        .price(dto.getPrice())
                         .productId(dto.getProductId())
                         .registration(members.getRegistration())
                         .memberIp(members.getIp())
@@ -73,11 +72,14 @@ public class OrderServiceImpl implements OrderService {
                         .productDetail(productDetail)
                         .member(members)
                         .username(members.getUsername())
+                        .productId(dto.getProductId())
                         .count(dto.getCount())
                         .build();
 
+
+
                 orderRepository.save(order);
-                return id;
+                return order.getOrderId();
             }
             return null;
     }
@@ -89,7 +91,69 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItem> list  = orderRepository.findByUsername(name);
 
         return list;
+    }
 
+    @Override
+    public OrderDto findByOrderCode(String code) {
+
+        Optional<OrderItem> dto = Optional.ofNullable(orderRepository.findByOrderCode(code)
+                .orElseThrow(() -> new RuntimeException("orderCode에 해당하는 주문번호를 찾을수 없습니다.")));
+
+        if(dto.isPresent()){
+
+            OrderItem order = dto.get();
+
+            return OrderDto.builder()
+                    .OrderId(order.getOrderId())
+                    .CategoryName(order.getCategoryName())
+                    .companyName(order.getCompanyName())
+                    .productColor(order.getProductColor())
+                    .productSize(order.getProductSize())
+                    .price(order.getPrice())
+                    .count(order.getCount())
+                    .productName(order.getProductName())
+                    .comment(Comment(order))
+                    .build();
+        }
+
+        return null;
+    }
+
+    @Override
+    public OrderDto findByOrderId(String code) {
+        Long id = Long.valueOf(code);
+        Optional<OrderItem> dto2 = Optional.ofNullable(orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("orderCode에 해당하는 주문번호를 찾을수 없습니다.")));
+
+        if(dto2.isPresent()){
+
+            OrderItem order = dto2.get();
+
+            return OrderDto.builder()
+                    .OrderId(order.getOrderId())
+                    .CategoryName(order.getCategoryName())
+                    .companyName(order.getCompanyName())
+                    .productColor(order.getProductColor())
+                    .productSize(order.getProductSize())
+                    .price(order.getPrice())
+                    .count(order.getCount())
+                    .productName(order.getProductName())
+                    .comment(Comment(order))
+                    .build();
+        }
+
+
+        return null;
+    }
+
+    private String Comment(OrderItem order){
+        StringBuilder sb = new StringBuilder();
+        return   sb.append("["+order.getCategoryName()+"] : ").append(order.getProductName()+" ").append("\n")
+                .append(order.getProductColor()+" ").append(order.getProductSize()+" ")
+                .append(order.getCount()+"개").toString();
 
     }
+
+
+
 }

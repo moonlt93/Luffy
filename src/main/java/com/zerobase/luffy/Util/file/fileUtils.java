@@ -90,8 +90,8 @@ public class fileUtils implements fileUtil{
             }
         }
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-        String newFilename = String.format("%s%s", dirs[2], uuid);
-        String urlFilename = String.format("%s%s", urlDir, uuid);
+        String newFilename = String.format("%s%s", dirs[2], uuid.substring(0,6));
+        String urlFilename = String.format("%s%s", urlDir, uuid.substring(0,6));
         if (fileExtension.length() > 0) {
             newFilename += "." + fileExtension;
             urlFilename += "." + fileExtension;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -14,7 +14,51 @@
           rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="/css/category.css" rel="stylesheet">
+
     <style>
+        .form-floating textarea {
+            text-align: left;
+            font-weight: bold;
+            font-size: 28px;
+            font-family: Dialog, serif;
+        }
+
+        p#reserveCon {
+            color: red;
+        }
+
+        dl.row dt {
+            text-align: left;
+            font-size: 21px;
+
+        }
+        h1 {
+            font-family: "Century Gothic", serif;
+            text-decoration: underline;
+            padding-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+
+        }
+        dl dd input{
+            width: 50%;
+            font-weight: bold;
+
+        }
+        .form-control {
+
+            font-weight: bold;
+            text-align: right;
+
+        }
+        .card-header #cardHeader{
+            font-family: "Century Gothic", serif;
+            text-decoration: underline;
+            text-align: center;
+            font-weight: bold;
+            font-size: 25px;
+        }
+
     </style>
 </head>
 <body>
@@ -25,75 +69,271 @@
     <div th:replace="/fragment/category.html ::fragment-cate-menu"></div>
     <br/>
 
-<div class="member">
-    <section class="ProductCardArea">
-        <div class="container">
-            <div class="row">
-                <h1>payment create </h1>
-                <!-- 상품 상세내역-->
-                <div class="col-12 col-md-6 mb-3 mb-lg-3">
-                    <!-- 쿠폰, 배송지 ,적립금 유무-->
+    <div class="member">
+        <section class="ProductCardArea">
+            <div class="container">
+                <div class="row">
+                    <h1>payment create </h1>
+                    <!-- 상품 상세내역-->
+                    <div class="form-floating">
+                    <textarea class="form-control" id="floatingTextarea2"
+                              name="textArea"
+                              th:value="${item.comment}"
+                              th:text="${item.comment}"
+                              style="height: 100px" readonly ></textarea>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3 mb-lg-3">
+                        <!-- 쿠폰, 배송지 ,적립금 유무-->
+                        <dl class="row">
+                            <dt class="col-sm-3">쿠폰</dt>
+                            <select id="coupon" name="coupon"
+                                    class="col-sm-9 form-select form-select-lg"
+                                    aria-label=".form-select-lg example"
+                                    style="width: 50%; text-align: center;">
+                                <option value=" ">쿠폰</option>
+                                <option th:each="x: ${coupon}"
+                                        th:text="${x.title}"
+                                        th:value="${x.rate}"></option>
+                            </select>
+                            <input id="couponYn" type="hidden" name="couponYn"/>
+                        </dl>
+                        <p style="text-align: right" id="reserveCon"
+                           th:value="${member.reserve}"
+                           th:text="'내가 가진 적립금: '+${member.reserve}"></p>
 
-                    <dl class="row">
-                        <dt class="col-sm-3">쿠폰</dt>
-                        <select id="coupon" name="coupon"
-                                class="form-select form-select-sm mb-6"
-                                aria-label=".form-select-lg example"
-                                style="width: 50%">
-                            <option value=" ">쿠폰</option>
-                           <option th:each="x: ${coupon}"th:text="${x.title}"></option>
-                        </select>
-                    </dl>
+                        <dl class="row">
+                            <dt class="col-sm-3">적립금</dt>
+                            <dd class="row col-sm-9"><input class="form-control"
+                                                        type="text"
+                                                        name="reserve"
+                                                        id="reserve"
+                                                        placeholder="0">
 
-                    <dl class="row">
+                            </dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-sm-3">결제방식지정</dt>
+                            <dd class="row col-sm-9">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="Checkbox1" value="KAKAOPAY">
+                                    <label class="form-check-label" for="Checkbox1">카카오페이</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="Checkbox2" value="NAVERPAY">
+                                    <label class="form-check-label" for="Checkbox2">네이버페이</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="Checkbox3" value="TOSS" >
+                                    <label class="form-check-label" for="Checkbox3">토스</label>
+                                </div>
+                            </dd>
+                            <!-- paymentType -->
+                        </dl>
+                        <dl class="row">
+                            <div class="title">
+                                <dt class="col-sm-3">배송지 정보</dt>
+                            </div>
+                            <div class="content">
+                                <dl class="row">
+                                    <dt class="col-sm-3">이름</dt>
+                                    <dd class="col-sm-9"><input type="text"
+                                                                th:value="${member.name}"
+                                                                name="name"  class="form-control"  >
+                                    </dd>
+                                </dl>
+                                <dl class="row">
+                                    <dt class="col-sm-3">연락처</dt>
+                                    <dd class="col-sm-9"><input type="text"
+                                                                th:value="${member.phone}"
+                                                                name="phone"  class="form-control" >
+                                    </dd>
+                                </dl>
+                                <dl class="row">
+                                    <dt class="col-sm-3">주소</dt>
+                                    <dd class="col-sm-9"><input type="text"
+                                                                th:value="${member.registration}"
+                                                                name="registration"  class="form-control" >
+                                    </dd>
+                                </dl>
+                            </div>
 
-                        <dt class="col-sm-3">적립금</dt>
-                         <dd class="col-sm-9"><input type="text" name="reserve"  placeholder="0"></dd>
 
-                    </dl>
-                    <dl class="row">
-                        <div class="title">
-                            <dt class="col-sm-3">배송지 정보</dt>
+                        </dl>
+                    </div>
+
+                    <div class="col-12 col-md-6 ">
+                        <!-- 결재 내역  card 사용-->
+                        <div class="card border-primary mb-lg-1"
+                             style="max-width: 60rem;">
+                            <div class="card-header"><p id="cardHeader">Payment Info</p></div>
+                            <div class="card-body">
+                                <dl class="row">
+                                    <dt class="col-sm-3">제품금액</dt>
+                                    <dd class="col-sm-9"><input
+                                            style="text-align: right; border: none;"
+                                            type="text"
+                                            th:value="${item.price}"
+                                            name="pricePay"></dd>
+                                </dl>
+
+                                <dl class="row">
+                                    <dt class="col-sm-3">적립금</dt>
+                                    <dd class="col-sm-9"><input
+                                                                style="text-align: right; border: none;"
+                                                                type="text"
+                                                                id="reservePay"
+                                                                th:value="${reservePay}"
+                                                                name="reservePay">
+                                    </dd>
+                                </dl>
+
+                                <dl class="row">
+                                    <dt class="col-sm-3">쿠폰적용금액</dt>
+                                    <dd class="col-sm-9"><input
+                                                                style="text-align: right; border: none;"
+                                                                type="text"
+                                                                id="couponPay"
+                                                                th:value="${couponPay}"
+                                                                name="couponPay">
+                                    </dd>
+                                </dl>
+
+                                <dl class="row">
+                                    <dt class="col-sm-3">총 정산금액</dt>
+                                    <dd class="col-sm-9"><input type="text" readonly
+                                                                id="totalPrice"
+                                                                name="totalPrice"
+                                                                th:value="${totalPrice}"
+                                                                style="text-align: right; border: none;"/>
+                                        <button id="checkBtn"
+                                                class="btn btn-dark"
+                                                type="button">확인
+                                        </button>
+                                    </dd>
+                                </dl>
+                                <br/>
+
+                                <div class="row">
+                                    <button type="button" id="payBtn" class="btn btn-danger btn-lg ">결제</button>
+                                </div>
+                            </div>
+
                         </div>
-                       <div class="content">
-                         <dl class="row">
-                             <dt class="col-sm-3">이름</dt>
-                             <dd class="col-sm-9"><input type="text" th:value="${member.name}" name="name" ></dd>
-                         </dl>
-                           <dl class="row">
-                               <dt class="col-sm-3">연락처</dt>
-                               <dd class="col-sm-9"><input type="text" th:value="${member.phone}" name="phone" ></dd>
-                           </dl>
-                           <dl class="row">
-                               <dt class="col-sm-3">주소</dt>
-                               <dd class="col-sm-9"><input type="text" th:value="${member.registration}" name="registration"></dd>
-                           </dl>
-                       </div>
-
-
-                    </dl>
-                </div>
-
-                <div class="col-12 col-md-6 ">
-                    <!-- 결재 내역  card 사용-->
-                    <div class="card border-primary mb-3"
-                         style="max-width: 20rem;">
-                        <div class="card-header">Header</div>
-                        <div class="card-body">
-
-                        </div>
-
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
 
-    <div th:replace="/fragment/footer.html ::fragment-footer"></div>
-</div>
+        <div th:replace="/fragment/footer.html ::fragment-footer"></div>
+    </div>
 </div>
 <script th:inline="javascript">
+
+    let couponPay;
+    let reservePay=0;
+    let reserve = [[${member.reserve}]];
+    let price = [[${item.price}]];
+    let totalPrice;
+    let code=[[${code}]];
+    let productId=[[${item.productId}]];
+    let couponYn =false;
+    let paymentType;
+
+    $(document).ready(function () {
+
+        $('#coupon').change(function () {
+
+            let coupons = document.getElementById('coupon');
+            let val = coupons.options[coupons.selectedIndex].value;
+            couponYn = true;
+            couponPay = ((price * val) / 100);
+
+            $('#couponPay').val(couponPay);
+            $('#totalPrice').val(totalPrice);
+            $('#couponYn').val(couponYn);
+
+
+        });
+        $('#reserve').change(function () {
+
+            reservePay = $('input[name=reserve]').val();
+            console.log(reservePay);
+            console.log(reserve);
+            if (reserve - reservePay > 0) {
+                console.log(reservePay);
+                $('#reservePay').val(reservePay);
+            }
+
+
+        });
+
+
+        $('#payBtn').on('click', function () {
+
+            var url="/payment/create";
+
+            var paramData={
+                reserve:    Math.round(totalPrice / 10),
+                totalPrice: $('input[name=totalPrice]').val(),
+                tax: (totalPrice / 10),
+                productComment: $('textarea[name=textArea]').val(),
+                orderId: code,
+                rate: $('select[name="coupon"]').val(),
+                couponYn: $('#couponYn').val(),
+                productId: productId,
+                paymentType : $("input[type='checkbox']:checked").val(),
+                reservePay:$('input[name=reservePay]').val()
+
+            };
+
+            let param =JSON.stringify(paramData);
+            console.log(param);
+
+            $.ajax({
+                url: url,
+                type: "post",
+                contentType: "application/json",
+                data: param,
+                async:true,
+                dataType:"json",
+                cache:false,
+                success:function(jqXHR,data,request){
+                    alert("성공");
+                },
+                error: function (jqXHR,data,status,error){
+
+                },
+
+            })
+
+
+
+        });
+
+
+        $('#checkBtn').on('click', function () {
+            totalPrice = price;
+
+            couponPay = $('#couponPay').val();
+            reservePay = $('#reservePay').val();
+
+            console.log(price);
+            console.log(reservePay);
+            console.log(couponPay);
+
+
+            totalPrice = Math.ceil(price - reservePay - (couponPay));
+
+
+            $('#totalPrice').val(totalPrice);
+
+        });
+
+    });
+
+
+
 
 </script>
 </body>

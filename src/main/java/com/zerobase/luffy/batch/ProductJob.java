@@ -3,6 +3,7 @@ package com.zerobase.luffy.batch;
 
 import com.zerobase.luffy.member.admin.entity.Photoes;
 import com.zerobase.luffy.member.admin.entity.ProductDetail;
+import com.zerobase.luffy.member.admin.service.Impl.ProductServiceImpl;
 import com.zerobase.luffy.member.bm.entity.ManagerProduct;
 import com.zerobase.luffy.member.bm.entity.Photo;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +12,14 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.database.JpaCursorItemReader;
 import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.database.builder.JpaCursorItemReaderBuilder;
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
+import org.springframework.batch.jsr.item.ItemProcessorAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -41,8 +44,8 @@ public class ProductJob {
     @Bean
     public Job ProductJob_batchBuild() {
         return jobBuilderFactory.get("ProductJob")
-                .start(ProductJob_step())
-                .next(PhotoesJob_step())
+                .start(PhotoesJob_step())
+                .next(ProductJob_step())
                 .build();
     }
 
@@ -62,7 +65,7 @@ public class ProductJob {
         return manageProduct -> {
             return new ProductDetail(manageProduct.getId(), manageProduct.getProductName(), manageProduct.getProductStatus(),
                         manageProduct.getPnt(), manageProduct.getPrice(), manageProduct.getFileName(), manageProduct.getUrlFileName(), manageProduct.getWriter()
-                      , manageProduct.getRegDt(), manageProduct.getCategoryName(), manageProduct.getContent(), manageProduct.getCompanyName());
+                      , manageProduct.getRegDt(), manageProduct.getCategoryName(), manageProduct.getContent(),manageProduct.getCompanyName(),manageProduct.getPhotoList());
         };
     }
 

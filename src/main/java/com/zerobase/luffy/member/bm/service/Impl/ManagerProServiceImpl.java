@@ -62,6 +62,10 @@ public class ManagerProServiceImpl implements ManagerProService {
     @Override
     public ManagerProException add(BmProductDto dto) {
 
+
+
+
+
         String fileName = dto.getFileName();
         String UrlName = dto.getUrlFileName();
         int len = dto.getFileCount();
@@ -83,6 +87,7 @@ public class ManagerProServiceImpl implements ManagerProService {
                     .content(dto.getContent())
                     .writer(dto.getWriter())
                     .productName(dto.getProductName())
+                    .companyName(dto.getCompanyName())
                     .productStatus(String.valueOf(ProductCode.Processing))
                     .photoList(new ArrayList<>())
                     .build();
@@ -113,6 +118,7 @@ public class ManagerProServiceImpl implements ManagerProService {
                     .categoryName(dto.getCategoryName())
                     .price(dto.getPrice())
                     .pnt(dto.getPnt())
+                    .companyName(dto.getCompanyName())
                     .content(dto.getContent())
                     .urlFileName(replaceUrl)
                     .writer(dto.getWriter())
@@ -185,6 +191,7 @@ public class ManagerProServiceImpl implements ManagerProService {
                     .pnt(dto.getPnt())
                     .fileName(fileNamePeek[0])
                     .urlFileName(urlNamePeek[0])
+                    .companyName(dto.getCompanyName())
                     .content(dto.getContent())
                     .writer(dto.getWriter())
                     .productName(dto.getProductName())
@@ -217,6 +224,7 @@ public class ManagerProServiceImpl implements ManagerProService {
                     .id(dto.getId())
                     .categoryName(dto.getCategoryName())
                     .price(dto.getPrice())
+                    .companyName(dto.getCompanyName())
                     .pnt(dto.getPnt())
                     .content(dto.getContent())
                     .urlFileName(replaceUrl)

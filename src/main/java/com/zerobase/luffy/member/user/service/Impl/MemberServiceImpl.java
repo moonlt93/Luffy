@@ -52,6 +52,7 @@ public class MemberServiceImpl implements MemberService {
                 .memberStatus(ING)
                 .email(dto.getEmail())
                 .name(dto.getName())
+                .reserve(1000L)
                 .coupons(new ArrayList<>())
                 .build();
 

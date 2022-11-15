@@ -37,7 +37,7 @@
 
 
 <div>
-    <div th:fragment="fragment-my-menu">
+    <div  th:fragment="fragment-my-menu">
         <a href="/"> | 홈으로</a>
         <a sec:authorize="isAnonymous()" href="/member/login"> | LOGIN</a>
         <a sec:authorize="isAuthenticated()" href="/member/logout"> | LOGOUT</a>

@@ -1,10 +1,12 @@
 package com.zerobase.luffy.member.user.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class OrderDto {
 
 
@@ -15,12 +17,13 @@ public class OrderDto {
     private String productName;
     private String productSize;
     private String productColor;
-    private Long totalPrice;
+    private Long price;
     private Long reserve; //적립금.
     private String CategoryName;
     private int coupon;
     private int count;
     private boolean couponYn;
+    private String comment;
 
     // 멤버정보
     private String username;

@@ -4,6 +4,7 @@ import com.zerobase.luffy.common.base.BaseHeader;
 import com.zerobase.luffy.member.admin.entity.Category;
 import com.zerobase.luffy.member.admin.entity.ProductDetail;
 import com.zerobase.luffy.member.type.OrderStatus;
+import com.zerobase.luffy.member.type.PaymentStatus;
 import lombok.*;
 import net.bytebuddy.asm.Advice;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrderItem {
+public class OrderItem extends BaseHeader {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,15 +29,10 @@ public class OrderItem {
     private String orderCode;
     private String productSize;
     private String productColor;
-    private Long totalPrice;
+    private Long price;
     private Long reserve;
     private Long tax;
     private int count;
-
-    @CreatedDate
-    private LocalDateTime regDt;
-    @UpdateTimestamp
-    private LocalDateTime upDt;
 
 
     @Enumerated(EnumType.STRING)
@@ -47,6 +43,9 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="paymentId")
+    private Payment payment;
 
     private String memberIp;
     private String name;
@@ -60,6 +59,7 @@ public class OrderItem {
     //제품
     @OneToOne(fetch = FetchType.LAZY)
     private ProductDetail productDetail;
+
 
     private Long productId;
     private String writer;

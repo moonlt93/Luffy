@@ -29,6 +29,7 @@ public class MemberDto {
     private String ROLE;
 
     private String memberStatus;
+    private Long reserve;
 
     public static MemberDto EntityBuild(Member member){
 
@@ -45,6 +46,7 @@ public class MemberDto {
                 .memberStatus(String.valueOf(member.getMemberStatus()))
                 .registration(member.getRegistration())
                 .name(member.getName())
+                .reserve(member.getReserve())
                 .build();
 
 

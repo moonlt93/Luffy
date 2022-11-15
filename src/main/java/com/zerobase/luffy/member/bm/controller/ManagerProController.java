@@ -5,6 +5,7 @@ import com.zerobase.luffy.Util.file.fileUtils;
 import com.zerobase.luffy.member.admin.Dto.ProductDto;
 import com.zerobase.luffy.member.admin.Dto.ProductFileDto;
 import com.zerobase.luffy.member.admin.service.CategoryService;
+import com.zerobase.luffy.member.admin.service.CompanyService;
 import com.zerobase.luffy.member.bm.Dto.BmProductDto;
 import com.zerobase.luffy.member.bm.entity.ManagerProduct;
 import com.zerobase.luffy.member.bm.service.ManagerProService;
@@ -33,6 +34,7 @@ public class ManagerProController {
     private final ManagerProService managerProService;
 
     private final CategoryService categoryService;
+    private final CompanyService companyService;
 
 
 @GetMapping("/list")
@@ -65,6 +67,7 @@ public String GetProduct(Model model,
     public String GetProductCreate(Model model, HttpServletRequest req, BmProductDto dto
     ) {
         HttpSession session = (HttpSession)req.getSession();
+        model.addAttribute("company",companyService.selectAllList());
         model.addAttribute("category", categoryService.selectList());
         model.addAttribute("sessionId", session.getId());
 

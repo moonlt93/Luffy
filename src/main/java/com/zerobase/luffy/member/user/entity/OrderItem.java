@@ -1,17 +1,12 @@
 package com.zerobase.luffy.member.user.entity;
 
-import com.zerobase.luffy.common.base.BaseHeader;
-import com.zerobase.luffy.member.admin.entity.Category;
+import com.zerobase.luffy.Util.base.BaseHeader;
 import com.zerobase.luffy.member.admin.entity.ProductDetail;
 import com.zerobase.luffy.member.type.OrderStatus;
-import com.zerobase.luffy.member.type.PaymentStatus;
 import lombok.*;
-import net.bytebuddy.asm.Advice;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +15,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicUpdate
 @Builder
 public class OrderItem extends BaseHeader {
 

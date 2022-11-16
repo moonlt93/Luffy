@@ -1,5 +1,8 @@
 package com.zerobase.luffy.member.user.controller;
 
+import com.zerobase.luffy.main.dto.WishDto;
+import com.zerobase.luffy.main.entity.Wish;
+import com.zerobase.luffy.main.service.WishService;
 import com.zerobase.luffy.member.admin.entity.ProductDetail;
 import com.zerobase.luffy.member.admin.service.ProductService;
 import com.zerobase.luffy.member.user.dto.MemberDto;
@@ -32,6 +35,7 @@ public class MemberController {
 
     private final OrderService orderService;
     private final ProductService productService;
+    private final WishService wishService;
 
 
     @RequestMapping("/login")
@@ -73,6 +77,9 @@ public class MemberController {
 
          MemberDto list = memberService.memberDetails(username);
 
+        List<Wish> dto = wishService.getWishes(list.getId());
+
+         model.addAttribute("wishes",dto);
          model.addAttribute("list",list);
 
         return "/member/myPage";
@@ -83,6 +90,8 @@ public class MemberController {
 
         Long id = Long.valueOf(req.getParameter("userNo"));
         dto.setId(id);
+
+
 
 
         MessageResult result = memberService.updateDetail(dto);

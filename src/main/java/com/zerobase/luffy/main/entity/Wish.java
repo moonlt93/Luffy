@@ -6,21 +6,25 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Getter
 @Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Coupon {
+public class Wish {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long CouponId;
+    private Long wishId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    private String productName;
+    private String fileUrl;
 
-    private String title;
-    private int rate;
+    private String productUrl;
+
+
+
 }

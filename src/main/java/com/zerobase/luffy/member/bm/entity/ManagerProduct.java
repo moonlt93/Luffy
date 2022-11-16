@@ -1,6 +1,6 @@
 package com.zerobase.luffy.member.bm.entity;
 
-import com.zerobase.luffy.common.base.BaseHeader;
+import com.zerobase.luffy.Util.base.BaseHeader;
 import lombok.*;
 
 import javax.persistence.*;

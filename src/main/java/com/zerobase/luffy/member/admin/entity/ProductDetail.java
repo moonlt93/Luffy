@@ -1,7 +1,6 @@
 package com.zerobase.luffy.member.admin.entity;
 
-import com.zerobase.luffy.common.base.BaseHeader;
-import com.zerobase.luffy.member.bm.entity.Photo;
+import com.zerobase.luffy.Util.base.BaseHeader;
 import com.zerobase.luffy.member.type.BatchStatus;
 import com.zerobase.luffy.member.user.entity.OrderItem;
 import lombok.*;

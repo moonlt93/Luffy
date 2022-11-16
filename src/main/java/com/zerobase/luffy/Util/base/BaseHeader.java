@@ -1,4 +1,4 @@
-package com.zerobase.luffy.common.base;
+package com.zerobase.luffy.Util.base;
 
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

@@ -2,8 +2,11 @@ package com.zerobase.luffy.member.user.entity;
 
 
 import com.zerobase.luffy.main.entity.Coupon;
+import com.zerobase.luffy.main.entity.Wish;
 import com.zerobase.luffy.member.type.MemberCode;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +16,8 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@DynamicUpdate
+@DynamicInsert
 @AllArgsConstructor
 @Builder
 @Entity
@@ -45,10 +50,22 @@ public class Member {
     private MemberCode memberStatus;
 
     @OneToMany(mappedBy="member" ,cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<OrderItem> items = new ArrayList<>();
+    private List<OrderItem> items = new ArrayList<OrderItem>();
 
-    @OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Coupon> coupons = new ArrayList<>();
+    @OneToMany(mappedBy = "member" ,orphanRemoval = true)
+    private List<Coupon> coupons = new ArrayList<Coupon>();
+
+    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Wish> wishes = new ArrayList<Wish>();
+
+
+    public void addWishes(final Wish wish){
+        wishes.clear();
+        wishes.add(wish);
+        wish.setMember(this);
+
+
+    }
 
 
 }

@@ -26,6 +26,7 @@
 
         <span><a sec:authorize="isAuthenticated()" href="/member/logout"> | LOGOUT</a></span>
         <span><a sec:authorize="isAuthenticated()" href="/member/myPage"> | MYPAGE</a></span>
+        <span><a sec:authorize="isAuthenticated()" href="/member/myPackage"> | CART</a></span>
         <span><a sec:authorize="hasRole('ADMIN')" href="/admin/main"> | ADMIN</a></span>
         <span><a sec:authorize="hasAnyRole('MANAGER','ADMIN')"
                  href="/manager/main">|MANAGER</a></span>

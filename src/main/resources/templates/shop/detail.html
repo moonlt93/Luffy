@@ -181,14 +181,14 @@
                     </dl>
                     <br/>
 
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <span>
-                            <button type="button"
+                    <div class="d-grid gap-3 d-md-flex justify-content-md-end">
+
+                            <button type="button" onclick="wish()"
                                     class="btn btn-outline-dark btn-lg">찜하기</button>
-                            <button type="button" class="btn btn-dark btn-lg">장바구니</button>
+
                             <button type="button" class="btn btn-dark btn-lg"
                                     onclick="order()">구매하기</button>
-                        </span>
+
                     </div>
                 </div>
             </div>
@@ -218,6 +218,7 @@
     let reserve = [[${items.price}]] * 0.1;
     let productId = [[${items.id}]];
     let companyName = [[${items.companyName}]];
+    let fileUrl = [[${items.urlFileName}]];
 
 
     let productColor = $("select[name=productColor]").val();
@@ -298,7 +299,7 @@
               let code = jqXHR.code;
               console.log(code);
 
-                if (!confirm("결재하시겠습니까?")) {
+                if (!confirm("결제하시겠습니까?")) {
                     location.href ='/shop/fin';
                    return false;
                 }
@@ -307,6 +308,50 @@
             },
             error: function (jqXHR, status, error) {
                 if (jqXHR.status == '401') {
+                    alert('로그인 후 이용해주세요');
+                    location.href = '/member/login';
+                } else {
+                    alert(jqXHR.responseText);
+
+                }
+            }
+        });
+    }
+
+    function wish() {
+
+        var url = "/shop/wish";
+
+        var paramData = {
+            productName: productName,
+            productUrl: productId,
+            categoryName: categoryName,
+            companyName: companyName,
+            fileUrl: fileUrl,
+        }
+
+        var param = JSON.stringify(paramData);
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            contentType: "application/json",
+            data: param,
+            async: true,
+            dataType: "json",
+            cache: false,
+            success: function (jqXHR, data, status,request) {
+
+                if (!confirm("찜목록을 확인하시겠습니까?")) {
+                    location.href = '/';
+
+                    return false;
+                }
+                location.href ='/member/myPage';
+                //?orderCode= '+code;
+            },
+            error: function (jqXHR, status, error) {
+                if (jqXHR.status === '401') {
                     alert('로그인 후 이용해주세요');
                     location.href = '/member/login';
                 } else {

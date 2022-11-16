@@ -28,6 +28,7 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final OrderService orderService;
 
+    //결재 페이지 이동.
     @GetMapping("/create/{code}")
     public String GetPayment(Model model, Principal principal, @PathVariable String code){
         log.info("결제 페이지");
@@ -48,7 +49,7 @@ public class PaymentController {
         return "/paymentSys/create";
     }
 
-
+    //결제 내역 생성
     @PostMapping("/create")
     @ResponseBody
     public ResponseEntity createPayment(@RequestBody PaymentDto dto, Principal principal) throws InterruptedException {

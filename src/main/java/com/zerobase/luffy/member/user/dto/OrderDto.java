@@ -24,6 +24,7 @@ public class OrderDto {
     private int count;
     private boolean couponYn;
     private String comment;
+    private int productCount;
 
     // 멤버정보
     private String username;

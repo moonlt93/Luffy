@@ -1,6 +1,7 @@
 package com.zerobase.luffy.member.admin.repository;
 
 import com.zerobase.luffy.member.admin.entity.ProductDetail;
+import com.zerobase.luffy.member.type.ProductCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,6 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail,Lon
 
 
     Page<ProductDetail> findByProductNameContaining(String searchKeyword, Pageable pageable);
+
+    Page<ProductDetail> findByProductStatusContaining(ProductCode str, Pageable pageable);
 }

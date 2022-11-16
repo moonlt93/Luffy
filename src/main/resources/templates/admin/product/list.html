@@ -73,6 +73,9 @@
                 등록일
             </td>
             <td>
+                회사명
+            </td>
+            <td>
                 수량
             </td>
             <td>
@@ -101,6 +104,9 @@
             <td>
                 <img id="image" th:src="@{${x.urlFileName}}" alt="첨부이미지"
                      th:if="${x.urlFileName != null}"/>
+            </td>
+            <td>
+               <p th:text="${x.companyName}"></p>
             </td>
             <td>
                 <p th:text="${x.regDt}"></p>

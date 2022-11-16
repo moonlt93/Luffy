@@ -5,6 +5,7 @@ import com.zerobase.luffy.member.admin.entity.Photoes;
 import com.zerobase.luffy.member.admin.entity.ProductDetail;
 import com.zerobase.luffy.member.admin.repository.ProductDetailRepository;
 import com.zerobase.luffy.member.admin.service.ProductService;
+import com.zerobase.luffy.member.type.ProductCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,9 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductDetailRepository productDetailRepository;
+
+
+
 
     @Override
     public Page<ProductDetail> getAllList(Pageable pageable) {
@@ -239,6 +243,12 @@ public class ProductServiceImpl implements ProductService {
         return page;
     }
 
+    @Override
+    public Page<ProductDetail> getUseList(ProductCode str, Pageable pageable) {
+
+        Page<ProductDetail> page =productDetailRepository.findByProductStatusContaining(str,pageable);
+        return page;
+    }
 
     private String replaceString(String replaceFile) {
 

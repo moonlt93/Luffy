@@ -3,6 +3,7 @@ package com.zerobase.luffy.member.admin.entity;
 import com.zerobase.luffy.common.base.BaseHeader;
 import com.zerobase.luffy.member.bm.entity.Photo;
 import com.zerobase.luffy.member.type.BatchStatus;
+import com.zerobase.luffy.member.user.entity.OrderItem;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,6 +27,11 @@ public class ProductDetail extends BaseHeader {
     @OneToMany(mappedBy = "productDetail",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Photoes> photoes =new ArrayList<>();
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="orderId")
+    private OrderItem orderItem;
+
     private String productName;
     private String categoryName;
     private int pnt;
@@ -42,11 +48,12 @@ public class ProductDetail extends BaseHeader {
 
 
 
-    public ProductDetail(Long id, String productName, String productStatus, int pnt,
-                          Long price, String fileName,String urlFileName, String writer, LocalDateTime regDt,
-                         String categoryName, String content,String companyName, List<Photo> list) {
+
+
+
+    public ProductDetail(Long id, String productName, String productStatus, int pnt, Long price, String fileName, String urlFileName, String writer, LocalDateTime regDt, String categoryName, String content, String companyName) {
         this.id= id;
-        this.pnt= pnt;
+        this.pnt+= pnt;
         this.fileName = fileName;
         this.urlFileName = urlFileName;
         this.productStatus = String.valueOf(BatchStatus.BatchProduct);
@@ -56,7 +63,6 @@ public class ProductDetail extends BaseHeader {
         this.content=content;
         this.writer=writer;
         this.companyName = companyName ;
-        this.photoes.get(0).setId(this.id);
     }
 
 

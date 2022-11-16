@@ -12,6 +12,8 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -57,8 +59,8 @@ public class OrderItem extends BaseHeader {
     private String companyName;
 
     //제품
-    @OneToOne(fetch = FetchType.LAZY)
-    private ProductDetail productDetail;
+    @OneToMany(mappedBy = "orderItem" ,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductDetail> productDetail= new ArrayList<>();
 
 
     private Long productId;

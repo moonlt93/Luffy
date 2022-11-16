@@ -6,6 +6,7 @@ import com.zerobase.luffy.main.service.ShopService;
 import com.zerobase.luffy.member.admin.entity.Photoes;
 import com.zerobase.luffy.member.admin.entity.ProductDetail;
 import com.zerobase.luffy.member.admin.service.ProductService;
+import com.zerobase.luffy.member.type.ProductCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -33,7 +34,9 @@ public class ShopController {
     public String MainAllList(Model model, @PageableDefault(page = 0, size = 10,
             sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
 
-        Page<ProductDetail> items = productService.getAllList(pageable);
+       // Page<ProductDetail> items = productService.getAllList(pageable);
+        ProductCode str = ProductCode.SellOK;
+        Page<ProductDetail> items = productService.getUseList(str,pageable);
         model.addAttribute("items",items);
 
         return "/shop/list";

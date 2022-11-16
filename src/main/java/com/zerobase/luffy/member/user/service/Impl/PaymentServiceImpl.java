@@ -65,10 +65,10 @@ public class PaymentServiceImpl implements PaymentService {
                     .build();
 
             order.setPayment(pay);
-            /* 상품 갯수조절  */
-            int sellTotal = order.getProductDetail().getPnt();
+            /* 상품 갯수조절  상품이 한 개 일때 */
+            int sellTotal = order.getProductDetail().get(0).getPnt();
             int finalCount = sellTotal - order.getCount();
-            order.getProductDetail().setPnt(finalCount);
+            order.getProductDetail().get(0).setPnt(finalCount);
 
             /*보조금 set*/
             Thread.sleep(5000);

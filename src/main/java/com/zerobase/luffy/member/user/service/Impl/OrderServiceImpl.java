@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -69,14 +70,14 @@ public class OrderServiceImpl implements OrderService {
                         .name(members.getName())
                         .phone(members.getPhone())
                         .writer(productDetail.getWriter())
-                        .productDetail(productDetail)
+                        .productDetail(new ArrayList<>())
                         .member(members)
                         .username(members.getUsername())
                         .productId(dto.getProductId())
                         .count(dto.getCount())
                         .build();
 
-
+              // 상품 갯수 만큼 insert 일단 중지
 
                 orderRepository.save(order);
                 return order.getOrderId();

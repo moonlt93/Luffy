@@ -2,6 +2,7 @@ package com.zerobase.luffy.member.admin.service;
 
 import com.zerobase.luffy.member.admin.Dto.ProductDto;
 import com.zerobase.luffy.member.admin.entity.ProductDetail;
+import com.zerobase.luffy.member.type.ProductCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -24,4 +25,6 @@ public interface ProductService {
     Page<ProductDetail> findByTitleContaining(String searchKeyword, Pageable pageable);
 
     ProductDetail findById(Long productId);
+
+    Page<ProductDetail> getUseList(ProductCode str, Pageable pageable);
 }

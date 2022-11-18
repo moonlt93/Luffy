@@ -13,6 +13,8 @@ import com.zerobase.luffy.member.user.repository.OrderProductRepository;
 import com.zerobase.luffy.member.user.repository.OrderRepository;
 import com.zerobase.luffy.member.user.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,6 +41,8 @@ public class OrderServiceImpl implements OrderService {
     private final MemberRepository memberRepository;
     private final ProductDetailRepository productDetailRepository;
 
+
+    @Transactional
     @Override
     public Object createOrder(OrderDto dto) {
 

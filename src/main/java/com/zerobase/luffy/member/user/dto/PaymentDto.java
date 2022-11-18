@@ -46,6 +46,7 @@ public class PaymentDto {
     private String idList;
 
 
+
     public static PaymentDto of(Payment pay) {
 
             return  PaymentDto.builder()

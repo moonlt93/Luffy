@@ -39,7 +39,9 @@ class ProductServiceImplTest {
             .productName("제품").build();
             detail.setId(12L);
 
-     given(productDetailRepository.findById(anyLong()))
+            productDetailRepository.save(detail);
+
+             given(productDetailRepository.findById(anyLong()))
              .willReturn(Optional.of(detail));
     //when
 

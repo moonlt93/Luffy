@@ -6,7 +6,6 @@ import com.zerobase.luffy.member.admin.entity.ProductDetail;
 import com.zerobase.luffy.member.admin.repository.ProductDetailRepository;
 import com.zerobase.luffy.member.type.OrderStatus;
 import com.zerobase.luffy.member.type.PaymentStatus;
-import com.zerobase.luffy.member.type.PaymentType;
 import com.zerobase.luffy.member.user.dto.PaymentDto;
 import com.zerobase.luffy.member.user.entity.Member;
 import com.zerobase.luffy.member.user.entity.OrderItem;
@@ -17,6 +16,8 @@ import com.zerobase.luffy.member.user.repository.PaymentRepository;
 import com.zerobase.luffy.member.user.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +42,8 @@ public class PaymentServiceImpl implements PaymentService {
     private final MemberRepository memberRepository;
     private final ProductDetailRepository productDetailRepository;
 
+    private final RedissonClient redissonClient;
+
     @Override
     public List<Coupon> getCoupons(Long id) {
 
@@ -48,9 +52,10 @@ public class PaymentServiceImpl implements PaymentService {
         return coupons;
     }
 
-    @Transactional
+
     @Override
     public PaymentDto addPayment(PaymentDto dto) throws InterruptedException {
+
         Long id = dto.getOrderId();
         Optional<OrderItem> optionalOrderItem = Optional.ofNullable(orderRepository.findById(id)
                 .orElseThrow(() -> new NullPointerException("해당하는 Order가 없습니다.")));
@@ -64,8 +69,8 @@ public class PaymentServiceImpl implements PaymentService {
         if(optionalOrderItem.isPresent() || optionalMember.isPresent() || optionalProductDetail.isPresent()) {
             ProductDetail detail = optionalProductDetail.get();
             //수량 감소
-            int currentQuantity = detail.getPnt();
-            detail.setPnt(currentQuantity-dto.getProductCnt());
+            int minus = dto.getProductCnt();
+            detail.minus(minus);
 
             //적립금 추가 및 제거
             Member members =optionalMember.get();
@@ -77,9 +82,6 @@ public class PaymentServiceImpl implements PaymentService {
 
             OrderItem order = optionalOrderItem.get();
             order.setOrderStatus(OrderStatus.Costed);
-
-
-
 
             Payment pay = Payment.builder()
                     .paymentStatus(PaymentStatus.PAYMENT_DONE)
@@ -94,18 +96,42 @@ public class PaymentServiceImpl implements PaymentService {
 
             order.setPayment(pay);
 
-
-            /*보조금 set*/
-            Thread.sleep(5000);
-
             pay.getOrderItem().add(order);
 
-            paymentRepository.save(pay);
+            //저장에 성공했다면 3초 락
+            LockMyself(pay);
+
             return PaymentDto.of(pay);
+
+
+
         }
         return null;
 
+    }
 
+    void LockMyself(Payment pays) {
+
+        RLock lock =redissonClient.getLock(pays.getUsername());
+
+        try{
+            boolean isLocked = lock.tryLock(3,3,TimeUnit.SECONDS);
+            log.info("Lock Success");
+            Thread.sleep(1000);
+            if(!isLocked){
+                log.info("Lock fail");
+                throw new RuntimeException("락 획득에 실패했습니다.");
+            }
+
+           paymentRepository.save(pays);
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }finally {
+            //락 해제
+            log.info("UnLock success ");
+            lock.unlock();
+        }
 
     }
 

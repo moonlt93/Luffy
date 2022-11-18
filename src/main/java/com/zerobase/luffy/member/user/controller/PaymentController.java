@@ -63,7 +63,7 @@ public class PaymentController {
     }
 
     @GetMapping("/listCreate/{idList}")
-    public String GetPaymentList(Model model, Principal principal, @PathVariable String idList){
+    public String GetPaymentList(@PathVariable String idList){
 
        log.info("orderNo값 확인:"+idList);
 

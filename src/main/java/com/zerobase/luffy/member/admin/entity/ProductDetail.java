@@ -67,6 +67,10 @@ public class ProductDetail extends BaseHeader {
         this.pnt+=pnt;
     }
 
+    public void minus(final int num){
+        this.pnt-= num;
+    }
+
 
 
 

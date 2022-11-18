@@ -23,10 +23,10 @@ public class ProductDetail extends BaseHeader {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="product_id")
     private Long id;
-
+    @Builder.Default
     @OneToMany(mappedBy = "productDetail",orphanRemoval = true)
     private List<Photoes> photoes =new ArrayList<>();
-
+    @Builder.Default
     @OneToMany(mappedBy = "productDetail",cascade = CascadeType.ALL)
     private List<OrderProduct> orderProduct= new ArrayList<>();
 

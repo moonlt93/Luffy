@@ -49,12 +49,13 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberCode memberStatus;
 
+    @Builder.Default
     @OneToMany(mappedBy="member" ,cascade = CascadeType.ALL,orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<OrderItem>();
-
+    @Builder.Default
     @OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Coupon> coupons = new ArrayList<Coupon>();
-
+    @Builder.Default
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Wish> wishes = new ArrayList<Wish>();
 

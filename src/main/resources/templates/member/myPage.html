@@ -119,6 +119,7 @@
                 <table class="table">
                     <thead>
                     <tr>
+                        <th><input  class="form-check" type="checkbox" id="selectAll"/>Check</th>
                         <th> ID</th>
                         <th>
                             제품이름
@@ -132,8 +133,10 @@
 
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="dataList">
                     <tr th:each="x: ${wishes}">
+                        <td>
+                            <input th:value="${x.wishId}" class="form-check" name="selectId" type="checkbox" id="selectId"/></td>
                         <td>
                             <p th:text="${x.wishId}"></p>
                             <input type="hidden" name="id" th:value="${x.wishId}"/>
@@ -149,7 +152,6 @@
                         <td>
                             <a th:href="'/shop/'+${x.productUrl}">이동</a>
                         </td>
-                        <p>삭제 버튼 만들어죠라</p>
                     </tr>
                     <tr th:if="${#lists.size(wishes)< 1}">
                         <td colspan="5">
@@ -158,10 +160,14 @@
                     </tr>
                     </tbody>
                 </table>
+                <button type="button" onclick="deleteFunc()" name="deleteBtn" style="float: right;" class="btn btn-danger">삭제</button>
             </div>
         </div>
     </div>
 </article>
+<form name="deleteForm" method="post" action="/member/wishDelete">
+    <input type="hidden" name="idList"/>
+</form>
 
 <div th:replace="/fragment/footer.html ::fragment-footer"></div>
 
@@ -182,7 +188,31 @@
 
         });
     });
+function deleteFunc(){
 
+    var $checked = $('#dataList input[type=checkbox]:checked');
+    if ($checked.length < 1) {
+        alert(' 삭제할 데이터를 선택해 주세요. ');
+        return false;
+    }
+
+    if (!confirm(' 선택한 데이터를 삭제하시겠습니까? ')) {
+        return false;
+    }
+
+    let idList = [];
+    $.each($checked, function(k, v) {
+        idList.push($(this).val());
+    });
+
+    console.log(idList);
+    console.log(idList.join(','));
+    alert(idList);
+
+    let $deleteForm = $('form[name=deleteForm]');
+    $deleteForm.find('input[name=idList]').val( idList.join(',') );
+    $deleteForm.submit();
+}
 
 </script>
 

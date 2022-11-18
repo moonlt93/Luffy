@@ -31,4 +31,5 @@ public class OrderDto {
 
     // 회사 정보
     private Long productId;
+    private String idList;
 }

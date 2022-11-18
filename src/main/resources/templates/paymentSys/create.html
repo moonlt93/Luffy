@@ -172,7 +172,7 @@
                                     <dd class="col-sm-9"><input
                                             style="text-align: right; border: none;"
                                             type="text"
-                                            th:value="${item.price}"
+                                            id ="pricePay"
                                             name="pricePay"></dd>
                                 </dl>
 
@@ -212,7 +212,7 @@
                                     </dd>
                                 </dl>
                                 <br/>
-
+                                <input name="plusReserve" id="plusReserve" type="hidden"/>
                                 <div class="row">
                                     <button type="button" id="payBtn" class="btn btn-danger btn-lg ">결제</button>
                                 </div>
@@ -234,20 +234,29 @@
     let reservePay=0;
     let reserve = [[${member.reserve}]];
     let price = [[${item.price}]];
+
     let totalPrice;
     let code=[[${code}]];
     let productId=[[${item.productId}]];
     let couponYn =false;
-    let paymentType;
+    let plusReserve;
+    let ProductCnt=[[${item.count}]];
+    let memberId= [[${member.id}]];
+
+    let pricePay=price * ProductCnt;
+
 
     $(document).ready(function () {
+
+        $('#pricePay').val(pricePay);
+
 
         $('#coupon').change(function () {
 
             let coupons = document.getElementById('coupon');
             let val = coupons.options[coupons.selectedIndex].value;
             couponYn = true;
-            couponPay = ((price * val) / 100);
+            couponPay = ((pricePay * val) / 100);
 
             $('#couponPay').val(couponPay);
             $('#totalPrice').val(totalPrice);
@@ -258,9 +267,9 @@
         $('#reserve').change(function () {
 
             reservePay = $('input[name=reserve]').val();
-            console.log(reservePay);
-            console.log(reserve);
-            if (reserve - reservePay > 0) {
+
+
+            if (reserve - reservePay >= 0) {
                 console.log(reservePay);
                 $('#reservePay').val(reservePay);
             }
@@ -273,8 +282,9 @@
 
             var url="/payment/create";
 
+
             var paramData={
-                reserve:    Math.round(totalPrice / 10),
+                reserve: $('input[name=reserve]').val(),
                 totalPrice: $('input[name=totalPrice]').val(),
                 tax: (totalPrice / 10),
                 productComment: $('textarea[name=textArea]').val(),
@@ -283,8 +293,10 @@
                 couponYn: $('#couponYn').val(),
                 productId: productId,
                 paymentType : $("input[type='checkbox']:checked").val(),
-                reservePay:$('input[name=reservePay]').val()
-
+                reservePay:$('input[name=reservePay]').val(),
+                plusReserve:  Math.floor(totalPrice/10000)*100,
+                ProductCnt: ProductCnt,
+                memberId:memberId
             };
 
             let param =JSON.stringify(paramData);
@@ -299,7 +311,11 @@
                 dataType:"json",
                 cache:false,
                 success:function(jqXHR,data,request){
-                    alert("성공");
+
+                    let code= jqXHR.paymentId;
+                    console.log(code);
+
+                    location.href="/payment/fin/"+code;
                 },
                 error: function (jqXHR,data,status,error){
 
@@ -313,17 +329,17 @@
 
 
         $('#checkBtn').on('click', function () {
-            totalPrice = price;
+            totalPrice = pricePay;
 
             couponPay = $('#couponPay').val();
             reservePay = $('#reservePay').val();
 
-            console.log(price);
+            console.log(pricePay);
             console.log(reservePay);
             console.log(couponPay);
 
 
-            totalPrice = Math.ceil(price - reservePay - (couponPay));
+            totalPrice = Math.ceil(pricePay - reservePay - (couponPay));
 
 
             $('#totalPrice').val(totalPrice);

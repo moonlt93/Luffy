@@ -2,13 +2,19 @@ package com.zerobase.luffy.member.user.service.Impl;
 
 import com.zerobase.luffy.member.admin.entity.ProductDetail;
 import com.zerobase.luffy.member.admin.repository.ProductDetailRepository;
+import com.zerobase.luffy.member.type.OrderStatus;
 import com.zerobase.luffy.member.user.dto.OrderDto;
+import com.zerobase.luffy.member.user.dto.OrderListDto;
 import com.zerobase.luffy.member.user.entity.Member;
 import com.zerobase.luffy.member.user.entity.OrderItem;
+import com.zerobase.luffy.member.user.entity.OrderProduct;
 import com.zerobase.luffy.member.user.repository.MemberRepository;
+import com.zerobase.luffy.member.user.repository.OrderProductRepository;
 import com.zerobase.luffy.member.user.repository.OrderRepository;
 import com.zerobase.luffy.member.user.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +35,10 @@ import static com.zerobase.luffy.member.type.OrderStatus.PreCost;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderProductRepository orderProductRepository;
     private final MemberRepository memberRepository;
     private final ProductDetailRepository productDetailRepository;
+
     @Override
     public Object createOrder(OrderDto dto) {
 
@@ -49,6 +57,11 @@ public class OrderServiceImpl implements OrderService {
                         .orElseThrow(() -> new IllegalArgumentException("잘못된 제품번호 입니다.")));
                 Member members = optionalMember.get();
                 ProductDetail productDetail = optionalProductDetail.get();
+                ProductDetail detail = new ProductDetail();
+                detail.setOrderProduct(new ArrayList<>());
+                detail.setId(productDetail.getId());
+
+
 
 
                 OrderItem order = OrderItem.builder()
@@ -65,21 +78,24 @@ public class OrderServiceImpl implements OrderService {
                         .reserve(dto.getReserve())
                         .price(dto.getPrice())
                         .productId(dto.getProductId())
-                        .registration(members.getRegistration())
+                        .orderProduct(new ArrayList<>())
+                        .member(members)
+                        .phone(members.getPhone())
                         .memberIp(members.getIp())
                         .name(members.getName())
-                        .phone(members.getPhone())
-                        .writer(productDetail.getWriter())
-                        .productDetail(new ArrayList<>())
-                        .member(members)
+                        .registration(members.getRegistration())
                         .username(members.getUsername())
-                        .productId(dto.getProductId())
                         .count(dto.getCount())
+                        .writer(productDetail.getWriter())
                         .build();
 
-              // 상품 갯수 만큼 insert 일단 중지
+
+                OrderProduct pro = new OrderProduct();
+                pro.setOrderItem(order);
+                pro.setProductDetail(detail);
 
                 orderRepository.save(order);
+
                 return order.getOrderId();
             }
             return null;
@@ -139,12 +155,59 @@ public class OrderServiceImpl implements OrderService {
                     .price(order.getPrice())
                     .count(order.getCount())
                     .productName(order.getProductName())
+                    .productId(order.getProductId())
                     .comment(Comment(order))
                     .build();
         }
 
 
         return null;
+    }
+
+
+    @Override
+    public void deleteOrders(OrderListDto dto) {
+
+       String idList = dto.getIdList();
+        if (idList != null && idList.length() > 0) {
+            String[] ids = idList.split(",");
+
+            for (String x : ids) {
+                long orderId = 0L;
+                try {
+
+                        orderId = Long.parseLong(x);
+
+
+                        Optional<OrderProduct> orderProduct = orderProductRepository.findByOrderItem_OrderId(orderId);
+
+                        if(orderProduct.isPresent()) {
+
+                            OrderProduct order = orderProduct.get();
+
+                            order.setOrderItem(new OrderItem());
+
+                            orderRepository.deleteById(orderId);
+                        }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        }
+
+    }
+
+
+    @Override
+    public Page<OrderItem> getOrderList(Pageable pageable, String username) {
+
+
+        Page<OrderItem> page = orderRepository.findByUsernameContaining(username,pageable);
+
+        return page;
     }
 
     private String Comment(OrderItem order){
@@ -154,7 +217,6 @@ public class OrderServiceImpl implements OrderService {
                 .append(order.getCount()+"개").toString();
 
     }
-
 
 
 }

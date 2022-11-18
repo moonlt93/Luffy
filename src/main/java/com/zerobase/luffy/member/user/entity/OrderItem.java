@@ -54,9 +54,10 @@ public class OrderItem extends BaseHeader {
     //회사
     private String companyName;
 
-    //제품
-    @OneToMany(mappedBy = "orderItem" ,cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductDetail> productDetail= new ArrayList<>();
+    // 상품 1개에 주문 여러개일수도?
+    @OneToMany(mappedBy = "orderItem",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<OrderProduct> orderProduct= new ArrayList<>();
+
 
 
     private Long productId;
@@ -71,11 +72,7 @@ public class OrderItem extends BaseHeader {
         this.registration = member.getRegistration();
     }
 
-    public OrderItem(ProductDetail detail){
-        this.productId=detail.getId();
-        this.writer=detail.getWriter();
-        this.productName=detail.getProductName();
-    }
+
 
 
 }

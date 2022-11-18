@@ -23,6 +23,15 @@
             font-weight: bold;
 
         }
+        .numbersPage {
+            text-align: center;
+            font-weight: bold;
+        }
+        .numbersPage a {
+            color:black;
+        }
+
+
     </style>
 </head>
 <body>
@@ -37,7 +46,7 @@
         <section class="container">
             <h1>MyPackage</h1>
             <div class="row">
-                <div class="col-12 col-md-6 mb-3 mb-lg-0">
+                <div class="container table-bordered-center">
                 <table class="table table-light table-hover">
 
                 <thead>
@@ -52,50 +61,70 @@
                 </thead>
                 <tbody id="dataList">
                 <tr th:each=" x :${item}">
-                    <th scope="row"><input  class="form-check" type="checkbox" id="selectId"/></th>
-                    <td th:text="${x.orderId}"></td>
+                    <th scope="row"><input th:value="${x.orderId}" class="form-check" name="selectId" type="checkbox" id="selectId"/></th>
+                    <td th:text="${x.orderId}">
+                        <input type="hidden" name="id" th:value="${x.orderId}"/>
+                    </td>
                     <td th:text="${x.orderCode}"></td>
                     <td th:text="${x.productName}"></td>
                     <td th:text="${x.price}"></td>
                 </tr>
                 </tbody>
             </table>
-                    <button type="submit" name="BtnDel" class="btn btn-outline-danger">주문취소</button>
-            </div>
-                <div class="col-12 col-md-6 ">
-                <h2>
-                <dl class="row">
 
-                    <dt class="col-sm-9">결제할 주문 건 수</dt>
-                    <dd class="col-sm-3"><p>0개</p></dd>
-                </dl></h2>
-                 <div class="buttonArea">
-                     <span><button class="btn btn-dark">결재하러가기</button></span>
-
-
-                 </div>
+                    <div class="buttonArea">
+                                <div style=" float: left;">
+                                     <button id="sendBtn" onclick="clickSend()" class="btn btn-outline-dark">결재하러가기</button>
+                                </div>
+                                <div style="float: right;">
+                                    <button  type="submit" id="BtnDel" name="BtnDel" class="btn btn-outline-danger">주문취소</button>
+                                </div>
+                    </div>
+                    <div class="numbersPage" >
+                        <th:block th:each="page: ${#numbers.sequence(startPage,totalNum)}" th:if="${totalNum > 0}">
+                            <a th:if="${page!=nowPage}" th:href="@{/member/myPackage(page = ${page - 1})}"  th:text="${page}"></a>
+                            <strong th:if="${page == nowPage}" th:text="${page}" style="color:red"></strong>
+                        </th:block>
+                        <th:block th:each="page: ${#numbers.sequence(startPage,totalNum)}" th:if="${totalNum < 0}">
+                            <strong th:if="${page == nowPage}" th:text="${page}" style="color:red"></strong>
+                        </th:block>
+                    </div>
                 </div>
+
             </div>
         </section>
     </article>
+    <form name="submitForm" method="get" action="/payment/listCreate">
+        <input type="hidden" name="idList"/>
+    </form>
+
+    <form name="deleteForm" method="post" action="/order/delete">
+        <input type="hidden" name="idList"/>
+    </form>
+
 
 
     <div th:replace="/fragment/footer.html ::fragment-footer"></div>
 </div>
 
 <script th:inline="javascript">
+    let checkedCount ;
+    $(document).ready(function(){
 
     $('#selectAll').on('click', function() {
 
         var checked = $(this).is(':checked');
+        checkedCount =$("input:checkbox[name=selectId]:checked").length;
         console.log(checked);
+        console.log(checkedCount);
 
 
         $('#dataList input[type=checkbox]').each(function(k, v) {
             $(this).prop('checked', checked);
-        });
 
-        $('#selDelete_btn').on('click', function() {
+        });
+    });
+        $('#BtnDel').on('click', function() {
 
             var $checked = $('#dataList input[type=checkbox]:checked');
             if ($checked.length < 1) {
@@ -114,6 +143,7 @@
 
             console.log(idList);
             console.log(idList.join(','));
+            alert(idList);
 
             let $deleteForm = $('form[name=deleteForm]');
             $deleteForm.find('input[name=idList]').val( idList.join(',') );
@@ -121,7 +151,28 @@
 
         });
 
+
     });
+    function clickSend() {
+
+        let $checked = $('#dataList input[type=checkbox]:checked');
+        let len = $checked.length;
+        console.log($checked);
+        console.log(len);
+        if(2>len || len> 0){
+
+                let idList = [];
+                $.each($checked, function(k, v) {
+                    idList.push($(this).val());
+                });
+                alert( "list 확인:"+idList);
+
+            location.href="/payment/create/"+idList[0];
+            /*    let $sendForm = $('form[name=submitForm]');
+                $sendForm.find('input[name=idList]').val( idList.join(',') );
+                $sendForm.submit();*/
+        }
+    }
 </script>
 </body>
 </html>

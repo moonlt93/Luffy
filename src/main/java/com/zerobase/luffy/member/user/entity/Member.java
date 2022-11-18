@@ -52,7 +52,7 @@ public class Member {
     @OneToMany(mappedBy="member" ,cascade = CascadeType.ALL,orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<OrderItem>();
 
-    @OneToMany(mappedBy = "member" ,orphanRemoval = true)
+    @OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Coupon> coupons = new ArrayList<Coupon>();
 
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL,orphanRemoval = true)

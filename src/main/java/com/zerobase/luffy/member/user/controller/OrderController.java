@@ -1,6 +1,7 @@
 package com.zerobase.luffy.member.user.controller;
 
 import com.zerobase.luffy.member.user.dto.OrderDto;
+import com.zerobase.luffy.member.user.dto.OrderListDto;
 import com.zerobase.luffy.member.user.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +46,19 @@ public class OrderController {
         return new ResponseEntity<>(map ,HttpStatus.OK);
 
     }
+
+    @PostMapping("/delete")
+    public String deleteOrders( OrderListDto dto ){
+
+
+            log.info("dto"+dto);
+           orderService.deleteOrders(dto);
+
+
+        return "redirect:/member/myPackage";
+
+    }
+
 
 
 

@@ -31,15 +31,19 @@ public class PaymentDto {
 
     private List<OrderItem> orderItem;
     private int tax;
-
+    private Long reserve;
     private String productComment;
     private Long productId;
     private String username;
-    private int reserve;
+    private int ProductCnt;
     private int rate;
     private Long orderId;
     private Long reservePay;
     private boolean couponYn;
+    private Long plusReserve;
+    private Long memberId;
+
+    private String idList;
 
 
     public static PaymentDto of(Payment pay) {

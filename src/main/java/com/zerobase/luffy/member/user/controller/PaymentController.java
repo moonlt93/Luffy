@@ -55,9 +55,30 @@ public class PaymentController {
     public ResponseEntity createPayment(@RequestBody PaymentDto dto, Principal principal) throws InterruptedException {
 
         log.info("dto값 확인:"+dto.toString());
+
         dto.setUsername(principal.getName());
         PaymentDto dtos = paymentService.addPayment(dto);
 
         return new ResponseEntity(dtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/listCreate/{idList}")
+    public String GetPaymentList(Model model, Principal principal, @PathVariable String idList){
+
+       log.info("orderNo값 확인:"+idList);
+
+        return "/paymentSys/create";
+    }
+
+
+
+    @GetMapping("/fin/{paymentId}")
+    public String createPayment(Model model ,@PathVariable String paymentId)  {
+
+        Long id = Long.valueOf(paymentId);
+        PaymentDto dtos = paymentService.seletMyPayList(id);
+        model.addAttribute("pay",dtos);
+
+        return "/paymentSys/fin" ;
     }
 }

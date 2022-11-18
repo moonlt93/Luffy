@@ -18,4 +18,5 @@ public class WishDto {
     private String fileUrl;
 
     private String productUrl;
+    private String idList;
 }

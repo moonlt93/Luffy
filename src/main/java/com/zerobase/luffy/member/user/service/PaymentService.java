@@ -9,4 +9,6 @@ public interface PaymentService {
     List<Coupon> getCoupons(Long id);
 
     PaymentDto addPayment(PaymentDto dto) throws InterruptedException;
+
+    PaymentDto seletMyPayList(Long paymentId);
 }

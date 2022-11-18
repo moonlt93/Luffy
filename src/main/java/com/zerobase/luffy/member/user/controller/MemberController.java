@@ -13,6 +13,10 @@ import com.zerobase.luffy.member.bm.service.ManagerService;
 import com.zerobase.luffy.member.user.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +39,7 @@ public class MemberController {
 
     private final OrderService orderService;
     private final ProductService productService;
+
     private final WishService wishService;
 
 
@@ -92,8 +97,6 @@ public class MemberController {
         dto.setId(id);
 
 
-
-
         MessageResult result = memberService.updateDetail(dto);
 
         if(!result.isResult()){
@@ -134,15 +137,33 @@ public class MemberController {
 
     }
     @GetMapping("/myPackage")
-    public String memberPackage(Model model,Principal principal){
+    public String memberPackage(Model model,Principal principal
+     ,@PageableDefault(page = 0, size = 5,
+             sort = "orderId", direction = Sort.Direction.DESC) Pageable pageable){
 
-        List<OrderItem> items = orderService.findByUserName(principal.getName());
+        Page<OrderItem> items = orderService.getOrderList(pageable,principal.getName());
 
+
+        int nowPage = items.getPageable().getPageNumber() + 1;
+        int totalNum = items.getTotalPages();
+        int startPage = totalNum < 5 ? 1 : totalNum - 4;
 
         log.info("내 장바구니");
         model.addAttribute("item",items);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("totalNum", totalNum);
+        model.addAttribute("startPage", startPage);
 
-        return "/member/package";
+        return "/member/myPackage";
+    }
+    @PostMapping("/wishDelete")
+    public String deleteWishes(WishDto dto){
+
+        String id = dto.getIdList();
+
+        wishService.deleteWishes(id);
+
+        return "redirect:/member/myPage";
     }
 
 

@@ -31,12 +31,11 @@ public class JobScheduler {
     private final ProductJob productJob;
 
     private final ManagerProRepository managerProRepository;
-    private final PhotoesRepository photoesRepository;
-    private final ProductDetailRepository productDetail;
+
 
   //    @Scheduled(cron = "0 */2 * * * * ")
-
-      @Scheduled(cron = "0 0 1 1/1 * ? ")
+//  @Scheduled(cron = "0 0 1 1/1 * ? ")
+    @Scheduled(cron = "0 0 1 1/1 * ? ")
     public void ProductCreatedSchedule() {
 
         Map<String, JobParameter> confMap = new HashMap<>();
@@ -65,7 +64,7 @@ public class JobScheduler {
     @Transactional
   //  @Scheduled(cron = "0 5 1 1/1 * ? ")
 
-      @Scheduled(cron = "0 5 1 1/1 * ? ")
+    @Scheduled(cron = "0 5 1 1/1 * ? ")
     public void ProductDeleteSchedule() throws InterruptedException {
 
         log.info("if schedule finished extra data delete");

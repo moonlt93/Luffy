@@ -11,4 +11,6 @@ public interface WishService {
 
 
    List<Wish> getWishes(Long id);
+
+    void deleteWishes(String id);
 }

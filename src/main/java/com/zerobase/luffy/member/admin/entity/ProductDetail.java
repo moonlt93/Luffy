@@ -3,6 +3,7 @@ package com.zerobase.luffy.member.admin.entity;
 import com.zerobase.luffy.Util.base.BaseHeader;
 import com.zerobase.luffy.member.type.BatchStatus;
 import com.zerobase.luffy.member.user.entity.OrderItem;
+import com.zerobase.luffy.member.user.entity.OrderProduct;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,13 +24,11 @@ public class ProductDetail extends BaseHeader {
     @Column(name="product_id")
     private Long id;
 
-    @OneToMany(mappedBy = "productDetail",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "productDetail",orphanRemoval = true)
     private List<Photoes> photoes =new ArrayList<>();
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="orderId")
-    private OrderItem orderItem;
+    @OneToMany(mappedBy = "productDetail",cascade = CascadeType.ALL)
+    private List<OrderProduct> orderProduct= new ArrayList<>();
 
     private String productName;
     private String categoryName;
@@ -43,11 +42,6 @@ public class ProductDetail extends BaseHeader {
     private LocalDateTime endDt;
     private String writer;
     private String companyName;
-
-
-
-
-
 
 
     public ProductDetail(Long id, String productName, String productStatus, int pnt, Long price, String fileName, String urlFileName, String writer, LocalDateTime regDt, String categoryName, String content, String companyName) {
@@ -69,6 +63,11 @@ public class ProductDetail extends BaseHeader {
         photoes.add(photo);
         photo.setProductDetail(this);
     }
+    public void addPnt(final int pnt){
+        this.pnt+=pnt;
+    }
+
+
 
 
 }

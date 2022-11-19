@@ -10,7 +10,11 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
@@ -45,8 +49,10 @@ class PaymentServiceImplTest {
                     .username("진수").build();
 
              paymentServiceImpl.LockMyself(pay);
-                result++;
+             log.info("결제 정보생성: "+i);
+             result++;
         }
+
         Optional<Payment> optionalPayment=paymentRepository.findById(29L);
         Payment payment = null;
         if(optionalPayment.isPresent()) {
@@ -66,8 +72,54 @@ class PaymentServiceImplTest {
 
     }
 
+    @Test
+    @DisplayName("스레드 ")
+    void LockTest(){
+        ArgumentCaptor<Payment> lockCaptor = ArgumentCaptor
+                .forClass(Payment.class);
+        ArgumentCaptor<Payment> unLockCaptor = ArgumentCaptor
+                .forClass(Payment.class);
 
 
+        Payment  payment = Payment.builder()
+                    .paymentId(1L)
+                    .build();
+
+            AtomicInteger i= new AtomicInteger();
+            List<Thread> worker =  Stream
+                    .generate(() -> new Thread(new BuyWorker(payment, i.getAndIncrement())))
+                            .limit(30)
+                            .collect(Collectors.toList());
+
+            worker.forEach(Thread::start);
+
+             paymentServiceImpl.LockMyself(payment);
+
+        verify(paymentServiceImpl,times(31))
+                .LockMyself(lockCaptor.capture());
+        verify(paymentServiceImpl,times(31))
+                .LockMyself(unLockCaptor.capture());
+
+        assertEquals(worker.size(),30);
+        }
+
+
+private class BuyWorker implements Runnable{
+     private final Payment payment ;
+    private int count;
+       public BuyWorker(Payment payment, int andIncrement){
+           this.payment= payment;
+           this.count= andIncrement;
+       }
+
+    @Override
+    public void run() {
+            log.info("run 실행:"+count);
+
+            paymentServiceImpl.LockMyself(payment);
+
+    }
+}
 
 
 

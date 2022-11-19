@@ -48,10 +48,11 @@ ul {
      --bs-btn-disabled-bg: transparent;
      --bs-btn-disabled-border-color: black;
 }
- span #MainBanner a {
-     text-align: left;
- }
 
+#BodyMainMenu div a#logo img {
+    width: 100px;
+    height: 30px;
+}
 
 
 html, body {

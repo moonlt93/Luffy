@@ -73,12 +73,12 @@ public class PaymentServiceImpl implements PaymentService {
             detail.minus(minus);
 
             //적립금 추가 및 제거
-            Member members =optionalMember.get();
-            if(members.getReserve() == null){
-                members.setReserve(dto.getReservePay()+dto.getPlusReserve());
-            }
+            Member members = optionalMember.get();
+
             Long re = members.getReserve();
-            members.setReserve(re-dto.getReservePay()+dto.getPlusReserve());
+
+            ReserveMaker(members,dto, re);
+
 
             OrderItem order = optionalOrderItem.get();
             order.setOrderStatus(OrderStatus.Costed);
@@ -156,5 +156,17 @@ public class PaymentServiceImpl implements PaymentService {
         String dateLength=date.substring(0,4);
         int length = (int)((Math.random()+1)*10000);
         return Long.valueOf(dateLength+length);
+    }
+
+
+     void ReserveMaker( Member members,PaymentDto dto, Long val){
+        if(members.getReserve() == 0){
+            members.setReserve(dto.getReservePay()+dto.getPlusReserve());
+        }
+        if(dto.getReservePay() == 0) {
+            members.setReserve(val+dto.getPlusReserve());
+        }
+
+        members.setReserve(val-dto.getReservePay()+dto.getPlusReserve());
     }
 }

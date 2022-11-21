@@ -53,7 +53,7 @@ public class OrderItem extends BaseHeader {
 
     //회사
     private String companyName;
-
+    @Builder.Default
     // 상품 1개에 주문 여러개일수도?
     @OneToMany(mappedBy = "orderItem",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<OrderProduct> orderProduct= new ArrayList<>();

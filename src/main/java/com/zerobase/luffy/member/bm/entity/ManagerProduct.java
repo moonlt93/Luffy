@@ -22,6 +22,7 @@ public class ManagerProduct extends BaseHeader {
     @Column(name="Manager_product_id")
     private Long id;
 
+    @Builder.Default
     @OneToMany(mappedBy = "ManagerProduct",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Photo> photoList = new ArrayList<>();
 

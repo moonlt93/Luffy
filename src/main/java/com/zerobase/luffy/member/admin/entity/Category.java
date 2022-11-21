@@ -33,6 +33,7 @@ public class Category {
 
 
    // @OrderBy("sortValue asc")
+    @Builder.Default
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<Category> children = new ArrayList<>();
 

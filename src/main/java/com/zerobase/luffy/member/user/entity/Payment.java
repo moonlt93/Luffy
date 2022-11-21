@@ -28,6 +28,7 @@ public class Payment extends BaseHeader {
     @Enumerated(value=EnumType.STRING)
     private PaymentStatus paymentStatus;
 
+    @Builder.Default
     @OneToMany(mappedBy = "payment" ,cascade = CascadeType.ALL,orphanRemoval = true)
     private List<OrderItem> orderItem= new ArrayList<>();
 

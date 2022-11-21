@@ -14,4 +14,6 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail,Lon
     Page<ProductDetail> findByProductNameContaining(String searchKeyword, Pageable pageable);
 
     Page<ProductDetail> findByProductStatusContaining(ProductCode str, Pageable pageable);
+
+    Page<ProductDetail> findByProductStatusContainingAndCategory_CategoryId(Pageable pageable, ProductCode str, Long categoryId);
 }

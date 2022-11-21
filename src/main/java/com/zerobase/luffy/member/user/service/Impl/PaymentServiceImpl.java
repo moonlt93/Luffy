@@ -70,7 +70,7 @@ public class PaymentServiceImpl implements PaymentService {
             ProductDetail detail = optionalProductDetail.get();
             //수량 감소
             int minus = dto.getProductCnt();
-            detail.minus(minus);
+             detail.minus(minus);
 
             //적립금 추가 및 제거
             Member members = optionalMember.get();
@@ -110,6 +110,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     }
 
+
+
     void LockMyself(Payment pays) {
 
         RLock lock =redissonClient.getLock(pays.getUsername());
@@ -123,7 +125,7 @@ public class PaymentServiceImpl implements PaymentService {
                 throw new RuntimeException("락 획득에 실패했습니다.");
             }
 
-           paymentRepository.save(pays);
+            paymentRepository.save(pays);
 
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

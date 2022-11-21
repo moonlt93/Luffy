@@ -9,11 +9,9 @@ import com.zerobase.luffy.member.admin.entity.Photoes;
 import com.zerobase.luffy.member.admin.entity.ProductDetail;
 import com.zerobase.luffy.member.admin.service.ProductService;
 import com.zerobase.luffy.member.type.ProductCode;
-import com.zerobase.luffy.member.user.dto.PaymentDto;
 import com.zerobase.luffy.response.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.TransientPropertyValueException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,7 +22,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.AuthenticationNotSupportedException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,12 +41,24 @@ public class ShopController {
     public String MainAllList(Model model, @PageableDefault(page = 0, size = 10,
             sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        // Page<ProductDetail> items = productService.getAllList(pageable);
         ProductCode str = ProductCode.SellOK;
         Page<ProductDetail> items = productService.getUseList(str, pageable);
         model.addAttribute("items", items);
 
         return "/shop/list";
+    }
+
+    @GetMapping("/list/{parentId}/{children}")
+    public String MainCategoryList(Model model, @PageableDefault(page = 0, size = 10,
+            sort = "id", direction = Sort.Direction.DESC) Pageable pageable
+    ,@PathVariable Map<String,String> pathMulti) {
+
+        Long childrenId= Long.valueOf(pathMulti.get("children"));
+        ProductCode str = ProductCode.SellOK;
+        Page<ProductDetail> items = productService.getCategoryList(str,childrenId, pageable);
+
+        model.addAttribute("items", items);
+        return "/shop/categoryList";
     }
 
 
@@ -75,12 +84,11 @@ public class ShopController {
     public ResponseEntity makeWishList(@RequestBody WishDto dto
             , Principal principal) {
 
-
         try {
 
             ResponseMessage message = wishService.createWish(dto, principal.getName());
 
-            return new ResponseEntity(AnswerMaker(String.valueOf(message)), HttpStatus.OK);
+            return new ResponseEntity(AnswerMaker(String.valueOf(message)),HttpStatus.OK);
 
         } catch (NullPointerException e) {
 

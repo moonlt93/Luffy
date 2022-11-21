@@ -1,8 +1,6 @@
 package com.zerobase.luffy.scheduler;
 
 import com.zerobase.luffy.batch.ProductJob;
-import com.zerobase.luffy.member.admin.repository.PhotoesRepository;
-import com.zerobase.luffy.member.admin.repository.ProductDetailRepository;
 import com.zerobase.luffy.member.bm.entity.ManagerProduct;
 import com.zerobase.luffy.member.bm.repository.ManagerProRepository;
 import com.zerobase.luffy.member.type.ProductCode;
@@ -33,8 +31,6 @@ public class JobScheduler {
     private final ManagerProRepository managerProRepository;
 
 
-  //    @Scheduled(cron = "0 */2 * * * * ")
-//  @Scheduled(cron = "0 0 1 1/1 * ? ")
     @Scheduled(cron = "0 0 1 1/1 * ? ")
     public void ProductCreatedSchedule() {
 
@@ -62,8 +58,6 @@ public class JobScheduler {
 
 
     @Transactional
-  //  @Scheduled(cron = "0 5 1 1/1 * ? ")
-
     @Scheduled(cron = "0 5 1 1/1 * ? ")
     public void ProductDeleteSchedule() throws InterruptedException {
 

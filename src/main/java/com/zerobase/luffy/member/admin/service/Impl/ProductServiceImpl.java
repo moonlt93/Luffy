@@ -14,9 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -26,8 +24,6 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductDetailRepository productDetailRepository;
-
-
 
 
     @Override
@@ -45,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
 
         Optional<ProductDetail> optionalDto = productDetailRepository.findById(id);
 
-        if (!optionalDto.isEmpty()) {
+        if (optionalDto.isPresent()) {
 
             ProductDetail dto = optionalDto.get();
 
@@ -63,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
                     .writer(dto.getWriter())
                     .build();
         }
-
+        log.error("list get fail");
         return null;
     }
 
@@ -71,9 +67,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public boolean set(ProductDto dto) {
 
-        Optional<ProductDetail> optionalDetail = productDetailRepository.findById(dto.getId());
+        Optional<ProductDetail> optionalDetail = Optional.ofNullable(productDetailRepository.findById(dto.getId())
+                .orElseThrow(() -> new NullPointerException("해당하는 제품이 없습니다.")));
 
-        if (!optionalDetail.isPresent()) {
+        if (optionalDetail.isEmpty()) {
             return false;
         }
 
@@ -176,6 +173,7 @@ public class ProductServiceImpl implements ProductService {
                 pro.addPhotoes(photoes);
             }
             productDetailRepository.save(pro);
+            log.info("add success");
             return true;
         } else {
 
@@ -205,6 +203,7 @@ public class ProductServiceImpl implements ProductService {
 
             pro.getPhotoes().add(photoes);
             productDetailRepository.save(pro);
+            log.info("add success");
             return true;
         }
 
@@ -219,13 +218,11 @@ public class ProductServiceImpl implements ProductService {
             for (String x : ids) {
                 long id = 0L;
                 try {
-                    id = Long.parseLong(x);
-                    if (ids.length > 0) {
-
+                        id = Long.parseLong(x);
                         productDetailRepository.deleteById(id);
-                    }
+                    log.info("add success");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error("add fail");
                 }
 
             }
@@ -250,6 +247,13 @@ public class ProductServiceImpl implements ProductService {
         return page;
     }
 
+    @Override
+    public Page<ProductDetail> getCategoryList(ProductCode str, Long childrenId, Pageable pageable) {
+        Page<ProductDetail> page = productDetailRepository. findByProductStatusContainingAndCategory_CategoryId(pageable,str,childrenId);
+
+        return page;
+    }
+
     private String replaceString(String replaceFile) {
 
         return replaceFile.replace("-", "");
@@ -259,7 +263,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDetail findById(Long productId) {
 
-        Optional<ProductDetail> optionalProductDetail = productDetailRepository.findById(productId);
+        Optional<ProductDetail> optionalProductDetail = Optional.ofNullable(productDetailRepository.findById(productId)
+                .orElseThrow(() -> new NullPointerException("해당하는 상품이 없습니다.")));
 
         if (optionalProductDetail.isPresent()) {
             ProductDetail pro = optionalProductDetail.get();
@@ -268,6 +273,7 @@ public class ProductServiceImpl implements ProductService {
                     .urlFileName(pro.getUrlFileName())
                     .build();
         }
+        log.error("get fail");
         return null;
     }
 

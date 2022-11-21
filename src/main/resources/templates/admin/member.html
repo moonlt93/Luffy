@@ -18,22 +18,22 @@
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
             crossorigin="anonymous"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
 
-            $('#selectAll').on('click', function() {
+            $('#selectAll').on('click', function () {
 
                 var checked = $(this).is(':checked');
                 console.log(checked);
 
 
-                $('#dataList input[type=checkbox]').each(function(k, v) {
+                $('#dataList input[type=checkbox]').each(function (k, v) {
                     $(this).prop('checked', checked);
                 });
 
 
             });
 
-            $('#selDelete_btn').on('click', function() {
+            $('#selDelete_btn').on('click', function () {
 
                 var $checked = $('#dataList input[type=checkbox]:checked');
                 if ($checked.length < 1) {
@@ -46,7 +46,7 @@
                 }
 
                 let idList = [];
-                $.each($checked, function(k, v) {
+                $.each($checked, function (k, v) {
                     idList.push($(this).val());
                 });
 
@@ -54,7 +54,7 @@
                 console.log(idList.join(','));
 
                 let $deleteForm = $('form[name=deleteForm]');
-                $deleteForm.find('input[name=idList]').val( idList.join(',') );
+                $deleteForm.find('input[name=idList]').val(idList.join(','));
                 $deleteForm.submit();
 
             });
@@ -75,7 +75,7 @@
     <table class="table">
         <thead>
         <tr>
-            <td> <input id="selectAll" type="checkbox"/></td>
+            <td><input id="selectAll" type="checkbox"/></td>
             <td>No</td>
             <td>이름</td>
             <td>이메일</td>
@@ -83,7 +83,9 @@
             <td>등록일자</td>
             <td>수정일자</td>
             <td>거주지</td>
+            <td>회원권한</td>
             <td>회원상태</td>
+            <td>#</td>
         </tr>
         </thead>
         <tbody id="dataList">
@@ -97,37 +99,45 @@
                 <p th:text="${x.id}">1</p>
             </td>
             <td>
-                <input class="form-control" name="name" type="text"
-                       th:value="${x.name}" readonly/>
+                <p name="name" type="text"  th:text="${x.name}"/>
             </td>
             <td>
-                <input class="form-control" name="email" type="email"
-                       th:value="${x.email}" readonly/>
+                <p name="email" type="text" th:text="${x.email}"/>
             </td>
             <td>
-                <input class="form-control" type="text" th:value="${x.ip}"
-                       readonly/>
+                <p name="ip" type="text"  th:text="${x.ip}"/>
             </td>
             <td>
-                <input class="form-control" type="text" th:value="${x.regDt}"
-                       readonly/>
+                <p name="regDt" type="text"  th:text="${x.regDt}"/>
             </td>
             <td>
-                <input class="form-control" type="text" th:value="${x.upDt}"
-                       readonly/>
+                <p name="upDt" type="text"   th:text="${x.upDt}"/>
             </td>
             <td>
-                <input class="form-control" name="registration" type="text"
-                       th:value="${x.registration}" readonly/>
+                <p name="registration" type="text"  th:text="${x.registration}"/>
             </td>
             <td>
-                <!--    <input  class="form-control" name="registration" type="text" th:value="${x.memberStatus}"/>-->
-                <select name="memberStatus" class="form-control" th:value="${x.memberStatus}">
-                    <option th:selected="${x.memberStatus} == 'ING'">ING</option>
-                    <option th:selected="${x.memberStatus} == 'UNREGISTERED'">UNREGISTERED</option>
+                <select name="memberStatus" th:value="${x.memberStatus}">
+                    <option th:each="StatusValues: ${T(com.zerobase.luffy.member.type.MemberCode).values()}"
+                            th:text="${StatusValues.name()}"
+                            th:selected="${StatusValues.name() == x.memberStatus}">
+                    </option>
                 </select>
             </td>
+            <td>
+                <select name="ROLE" th:value="${x.ROLE}">
+                    <option th:each="StatusValues: ${T(com.zerobase.luffy.member.type.MemberRole).values()}"
+                            th:text="${StatusValues.name()}"
+                            th:selected="${StatusValues.name() == x.ROLE}">
+                    </option>
+                </select>
 
+            </td>
+            <td>
+                <div class="inline-div">
+                    <button id="update-button"  class="btn btn-outline-warning" type="button">수정</button>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -138,6 +148,53 @@
     <input type="hidden" name="idList"/>
 
 </form>
+
+<form method="post" name="updateForm" action="/admin/main/update">
+    <input  type="hidden" name="id" />
+    <input type="hidden" name="ROLE"/>
+    <input type="hidden" name="memberStatus"/>
+
+
+</form>
+
+<script>
+    $(document).ready(function () {
+
+
+        $('.inline-div #update-button').on('click', function () {
+
+            if (!confirm("해당회원을 수정하시겠습니까?")) {
+                return false;
+            }
+            var $this = $(this);
+            var $tr = $this.closest('tr');
+
+            var id = $tr.find('input[type=checkbox]:checked').val();
+            var ROLE = $tr.find('select[name=ROLE]').val();
+            var memberStatus = $tr.find('select[name=memberStatus]').val();
+
+
+            console.log(id);
+            console.log(ROLE);
+            console.log(memberStatus);
+
+
+
+            var $updateForm = $('form[name=updateForm]');
+            $updateForm.find('input[name=id]').val(id);
+            $updateForm.find('input[name=ROLE]').val(ROLE);
+            $updateForm.find('input[name=memberStatus]').val(memberStatus);
+
+            $updateForm.submit();
+        });
+
+
+
+
+
+    });
+
+</script>
 
 </body>
 </html>

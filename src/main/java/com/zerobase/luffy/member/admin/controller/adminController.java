@@ -43,10 +43,18 @@ public class adminController {
 
     @PostMapping("/member/delete")
     public String PostMemberDel(MemberInput dto){
-
+        log.info("회원 삭제"+dto);
         adminService.memberDelete(dto.getIdList());
 
-        log.info("삭제완료");
+        return "redirect:/admin/member";
+    }
+
+    @PostMapping("/main/update")
+    public String updateMember(MemberInput dto){
+
+        log.info("check"+dto);
+        adminService.memberUpdate(dto);
+
         return "redirect:/admin/member";
     }
 

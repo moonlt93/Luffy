@@ -4,6 +4,6 @@ import lombok.Getter;
 
 @Getter
 public enum ResponseMessage {
-     success,
-     fail;
+     success,fail
+
 }

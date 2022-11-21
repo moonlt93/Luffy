@@ -71,7 +71,6 @@ public class PaymentController {
     }
 
 
-
     @GetMapping("/fin/{paymentId}")
     public String createPayment(Model model ,@PathVariable String paymentId)  {
 

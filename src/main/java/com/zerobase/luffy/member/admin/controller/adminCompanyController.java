@@ -4,6 +4,7 @@ import com.zerobase.luffy.member.admin.Dto.CompanyDto;
 import com.zerobase.luffy.member.admin.Dto.ProductDto;
 import com.zerobase.luffy.member.admin.entity.Company;
 import com.zerobase.luffy.member.admin.service.CompanyService;
+import com.zerobase.luffy.response.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -95,10 +96,13 @@ public class adminCompanyController {
                 model.addAttribute("message", "상품정보가 없습니다.");
                 return "/common/error/error";
             }
-            boolean result = companyService.set(dto);
+            ResponseMessage result = companyService.set(dto);
+            log.info("company Update info:"+ result);
 
         } else {
-            boolean result = companyService.add(dto);
+            ResponseMessage result = companyService.add(dto);
+
+            log.info("company create info:"+ result);
 
         }
 
@@ -108,7 +112,9 @@ public class adminCompanyController {
     @PostMapping("/delete")
     public String deleteSubmit(ProductDto dto) {
 
-        boolean result = companyService.del(dto.getIdList());
+        ResponseMessage result = companyService.del(dto.getIdList());
+
+        log.info("company delete info:"+ result);
 
 
         return "redirect:/admin/company/list";

@@ -3,7 +3,9 @@ package com.zerobase.luffy.member.admin.controller;
 
 import com.zerobase.luffy.member.admin.Dto.CategoryDto;
 import com.zerobase.luffy.member.admin.service.CategoryService;
+import com.zerobase.luffy.response.ResponseMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/admin/category")
 public class adminCategoryController {
 
@@ -33,11 +36,7 @@ public class adminCategoryController {
     public String add(CategoryDto dto) {
 
 
-        boolean result = categoryService.createCategory(dto);
-
-        System.out.println("parentId: "+dto.getParentId());
-     // boolean result = categoryService.add(dto);
-
+        categoryService.createCategory(dto);
 
         return "redirect:/admin/category/list";
     }
@@ -45,15 +44,18 @@ public class adminCategoryController {
     @PostMapping("/delete")
     public String del(CategoryDto dto) {
 
-        boolean result = categoryService.del(dto.getId());
+        categoryService.del(dto.getId());
+
         return "redirect:/admin/category/list";
     }
 
     @PostMapping("/update")
     public String update(CategoryDto dto) {
-        System.out.println(dto.isUsingYn());
 
-        boolean result = categoryService.update(dto);
+        ResponseMessage result = categoryService.update(dto);
+
+        log.info("category Update result"+result);
+
         return "redirect:/admin/category/list";
     }
 

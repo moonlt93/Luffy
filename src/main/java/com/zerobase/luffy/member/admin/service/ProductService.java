@@ -6,8 +6,6 @@ import com.zerobase.luffy.member.type.ProductCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
 public interface ProductService {
 
 
@@ -27,4 +25,6 @@ public interface ProductService {
     ProductDetail findById(Long productId);
 
     Page<ProductDetail> getUseList(ProductCode str, Pageable pageable);
+
+    Page<ProductDetail> getCategoryList(ProductCode str, Long childrenId, Pageable pageable);
 }

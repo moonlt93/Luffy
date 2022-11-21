@@ -7,20 +7,33 @@
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="/css/category.css" rel="stylesheet">
+    <style>
+        h1 {
+            font-family: "Century Gothic", serif;
+            text-decoration: underline;
+            padding-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+
+        }
+    </style>
 </head>
 <body>
 <header>
     <div th:replace="/fragment/header.html :: fragment-body-menu"></div>
 </header>
-<h1>로그인 화면 </h1>
-<div  class="col-12 col-md-6 mb-3 mb-lg-3" >
+<h1> LoginForm </h1>
+<div class="row justify-content-md-center">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
   <form action="/member/login" method="post">
-    <input type="text" name="username" placeholder="아이디를 입력하세요"> <br/>
-    <input type="password" name="password" placeholder="비밀번호를 입력하세요"> <br/>
-  <button>로그인</button>
+    <input  class="form-control" type="text" name="username" placeholder="아이디를 입력하세요"> <br/>
+    <input  class="form-control" type="password" name="password" placeholder="비밀번호를 입력하세요"> <br/>
+  <button class="btn btn-outline-success">로그인</button>
   </form>
-        <a href="/member/register">아직 회원가입을 안하셨나요?</a>
-        <a href="/manager/login">아직 등록을 안하셨나요?</a>
+        </div>
+    </div>
+
 </div>
 <div th:replace="/fragment/footer.html ::fragment-footer"></div>
 

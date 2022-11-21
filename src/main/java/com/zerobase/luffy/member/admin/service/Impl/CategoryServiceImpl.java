@@ -3,28 +3,26 @@ package com.zerobase.luffy.member.admin.service.Impl;
 
 import com.zerobase.luffy.member.admin.Dto.CategoryDto;
 import com.zerobase.luffy.member.admin.entity.Category;
-import com.zerobase.luffy.member.admin.repository.CategoryQueryDslRepository;
 import com.zerobase.luffy.member.admin.repository.CategoryRepository;
 import com.zerobase.luffy.member.admin.service.CategoryService;
+import com.zerobase.luffy.response.ResponseMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.groupingBy;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
 
     private final CategoryRepository categoryRepository;
-    private final CategoryQueryDslRepository categoryQueryDslRepository;
 
     @Override
     public List<CategoryDto> selectList() {
@@ -34,32 +32,29 @@ public class CategoryServiceImpl implements CategoryService {
         return CategoryDto.of(categories);
     }
 
+
+
     @Override
-    public boolean add(CategoryDto dto) {
+    public void del(Long id) {
 
-        final Category parent = categoryRepository.findById(dto.getParentId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Menu입니다."));
+        Optional<Category> optionalCategory = Optional.ofNullable(categoryRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException("키에 해당하는 카테고리가 없습니다.")));
 
-        Category category = Category.builder()
-                .categoryName(dto.getCategoryName())
-                .usingYn(true)
-                .sortValue(0)
-                .parent(parent)
-                .build();
-        categoryRepository.save(category);
-        return false;
+        if(optionalCategory.isPresent()) {
+
+            Category category = optionalCategory.get();
+
+            categoryRepository.deleteCategory(category.getCategoryId());
+            log.info("category Del is success");
+        }
+        log.error("category del is fail ");
     }
 
     @Override
-    public boolean del(Long id) {
+    public ResponseMessage update(CategoryDto dto) {
+        Optional<Category> optionalCategory = Optional.ofNullable(categoryRepository.findById(dto.getId())
+                .orElseThrow(() -> new NullPointerException("id에 해당하는 Category가 없습니다.")));
 
-        categoryRepository.deleteById(id);
-        return true;
-    }
-
-    @Override
-    public boolean update(CategoryDto dto) {
-        Optional<Category> optionalCategory = categoryRepository.findById(dto.getId());
         if (optionalCategory.isPresent()) {
             Category category = optionalCategory.get();
 
@@ -67,10 +62,10 @@ public class CategoryServiceImpl implements CategoryService {
             category.setSortValue(dto.getSortValue());
             category.setUsingYn(dto.isUsingYn());
             categoryRepository.save(category);
-
+            return ResponseMessage.success;
         }
-        return true;
 
+        return ResponseMessage.fail;
     }
 
 
@@ -78,34 +73,36 @@ public class CategoryServiceImpl implements CategoryService {
         return Sort.by(Sort.Direction.DESC, "categoryId");
     }
 
-    ;
+
 
 
     @Override
-    public boolean createCategory(CategoryDto dto) {
+    public void createCategory(CategoryDto dto)   {
 
-        final Category parent = categoryRepository.findById(dto.getParentId())
-                .orElseThrow(() -> new IllegalArgumentException("이미 존재하는 메뉴 입니다."));
-
-        final  Category category = Category.builder()
-                .categoryName(dto.getCategoryName())
-                .parent(parent)
-                .children(new ArrayList<>())
-                .usingYn(true)
-                .sortValue(0)
-                .build();
-
-        final Category saved = categoryRepository.save(category);
-
-        return true;
+        //해당 id와 이름이 같지 않은 카테고리 생성
+         Optional<Category> optionalCategory = Optional.ofNullable(categoryRepository.findById(dto.getParentId())
+                 .orElseThrow(() -> new NoSuchElementException("해당하는 parentId가 없습니다.")));
 
 
-    }
+         if(optionalCategory.isPresent()) {
 
-    @Transactional
-    public List<CategoryDto> getCategoryList() {
-        final List<Category> all = categoryQueryDslRepository.findAllWithQuerydsl();
-        return all.stream().map(CategoryDto::new).collect(Collectors.toList());
+             Category cate = optionalCategory.get();
+
+             final Category category = Category.builder()
+                     .categoryName(dto.getCategoryName())
+                     .parent(cate)
+                     .children(new ArrayList<>())
+                     .usingYn(true)
+                     .sortValue(0)
+                     .build();
+
+             categoryRepository.save(category);
+
+            log.info("category is success");
+         }
+
+        log.error("Create category is fail");
+
     }
 
 

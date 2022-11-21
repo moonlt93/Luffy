@@ -5,4 +5,6 @@ import com.zerobase.luffy.member.admin.Dto.MemberInput;
 public interface AdminService {
 
     void memberDelete(String IdList);
+
+    void memberUpdate(MemberInput dto);
 }

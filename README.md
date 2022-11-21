@@ -19,7 +19,7 @@
 
 **Spring batch** / **Spring Security**
 
-**MySQL** / **Redis**
+**MariaDB** / **Redis**
 
 **ThymeLeaf**
 
@@ -27,13 +27,8 @@
 
 ## 주요 기능 
 
-- [ ] 대용량 데이터처리 : Springbatch
-- [ ] 트랜잭션 및 VALIDATION : SPRING AOP
-- [ ] 메시지 큐  : REDIS
-- [ ] 동시성 제어 : REDIS
-
-### 추후 +@ 추가 예정
-
+- [✔] 대용량 데이터처리 : Springbatch
+- [✔] 동시성 제어 : REDIS
 
 <hr/>
 

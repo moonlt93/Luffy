@@ -2,7 +2,6 @@ package com.zerobase.luffy.member.user.service.Impl;
 
 import com.zerobase.luffy.member.admin.entity.ProductDetail;
 import com.zerobase.luffy.member.admin.repository.ProductDetailRepository;
-import com.zerobase.luffy.member.type.OrderStatus;
 import com.zerobase.luffy.member.user.dto.OrderDto;
 import com.zerobase.luffy.member.user.dto.OrderListDto;
 import com.zerobase.luffy.member.user.entity.Member;
@@ -13,8 +12,7 @@ import com.zerobase.luffy.member.user.repository.OrderProductRepository;
 import com.zerobase.luffy.member.user.repository.OrderRepository;
 import com.zerobase.luffy.member.user.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +30,7 @@ import static com.zerobase.luffy.member.type.OrderStatus.PreCost;
 
 @Service
 @Transactional
+@Slf4j
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
@@ -99,9 +97,11 @@ public class OrderServiceImpl implements OrderService {
                 pro.setProductDetail(detail);
 
                 orderRepository.save(order);
+                log.info("insert success");
 
                 return order.getOrderId();
             }
+            log.error("insert fail");
             return null;
     }
 
@@ -192,10 +192,11 @@ public class OrderServiceImpl implements OrderService {
                             order.setOrderItem(new OrderItem());
 
                             orderRepository.deleteById(orderId);
+                            log.info("order delete success");
                         }
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error("order delete fail");
                 }
 
             }

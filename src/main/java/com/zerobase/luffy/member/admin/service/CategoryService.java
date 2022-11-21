@@ -1,22 +1,19 @@
 package com.zerobase.luffy.member.admin.service;
 
 import com.zerobase.luffy.member.admin.Dto.CategoryDto;
+import com.zerobase.luffy.response.ResponseMessage;
 
 import java.util.List;
 
 public interface CategoryService {
     List<CategoryDto> selectList();
 
-    boolean add(CategoryDto categoryDto);
+    void del(Long id);
 
-    boolean del(Long id);
-
-    boolean update(CategoryDto dto);
+    ResponseMessage update(CategoryDto dto);
 
 
-     boolean createCategory(CategoryDto dto);
+    void createCategory(CategoryDto dto);
 
-    List<CategoryDto> getCategoryList();
 
-  /*  List<CategoryDto> getCateListId(Long parentId);*/
 }

@@ -4,7 +4,9 @@ import com.zerobase.luffy.member.admin.Dto.CompanyDto;
 import com.zerobase.luffy.member.admin.entity.Company;
 import com.zerobase.luffy.member.admin.repository.CompanyRepository;
 import com.zerobase.luffy.member.admin.service.CompanyService;
+import com.zerobase.luffy.response.ResponseMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
 
@@ -47,7 +50,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         Optional<Company> optionalDto = companyRepository.findById(id);
 
-        if (!optionalDto.isEmpty()) {
+        if (optionalDto.isPresent()) {
 
             Company company = optionalDto.get();
 
@@ -62,14 +65,14 @@ public class CompanyServiceImpl implements CompanyService {
                     .companyStatus(company.getCompanyStatus())
                     .build();
 
-
         }
+        log.error("company chceck fail");
         return null;
     }
 
 
     @Override
-    public boolean add(CompanyDto dto) {
+    public ResponseMessage add(CompanyDto dto) {
 
         Company company = Company.builder()
                 .companyName(dto.getCompanyName())
@@ -80,16 +83,16 @@ public class CompanyServiceImpl implements CompanyService {
                 .companyCall(dto.getCompanyCall())
                 .build();
         companyRepository.save(company);
-        return true;
+        return ResponseMessage.success;
     }
 
 
     @Override
-    public boolean set(CompanyDto dto) {
+    public ResponseMessage set(CompanyDto dto) {
         Optional<Company> optionalCompany = companyRepository.findById(dto.getId());
 
         if (optionalCompany.isEmpty()) {
-            return false;
+            return ResponseMessage.fail;
         }
 
         Company company = optionalCompany.get();
@@ -103,12 +106,12 @@ public class CompanyServiceImpl implements CompanyService {
 
         companyRepository.save(company);
 
-        return true;
+        return ResponseMessage.success;
     }
 
 
     @Override
-    public boolean del(String idList) {
+    public ResponseMessage del(String idList) {
 
 
         if (idList != null && idList.length() > 0) {
@@ -128,7 +131,7 @@ public class CompanyServiceImpl implements CompanyService {
             }
 
         }
-        return true;
+        return ResponseMessage.success;
     }
 
 

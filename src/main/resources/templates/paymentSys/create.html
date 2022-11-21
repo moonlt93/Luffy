@@ -250,7 +250,6 @@
 
         $('#pricePay').val(pricePay);
 
-
         $('#coupon').change(function () {
 
             let coupons = document.getElementById('coupon');
@@ -268,9 +267,8 @@
 
             reservePay = $('input[name=reserve]').val();
 
-
             if (reserve - reservePay >= 0) {
-                console.log(reservePay);
+
                 $('#reservePay').val(reservePay);
             }
 
@@ -300,7 +298,7 @@
             };
 
             let param =JSON.stringify(paramData);
-            console.log(param);
+
 
             $.ajax({
                 url: url,
@@ -313,7 +311,6 @@
                 success:function(jqXHR,data,request){
 
                     let code= jqXHR.paymentId;
-                    console.log(code);
 
                     location.href="/payment/fin/"+code;
                 },
@@ -333,10 +330,6 @@
 
             couponPay = $('#couponPay').val();
             reservePay = $('#reservePay').val();
-
-            console.log(pricePay);
-            console.log(reservePay);
-            console.log(couponPay);
 
 
             totalPrice = Math.ceil(pricePay - reservePay - (couponPay));

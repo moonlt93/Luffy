@@ -2,7 +2,6 @@ package com.zerobase.luffy.member.admin.entity;
 
 import com.zerobase.luffy.Util.base.BaseHeader;
 import com.zerobase.luffy.member.type.BatchStatus;
-import com.zerobase.luffy.member.user.entity.OrderItem;
 import com.zerobase.luffy.member.user.entity.OrderProduct;
 import lombok.*;
 
@@ -26,9 +25,15 @@ public class ProductDetail extends BaseHeader {
     @Builder.Default
     @OneToMany(mappedBy = "productDetail",orphanRemoval = true)
     private List<Photoes> photoes =new ArrayList<>();
+
     @Builder.Default
     @OneToMany(mappedBy = "productDetail",cascade = CascadeType.ALL)
     private List<OrderProduct> orderProduct= new ArrayList<>();
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="categoryId")
+    private Category category;
 
     private String productName;
     private String categoryName;

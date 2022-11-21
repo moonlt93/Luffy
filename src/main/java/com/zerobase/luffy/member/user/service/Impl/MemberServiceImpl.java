@@ -1,8 +1,8 @@
 package com.zerobase.luffy.member.user.service.Impl;
 
+import com.zerobase.luffy.Util.passUtil;
 import com.zerobase.luffy.main.entity.Coupon;
 import com.zerobase.luffy.member.user.dto.MemberDto;
-import com.zerobase.luffy.Util.passUtil;
 import com.zerobase.luffy.member.user.entity.Member;
 import com.zerobase.luffy.member.user.model.MessageResult;
 import com.zerobase.luffy.member.user.repository.MemberRepository;
@@ -146,12 +146,6 @@ public class MemberServiceImpl implements MemberService {
         return new MessageResult();
     }
 
-    public MemberDto getMember(Long userId){
-        MemberDto member = MemberDto.EntityBuild(memberRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("USER_NOT_FOUND")));
-
-            return member;
-    }
 
     @Override
     public List<MemberDto> memberList(MemberDto dto) {
@@ -167,18 +161,3 @@ public class MemberServiceImpl implements MemberService {
     }
 }
 
-
-/*@Override
-    public List<MemberDto> getUserListByUsername(String username) {
-
-        List<Member> list = memberRepository.findUserListByUsername(username);
-
-        if(list.isEmpty()){
-            return (List<MemberDto>) new NullPointerException("리스트가 없습니다.");
-        }
-
-        return list.stream()
-                .map(MemberDto::EntityBuild)
-                .collect(Collectors.toList());
-
-    }*/

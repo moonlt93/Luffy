@@ -93,7 +93,7 @@ public class adminProductController {
         dto.setWriter(writer);
 
         if (fileDto == null) {
-            throw new Exception("전달받은 데이터가 없음. ");
+            throw new NullPointerException("전달받은 데이터가 없음.");
         }
         log.info("list ={}", fileDto.getItemImgList());
 
@@ -107,7 +107,6 @@ public class adminProductController {
             dto.setFileName(Things[0]);
             dto.setUrlFileName(Things[1]);
 
-            /*list<MultipartFile> 하면 여러개 한번에 받기 가능*/
             boolean isEdit = req.getRequestURI().contains("/edit");
 
             if (isEdit) {

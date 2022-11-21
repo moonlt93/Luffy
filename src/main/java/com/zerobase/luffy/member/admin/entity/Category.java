@@ -1,7 +1,6 @@
 package com.zerobase.luffy.member.admin.entity;
 
 
-import com.zerobase.luffy.member.admin.repository.CategoryRepository;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,10 +31,13 @@ public class Category {
     private Category parent;
 
 
-   // @OrderBy("sortValue asc")
     @Builder.Default
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<Category> children = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+    private List<ProductDetail> productDetails= new ArrayList<>();
 
 
 

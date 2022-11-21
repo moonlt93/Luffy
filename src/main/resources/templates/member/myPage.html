@@ -20,6 +20,7 @@
             font-weight: bold;
             text-decoration: underline;
         }
+
         h2 {
             font-family: "Century Gothic", serif;
             padding-bottom: 20px;
@@ -27,10 +28,12 @@
             font-weight: bold;
             font-style: oblique;
         }
-        td img{
+
+        td img {
             width: 40px;
             height: 40px;
         }
+
         td a {
             color: black;
         }
@@ -119,7 +122,9 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th><input  class="form-check" type="checkbox" id="selectAll"/>Check</th>
+                        <th><input class="form-check" type="checkbox"
+                                   id="selectAll"/>Check
+                        </th>
                         <th> ID</th>
                         <th>
                             제품이름
@@ -136,10 +141,13 @@
                     <tbody id="dataList">
                     <tr th:each="x: ${wishes}">
                         <td>
-                            <input th:value="${x.wishId}" class="form-check" name="selectId" type="checkbox" id="selectId"/></td>
+                            <input th:value="${x.wishId}" class="form-check"
+                                   name="selectId" type="checkbox"
+                                   id="selectId"/></td>
                         <td>
                             <p th:text="${x.wishId}"></p>
-                            <input type="hidden" name="id" th:value="${x.wishId}"/>
+                            <input type="hidden" name="id"
+                                   th:value="${x.wishId}"/>
                         </td>
                         <td>
                             <p th:text="${x.productName}"></p>
@@ -160,7 +168,9 @@
                     </tr>
                     </tbody>
                 </table>
-                <button type="button" onclick="deleteFunc()" name="deleteBtn" style="float: right;" class="btn btn-danger">삭제</button>
+                <button type="button" onclick="deleteFunc()" name="deleteBtn"
+                        style="float: right;" class="btn btn-danger">삭제
+                </button>
             </div>
         </div>
     </div>
@@ -188,31 +198,29 @@
 
         });
     });
-function deleteFunc(){
 
-    var $checked = $('#dataList input[type=checkbox]:checked');
-    if ($checked.length < 1) {
-        alert(' 삭제할 데이터를 선택해 주세요. ');
-        return false;
+    function deleteFunc() {
+
+        var $checked = $('#dataList input[type=checkbox]:checked');
+        if ($checked.length < 1) {
+            alert(' 삭제할 데이터를 선택해 주세요. ');
+            return false;
+        }
+
+        if (!confirm(' 선택한 데이터를 삭제하시겠습니까? ')) {
+            return false;
+        }
+
+        let idList = [];
+        $.each($checked, function (k, v) {
+            idList.push($(this).val());
+        });
+
+
+        let $deleteForm = $('form[name=deleteForm]');
+        $deleteForm.find('input[name=idList]').val(idList.join(','));
+        $deleteForm.submit();
     }
-
-    if (!confirm(' 선택한 데이터를 삭제하시겠습니까? ')) {
-        return false;
-    }
-
-    let idList = [];
-    $.each($checked, function(k, v) {
-        idList.push($(this).val());
-    });
-
-    console.log(idList);
-    console.log(idList.join(','));
-    alert(idList);
-
-    let $deleteForm = $('form[name=deleteForm]');
-    $deleteForm.find('input[name=idList]').val( idList.join(',') );
-    $deleteForm.submit();
-}
 
 </script>
 

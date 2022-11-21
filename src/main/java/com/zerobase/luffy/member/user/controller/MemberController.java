@@ -3,13 +3,10 @@ package com.zerobase.luffy.member.user.controller;
 import com.zerobase.luffy.main.dto.WishDto;
 import com.zerobase.luffy.main.entity.Wish;
 import com.zerobase.luffy.main.service.WishService;
-import com.zerobase.luffy.member.admin.entity.ProductDetail;
-import com.zerobase.luffy.member.admin.service.ProductService;
 import com.zerobase.luffy.member.user.dto.MemberDto;
 import com.zerobase.luffy.member.user.entity.OrderItem;
 import com.zerobase.luffy.member.user.model.MessageResult;
 import com.zerobase.luffy.member.user.service.MemberService;
-import com.zerobase.luffy.member.bm.service.ManagerService;
 import com.zerobase.luffy.member.user.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +35,6 @@ public class MemberController {
     private final MemberService memberService;
 
     private final OrderService orderService;
-    private final ProductService productService;
 
     private final WishService wishService;
 

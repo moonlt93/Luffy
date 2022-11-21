@@ -18,12 +18,12 @@ public class PrincipalDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       Optional<Member> Optionalmember = memberRepository.findByUsername(username);
+       Optional<Member> optionalMember = memberRepository.findByUsername(username);
 
-        if(!Optionalmember.isPresent()){
+        if(optionalMember.isEmpty()){
            throw new UsernameNotFoundException("username이 없습니다.");
         }
-        Member member = Optionalmember.get();
+        Member member = optionalMember.get();
 
         return new PrincipalDetails(member);
     }

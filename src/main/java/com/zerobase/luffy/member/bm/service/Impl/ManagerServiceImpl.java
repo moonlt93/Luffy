@@ -37,7 +37,7 @@ public class ManagerServiceImpl implements ManagerService {
 
         Optional<Company> optionalCompanyId = companyRepository.findByCompanyName(dto.getCompanyName());
 
-        if (!optionalCompanyId.isPresent()) {
+        if (optionalCompanyId.isEmpty()) {
             return false;
         }
 
@@ -66,8 +66,8 @@ public class ManagerServiceImpl implements ManagerService {
     public Page<BrandManager> getAllList(Pageable pageable) {
 
         Page<BrandManager> bm = managerRepository.findAll(
-                PageRequest.of(pageable.getPageNumber(), 10, Sort.by("id")));
 
+                PageRequest.of(pageable.getPageNumber(), 10, Sort.by("id")));
 
         return bm;
     }
@@ -77,7 +77,7 @@ public class ManagerServiceImpl implements ManagerService {
     public BmDto managerDetail(String username) {
 
         Optional<BrandManager> optionalBmDto = managerRepository.findByUsername(username);
-        if (!optionalBmDto.isEmpty()) {
+        if (optionalBmDto.isPresent()) {
 
             BrandManager manager = optionalBmDto.get();
 
@@ -141,13 +141,11 @@ public class ManagerServiceImpl implements ManagerService {
                 long id = 0L;
                 try {
                     id = Long.parseLong(x);
-                } catch (Exception e) {
-
-                }
-                if (id > 0) {
                     managerRepository.deleteById(id);
-                }
+                } catch (Exception e) {
+                    log.error(e.getMessage());
 
+                }
             }
         }
 

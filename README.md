@@ -34,5 +34,9 @@
 
 ## ERD 
 
-[ERD주소](https://www.erdcloud.com/d/LBrpvQWPKoqr8Wk2h)
+설계 초안 [ERD주소](https://www.erdcloud.com/d/LBrpvQWPKoqr8Wk2h)
+
+## NOTION 
+
+노션 주소 NOTION
 

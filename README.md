@@ -38,5 +38,5 @@
 
 ## NOTION 
 
-노션 주소 NOTION
+노션 주소 [NOTION](https://www.notion.so/5-_-_Template-859a81928122421797c35e5c3133ab75)
 

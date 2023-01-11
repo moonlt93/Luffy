@@ -128,14 +128,8 @@
     </th:block>
 </div>
 <div th:replace="/fragment/footer.html ::fragment-footer"></div>
-
 <script>
     $(document).ready(function () {
-        let list = [[${list}]];
-        if(list.length<= 0){
-         let n= document.getElementById('numbersPage');
-             n.disabled();
-        }
 
         $('#selectAll').on('click', function () {
 

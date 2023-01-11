@@ -57,6 +57,7 @@ public class OrderServiceImpl implements OrderService {
 
                 Optional<ProductDetail> optionalProductDetail = Optional.ofNullable(productDetailRepository.findById(dto.getProductId())
                         .orElseThrow(() -> new IllegalArgumentException("잘못된 제품번호 입니다.")));
+
                 Member members = optionalMember.get();
                 ProductDetail productDetail = optionalProductDetail.get();
                 ProductDetail detail = new ProductDetail();

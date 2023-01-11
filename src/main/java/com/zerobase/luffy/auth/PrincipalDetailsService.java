@@ -1,7 +1,14 @@
 package com.zerobase.luffy.auth;
 
+import com.zerobase.luffy.member.bm.entity.BrandManager;
+import com.zerobase.luffy.member.bm.repository.ManagerRepository;
+import com.zerobase.luffy.member.type.MemberCode;
+import com.zerobase.luffy.member.user.dto.MemberDto;
 import com.zerobase.luffy.member.user.entity.Member;
 import com.zerobase.luffy.member.user.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.Manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,19 +16,37 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class PrincipalDetailsService implements UserDetailsService {
 
-    @Autowired
-    private MemberRepository memberRepository;
+
+    private final MemberRepository memberRepository;
+    private final ManagerRepository managerRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        Optional<Member> optionalMember = memberRepository.findByUsername(username);
 
         if(optionalMember.isEmpty()){
-           throw new UsernameNotFoundException("username이 없습니다.");
+           BrandManager bm= managerRepository.findByUsername(username)
+                   .orElseThrow(() -> new UsernameNotFoundException("잘못된 username입니다."));
+
+            MemberDto memberDto = MemberDto.managerEntityBuild(bm);
+            Member member = Member.builder()
+                    .id(memberDto.getId())
+                    .username(memberDto.getUserName())
+                    .password(memberDto.getPassword())
+                    .ROLE(memberDto.getROLE())
+                    .email(memberDto.getEmail())
+                    .phone(memberDto.getPhone())
+                    .email(memberDto.getEmail())
+                    .build();
+
+            return new PrincipalDetails(member);
         }
         Member member = optionalMember.get();
 

@@ -1,5 +1,6 @@
 package com.zerobase.luffy.member.user.dto;
 
+import com.zerobase.luffy.member.bm.entity.BrandManager;
 import com.zerobase.luffy.member.user.entity.Member;
 import lombok.*;
 
@@ -65,6 +66,22 @@ public class MemberDto {
 
 
     }
+
+    public static MemberDto managerEntityBuild(BrandManager manger){
+
+        return MemberDto.builder()
+                .id(manger.getId())
+                .userName(manger.getUsername())
+                .ROLE(manger.getROLE())
+                .password(manger.getPassword())
+                .regDt(manger.getRegDt())
+                .upDt(manger.getUpDt())
+                .memberStatus(String.valueOf(manger.getMemberStatus()))
+                .build();
+
+
+    }
+
 
 
 

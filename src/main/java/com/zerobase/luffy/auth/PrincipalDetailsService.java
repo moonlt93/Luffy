@@ -2,26 +2,22 @@ package com.zerobase.luffy.auth;
 
 import com.zerobase.luffy.member.bm.entity.BrandManager;
 import com.zerobase.luffy.member.bm.repository.ManagerRepository;
-import com.zerobase.luffy.member.type.MemberCode;
 import com.zerobase.luffy.member.user.dto.MemberDto;
 import com.zerobase.luffy.member.user.entity.Member;
 import com.zerobase.luffy.member.user.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.Manager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.OptionalInt;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class PrincipalDetailsService implements UserDetailsService {
+public class PrincipalDetailsService implements UserDetailsService{
 
 
     private final MemberRepository memberRepository;

@@ -1,4 +1,4 @@
-package com.zerobase.luffy.member.admin.repository;
+package com.zerobase.luffy.member.admin.repository.custom;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zerobase.luffy.member.admin.entity.Category;

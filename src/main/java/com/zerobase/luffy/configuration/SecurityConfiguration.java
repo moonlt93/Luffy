@@ -13,11 +13,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
-
-
 @EnableWebSecurity(debug = false)
 @RequiredArgsConstructor
-public class SecurityConfiguration  {
+public class SecurityConfiguration {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -51,10 +49,8 @@ public class SecurityConfiguration  {
                 .userInfoEndpoint().userService(principalOauth2UserService);
 
 
-    return http.build();
+        return http.build();
     }
-
-
 
 
     @Bean
@@ -69,15 +65,13 @@ public class SecurityConfiguration  {
     }
 
 
-
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
 
         return (web) -> web.ignoring()
-                .mvcMatchers("**/favicon.ico","/cdn**","/maxcdn**","code.jquery.com/jquery**")
+                .mvcMatchers("**/favicon.ico", "/cdn**", "/maxcdn**", "code.jquery.com/jquery**")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
-
 
 
 }

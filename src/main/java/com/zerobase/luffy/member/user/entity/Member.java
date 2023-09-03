@@ -41,6 +41,9 @@ public class Member {
     private LocalDateTime upDt;
     private LocalDateTime endDt;
 
+    private String provider;
+    private String providerId;
+
 
     private String ip;
     private String ROLE;

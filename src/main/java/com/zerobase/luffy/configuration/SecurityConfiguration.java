@@ -1,5 +1,7 @@
 package com.zerobase.luffy.configuration;
 
+import com.zerobase.luffy.Oauth.PrincipalDetails.PrincipalOauth2UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,10 +13,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
-
-
 @EnableWebSecurity(debug = false)
-public class SecurityConfiguration  {
+@RequiredArgsConstructor
+public class SecurityConfiguration {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -22,6 +23,7 @@ public class SecurityConfiguration  {
     }
 
 
+    private final PrincipalOauth2UserService principalOauth2UserService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -41,13 +43,14 @@ public class SecurityConfiguration  {
                         new AntPathRequestMatcher("/member/logout")
                 ).logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
-                .and().headers().frameOptions().sameOrigin();
+                .and().headers().frameOptions().sameOrigin()
+                .and()
+                .oauth2Login().loginPage("/member/login")
+                .userInfoEndpoint().userService(principalOauth2UserService);
 
 
-    return http.build();
+        return http.build();
     }
-
-
 
 
     @Bean
@@ -62,15 +65,13 @@ public class SecurityConfiguration  {
     }
 
 
-
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
 
         return (web) -> web.ignoring()
-                .mvcMatchers("**/favicon.ico","/cdn**","/maxcdn**","code.jquery.com/jquery**")
+                .mvcMatchers("**/favicon.ico", "/cdn**", "/maxcdn**", "code.jquery.com/jquery**")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
-
 
 
 }

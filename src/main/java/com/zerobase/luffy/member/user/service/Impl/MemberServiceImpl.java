@@ -1,5 +1,7 @@
 package com.zerobase.luffy.member.user.service.Impl;
 
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zerobase.luffy.Util.passUtil;
 import com.zerobase.luffy.main.entity.Coupon;
 import com.zerobase.luffy.member.user.dto.MemberDto;
@@ -9,7 +11,6 @@ import com.zerobase.luffy.member.user.repository.MemberRepository;
 import com.zerobase.luffy.member.user.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 import static com.zerobase.luffy.member.type.MemberCode.ING;
 import static com.zerobase.luffy.member.type.MemberCode.UNREGISTERED;
+import static com.zerobase.luffy.member.user.entity.QMember.member;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +30,9 @@ import static com.zerobase.luffy.member.type.MemberCode.UNREGISTERED;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
+    private final JPAQueryFactory queryFactory;
+
+
     @Override
     public boolean register(MemberDto dto) {
 
@@ -88,6 +93,8 @@ public class MemberServiceImpl implements MemberService {
 
 
     }
+
+
 
 
     @Override
@@ -159,5 +166,9 @@ public class MemberServiceImpl implements MemberService {
                 .map(MemberDto :: EntityBuild)
                 .collect(Collectors.toList());
     }
+
+
+
+
 }
 

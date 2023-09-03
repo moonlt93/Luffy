@@ -17,6 +17,6 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
    @Query(value=" delete from Category c where c.categoryId = :id")
    void deleteCategory(@Param("id")Long id);
 
-   @Query(value="select c from Category c where c.categoryId = :parentId and c.categoryName = :categoryName ")
-   Optional<Category> findByIdAndCategoryName(@Param("parentId") Long parentId, String categoryName);
+  /* @Query(value="select c from Category c where c.categoryId = :parentId and c.categoryName = :categoryName ")
+   Optional<Category> findByIdAndCategoryName(@Param("parentId") Long parentId, String categoryName);*/
 }

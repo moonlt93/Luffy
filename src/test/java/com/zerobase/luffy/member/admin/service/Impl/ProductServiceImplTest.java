@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -25,8 +24,7 @@ class ProductServiceImplTest {
     @Mock
     private ProductDetailRepository productDetailRepository;
 
-    @InjectMocks
-    private ProductServiceImpl productServiceImpl;
+    private  ProductDetail productDetail;
 
 
 

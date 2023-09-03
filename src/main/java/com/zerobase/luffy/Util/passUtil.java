@@ -1,6 +1,8 @@
 package com.zerobase.luffy.Util;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.stereotype.Component;
+
 
 public class passUtil {
     public static boolean equals(String plaintext, String hashed){

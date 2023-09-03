@@ -31,6 +31,8 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final JPAQueryFactory queryFactory;
+
+
     @Override
     public boolean register(MemberDto dto) {
 

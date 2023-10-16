@@ -16,8 +16,6 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@DynamicUpdate
-@DynamicInsert
 @AllArgsConstructor
 @Builder
 @Entity
